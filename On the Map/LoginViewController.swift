@@ -21,12 +21,40 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func login(sender: AnyObject) {
-        print("login")
-        print("\(emailField.text): \(passwordField.text)")
+        guard let email = emailField.text, let password = passwordField.text else {
+            print("E-mail and password field required.")
+            return
+        }
+        
+        let parameters: [String:AnyObject] = [
+            UdacityClient.JSONBodyKeys.Username: email,
+            UdacityClient.JSONBodyKeys.Password: password
+        ]
+        
+        UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, errorString) in
+            performUIUpdatesOnMain {
+                if success {
+                    self.completeLogin()
+                }
+                else {
+                    self.displayError(errorString)
+                }
+            }
+        }
     }
     
     @IBAction func signUp(sender: AnyObject) {
         print("signup")
+    }
+    
+    private func completeLogin() {
+        print("completeLogin")
+    }
+    
+    private func displayError(errorString: String?) {
+        if let errorString = errorString {
+            print("error: \(errorString)")
+        }
     }
 }
 
