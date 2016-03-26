@@ -30,6 +30,7 @@ class LoginViewController: UIViewController {
             UdacityClient.JSONBodyKeys.Username: email,
             UdacityClient.JSONBodyKeys.Password: password
         ]
+        
         UdacityClient.sharedInstance().checkNetworkConnection(self) { (success, error) in
             
             if success {
