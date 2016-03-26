@@ -19,6 +19,8 @@
 		3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */; };
 		3E1765A21CA4FD80009BB886 /* UdacityUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A11CA4FD80009BB886 /* UdacityUser.swift */; };
 		3E1765A41CA5C302009BB886 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A31CA5C302009BB886 /* GCDBlackBox.swift */; };
+		3E1765A71CA5EEAD009BB886 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1765A51CA5EDF2009BB886 /* Reachability.framework */; };
+		3E1765AA1CA5F2EC009BB886 /* UdacityClientReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientConvenience.swift; sourceTree = "<group>"; };
 		3E1765A11CA4FD80009BB886 /* UdacityUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityUser.swift; sourceTree = "<group>"; };
 		3E1765A31CA5C302009BB886 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		3E1765A51CA5EDF2009BB886 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
+		3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientReachability.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E1765A71CA5EEAD009BB886 /* Reachability.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				3E1765741CA48632009BB886 /* On the Map */,
+				3E1765A81CA5EEF2009BB886 /* Resources */,
 				3E1765891CA48633009BB886 /* On the MapTests */,
 				3E1765731CA48632009BB886 /* Products */,
 			);
@@ -135,6 +141,7 @@
 				3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */,
 				3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */,
 				3E1765A11CA4FD80009BB886 /* UdacityUser.swift */,
+				3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -144,6 +151,14 @@
 			children = (
 			);
 			name = UdacityParse;
+			sourceTree = "<group>";
+		};
+		3E1765A81CA5EEF2009BB886 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3E1765A51CA5EDF2009BB886 /* Reachability.framework */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,6 +171,7 @@
 				3E17656E1CA48632009BB886 /* Sources */,
 				3E17656F1CA48632009BB886 /* Frameworks */,
 				3E1765701CA48632009BB886 /* Resources */,
+				3E1765AB1CA5FBC4009BB886 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -242,6 +258,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3E1765AB1CA5FBC4009BB886 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Reachability.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3E17656E1CA48632009BB886 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -249,6 +282,7 @@
 			files = (
 				3E1765A41CA5C302009BB886 /* GCDBlackBox.swift in Sources */,
 				3E1765781CA48632009BB886 /* LoginViewController.swift in Sources */,
+				3E1765AA1CA5F2EC009BB886 /* UdacityClientReachability.swift in Sources */,
 				3E1765A21CA4FD80009BB886 /* UdacityUser.swift in Sources */,
 				3E17659E1CA4ABD7009BB886 /* UdacityClientConstants.swift in Sources */,
 				3E1765761CA48632009BB886 /* AppDelegate.swift in Sources */,
@@ -383,6 +417,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "On the Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.4mfd.On-the-Map";
@@ -394,6 +432,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "On the Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.4mfd.On-the-Map";
