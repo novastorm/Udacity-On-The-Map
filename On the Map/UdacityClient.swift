@@ -18,7 +18,7 @@ class UdacityClient: NSObject {
     
     // Authentication State
     var sessionId: String? = nil
-    var userId: String? = nil
+    var accountKey: String? = nil
     
     override init() {
         super.init()

@@ -51,10 +51,12 @@ extension UdacityClient {
         // MARK: General
         
         // MARK: Authorization
-        static let SessionId = "session_id"
-        static let UserId = "user_id"
+        static let Session = "session"
+        static let SessionId = "id"
+        static let Account = "account"
+        static let AccountKey = "key"
         
-        //MARK: User
+        // MARK: User
         static let User = "user"
     }
 }

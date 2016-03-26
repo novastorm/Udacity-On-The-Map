@@ -30,15 +30,22 @@ class LoginViewController: UIViewController {
             UdacityClient.JSONBodyKeys.Username: email,
             UdacityClient.JSONBodyKeys.Password: password
         ]
-        
-        UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, errorString) in
-            performUIUpdatesOnMain {
-                if success {
-                    self.completeLogin()
+        UdacityClient.sharedInstance().checkNetworkConnection(self) { (success, error) in
+            
+            if success {
+                UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, errorString) in
+                    performUIUpdatesOnMain {
+                        if success {
+                            self.completeLogin()
+                        }
+                        else {
+                            self.displayError(errorString)
+                        }
+                    }
                 }
-                else {
-                    self.displayError(errorString)
-                }
+            }
+            else {
+                print(error!)
             }
         }
     }
@@ -49,6 +56,8 @@ class LoginViewController: UIViewController {
     
     private func completeLogin() {
         print("completeLogin")
+        print ("sessionId: \(UdacityClient.sharedInstance().sessionId)")
+        print ("accountKey: \(UdacityClient.sharedInstance().accountKey)")
     }
     
     private func displayError(errorString: String?) {

@@ -20,27 +20,17 @@ extension UdacityClient {
         let parameters = inputParameters
         
         // Chain completion handlers for each request to run in sequence
-        self.getSessionId(parameters) { (success, sessionId, errorString) in
+        self.getSession(parameters) { (success, sessionId, accountKey, errorString) in
             if success {
                 self.sessionId = sessionId
-                
-                self.getUserId{ (success, userId, errorString) in
-                    if success {
-                        if let userId = userId {
-                            self.userId = userId
-                        }
-                    }
-                    
-                    completionHandlerForAuth(success: success, errorString: errorString)
-                }
+                self.accountKey = accountKey
             }
-            else {
-                completionHandlerForAuth(success: success, errorString: errorString)
-            }
+            
+            completionHandlerForAuth(success: success, errorString: errorString)
         }
     }
     
-    private func getSessionId(inputParameters: [String:AnyObject], completionHandlerForSession: (success: Bool, sessionId: String?, errorString: String?) -> Void) {
+    private func getSession(inputParameters: [String:AnyObject], completionHandlerForSession: (success: Bool, sessionId: String?, accountKey: String?, errorString: String?) -> Void) {
         
         // (1) Specify parameters
         let parameters = [String:AnyObject]()
@@ -57,42 +47,22 @@ extension UdacityClient {
             // (3) Send to completion handler
             if let error = error {
                 print(error)
-                completionHandlerForSession(success: false, sessionId: nil, errorString: "Login Failed (Session ID)")
+                completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, errorString: "Login Failed (Session ID)")
+                return
             }
-            else {
-                if let sessionId = results[JSONResponseKeys.SessionId] as? String {
-                    completionHandlerForSession(success: true, sessionId: sessionId, errorString: nil)
-                }
-                else {
-                    print("Could not find \(JSONResponseKeys.SessionId) in \(results)")
-                    completionHandlerForSession(success: false, sessionId: nil, errorString: "Login Failed (Session ID)")
-                }
+
+            guard let sessionId = results[JSONResponseKeys.Session]??[JSONResponseKeys.SessionId] as? String else {
+                print("Could not find \(JSONResponseKeys.Session):\(JSONResponseKeys.SessionId) in \(results)")
+                completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, errorString: "Login Failed (Session Id)")
+                return
             }
-        }
-    }
-    
-    private func getUserId(completionHandlerForUserId: (success: Bool, userId: String?, errorString: String?) -> Void) {
-        
-        // (1) Specify parameters
-        let parameters = [String: AnyObject]()
-        
-        // (2) Make the request
-        taskForGETMethod(Resources.Session, parameters: parameters) { (results, error) in
+            guard let accountKey = results[JSONResponseKeys.Account]??[JSONResponseKeys.AccountKey] as? String else {
+                print("Could not find \(JSONResponseKeys.Account):\(JSONResponseKeys.AccountKey) in \(results)")
+                completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, errorString: "Login Failed (Account Key)")
+                return
+            }
             
-            // (3) Send to completion handler
-            if let error = error {
-                print(error)
-                completionHandlerForUserId(success: false, userId: nil, errorString: "Login Failed (Session ID)")
-            }
-            else {
-                if let userId = results[JSONResponseKeys.UserId] as? String {
-                    completionHandlerForUserId(success: true, userId: userId, errorString: nil)
-                }
-                else {
-                    print("Could not find \(JSONResponseKeys.UserId) in \(results)")
-                    completionHandlerForUserId(success: false, userId: nil, errorString: "Login Failed (Session ID)")
-                }
-            }
+            completionHandlerForSession(success: true, sessionId: sessionId, accountKey: accountKey, errorString: nil)
         }
     }
     
