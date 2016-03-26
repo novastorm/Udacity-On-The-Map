@@ -21,6 +21,7 @@
 		3E1765A41CA5C302009BB886 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A31CA5C302009BB886 /* GCDBlackBox.swift */; };
 		3E1765A71CA5EEAD009BB886 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1765A51CA5EDF2009BB886 /* Reachability.framework */; };
 		3E1765AA1CA5F2EC009BB886 /* UdacityClientReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */; };
+		3EDAAE7D1CA7337D0096FADF /* MapTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDAAE7C1CA7337D0096FADF /* MapTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		3E1765A31CA5C302009BB886 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		3E1765A51CA5EDF2009BB886 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientReachability.swift; sourceTree = "<group>"; };
+		3EDAAE7C1CA7337D0096FADF /* MapTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				3E1765751CA48632009BB886 /* AppDelegate.swift */,
 				3E1765771CA48632009BB886 /* LoginViewController.swift */,
 				3E1765791CA48632009BB886 /* Main.storyboard */,
+				3EDAAE7C1CA7337D0096FADF /* MapTabBarController.swift */,
 				3E17657C1CA48632009BB886 /* Assets.xcassets */,
 				3E17657E1CA48632009BB886 /* LaunchScreen.storyboard */,
 				3E1765811CA48632009BB886 /* Info.plist */,
@@ -286,6 +289,7 @@
 				3E1765A21CA4FD80009BB886 /* UdacityUser.swift in Sources */,
 				3E17659E1CA4ABD7009BB886 /* UdacityClientConstants.swift in Sources */,
 				3E1765761CA48632009BB886 /* AppDelegate.swift in Sources */,
+				3EDAAE7D1CA7337D0096FADF /* MapTabBarController.swift in Sources */,
 				3E17659A1CA4A6E0009BB886 /* UdacityClient.swift in Sources */,
 				3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */,
 				3E17659C1CA4A78A009BB886 /* UdacityConfig.swift in Sources */,
