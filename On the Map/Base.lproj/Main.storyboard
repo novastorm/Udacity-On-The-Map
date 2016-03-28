@@ -34,20 +34,44 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="218" y="208" width="125" height="21"/>
+                                        </variation>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="318" y="208" width="125" height="21"/>
+                                        </variation>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="E-Mail" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kSC-RE-uxU">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="E-Mail" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kSC-RE-uxU">
                                         <rect key="frame" x="0.0" y="237" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="237" width="560" height="30"/>
+                                        </variation>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="237" width="760" height="30"/>
+                                        </variation>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gY6-cU-VjO">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gY6-cU-VjO">
                                         <rect key="frame" x="0.0" y="275" width="560" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="275" width="560" height="30"/>
+                                        </variation>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="275" width="760" height="30"/>
+                                        </variation>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P31-aN-eJy">
                                         <rect key="frame" x="0.0" y="313" width="560" height="30"/>
                                         <state key="normal" title="Login"/>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="313" width="560" height="30"/>
+                                        </variation>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="313" width="760" height="30"/>
+                                        </variation>
                                         <connections>
                                             <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AzD-Bb-5Td"/>
                                         </connections>
@@ -69,6 +93,12 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="162" y="351" width="236" height="30"/>
+                                        </variation>
+                                        <variation key="widthClass=regular" misplaced="YES">
+                                            <rect key="frame" x="262" y="351" width="236" height="30"/>
+                                        </variation>
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -79,6 +109,12 @@
                                     <constraint firstItem="P31-aN-eJy" firstAttribute="leading" secondItem="XSJ-P8-i42" secondAttribute="leading" id="WpA-qD-xJC"/>
                                     <constraint firstAttribute="trailing" secondItem="P31-aN-eJy" secondAttribute="trailing" id="udF-eM-i1o"/>
                                 </constraints>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="20" width="560" height="381"/>
+                                </variation>
+                                <variation key="widthClass=regular" misplaced="YES">
+                                    <rect key="frame" x="20" y="20" width="760" height="381"/>
+                                </variation>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -99,10 +135,10 @@
             </objects>
             <point key="canvasLocation" x="439" y="476"/>
         </scene>
-        <!--List-->
+        <!--Student List-->
         <scene sceneID="bgh-og-roB">
             <objects>
-                <viewController id="kbW-fO-HtK" sceneMemberID="viewController">
+                <viewController title="Student List" id="kbW-fO-HtK" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8xo-gK-2bw"/>
                         <viewControllerLayoutGuide type="bottom" id="fxl-lC-dU3"/>
@@ -111,11 +147,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SIr-gi-aek">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SIr-gi-aek">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LN1-3y-nSZ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StudentListCell" id="LN1-3y-nSZ">
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LN1-3y-nSZ" id="k65-d0-ls4">
@@ -127,6 +163,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SIr-gi-aek" firstAttribute="top" secondItem="ZRg-ff-IEu" secondAttribute="topMargin" id="I3h-y4-HEx"/>
+                            <constraint firstItem="fxl-lC-dU3" firstAttribute="top" secondItem="SIr-gi-aek" secondAttribute="bottom" id="hGZ-CE-3Hw"/>
+                            <constraint firstItem="SIr-gi-aek" firstAttribute="leading" secondItem="ZRg-ff-IEu" secondAttribute="leadingMargin" constant="-20" id="poF-fL-Hf8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SIr-gi-aek" secondAttribute="trailing" constant="-20" id="xey-Qv-HeN"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" id="zuy-yK-4dj"/>
                 </viewController>
@@ -134,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="2653" y="804"/>
         </scene>
-        <!--Map-->
+        <!--Student Map-->
         <scene sceneID="oA7-9U-TJU">
             <objects>
-                <viewController id="hSE-gW-N31" sceneMemberID="viewController">
+                <viewController title="Student Map" id="hSE-gW-N31" customClass="MapViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EWl-tu-DkJ"/>
                         <viewControllerLayoutGuide type="bottom" id="8Lw-MB-5kq"/>
@@ -145,9 +187,23 @@
                     <view key="view" contentMode="scaleToFill" id="e6I-6S-m1R">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3at-aQ-DZE">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3at-aQ-DZE" firstAttribute="leading" secondItem="e6I-6S-m1R" secondAttribute="leadingMargin" constant="-20" id="MiT-D4-9SR"/>
+                            <constraint firstItem="3at-aQ-DZE" firstAttribute="top" secondItem="EWl-tu-DkJ" secondAttribute="bottom" id="ax2-fw-nZM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3at-aQ-DZE" secondAttribute="trailing" constant="-20" id="wwq-wz-kPY"/>
+                            <constraint firstItem="8Lw-MB-5kq" firstAttribute="top" secondItem="3at-aQ-DZE" secondAttribute="bottom" id="zDt-ZR-1MJ"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="f1V-JA-IFA"/>
+                    <connections>
+                        <outlet property="mapView" destination="3at-aQ-DZE" id="gbJ-Dx-Fy9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qmp-kP-3N5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -185,7 +241,11 @@
                                     <action selector="refresh:" destination="9Ec-88-yfE" id="48w-CL-j77"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="marker pin" id="wfE-gQ-IVi" userLabel="Info Detail"/>
+                            <barButtonItem image="marker pin" id="wfE-gQ-IVi" userLabel="Info Detail">
+                                <connections>
+                                    <action selector="showInformationDetail:" destination="9Ec-88-yfE" id="mMJ-sF-SR6"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Aik-hj-arD">

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -17,14 +17,52 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        self.emailField.delegate = self
+        self.passwordField.delegate = self
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // ensure password field is cleared
+        passwordField.text = ""
+        print([
+            "source": "viewWillAppear",
+            "accountKey": UdacityClient.sharedInstance().accountKey,
+            "sessionId": UdacityClient.sharedInstance().sessionId
+            ])
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        // clear password field
+        passwordField.text = ""
+        print([
+            "source": "viewDidDisappear",
+            "accountKey": UdacityClient.sharedInstance().accountKey,
+            "sessionId": UdacityClient.sharedInstance().sessionId
+        ])
     }
 
     @IBAction func login(sender: AnyObject) {
-        guard let email = emailField.text, let password = passwordField.text else {
+        
+        view.endEditing(true)
+        
+        if emailField.text!.isEmpty {
+            // Change email field to red
+            setTextFieldBorderToDanger(emailField)
+        }
+
+        if passwordField.text!.isEmpty {
+            // Change email field to red
+            setTextFieldBorderToDanger(passwordField)
+        }
+        
+        if emailField.text!.isEmpty || passwordField.text!.isEmpty {
             print("E-mail and password field required.")
             return
         }
+        
+        let email = emailField.text!
+        let password = passwordField.text!
         
         let parameters: [String:AnyObject] = [
             UdacityClient.JSONBodyKeys.Username: email,
@@ -40,7 +78,8 @@ class LoginViewController: UIViewController {
                             self.completeLogin()
                         }
                         else {
-                            self.displayError(errorString)
+                            self.setTextFieldBorderToDanger(self.emailField)
+                            self.setTextFieldBorderToDanger(self.passwordField)
                         }
                     }
                 }
@@ -51,14 +90,29 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        setTextFieldBorderToDefault(textField)
+    }
+    
+    private func setTextFieldBorderToDanger(textField: UITextField) {
+        textField.layer.borderColor = UIColor.redColor().CGColor
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 5.0
+    }
+    
+    private func setTextFieldBorderToDefault(textField: UITextField) {
+        textField.layer.borderColor = nil
+        textField.layer.borderWidth = 0
+        textField.layer.cornerRadius = 5.0
+    }
+    
     @IBAction func signUp(sender: AnyObject) {
         print("signup")
     }
     
     private func completeLogin() {
-        print("completeLogin")
-        print ("sessionId: \(UdacityClient.sharedInstance().sessionId)")
-        print ("accountKey: \(UdacityClient.sharedInstance().accountKey)")
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
+        presentViewController(controller, animated: true, completion: nil)
     }
     
     private func displayError(errorString: String?) {

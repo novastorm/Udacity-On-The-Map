@@ -13,7 +13,7 @@ import UIKit
 extension UdacityClient {
     
     func checkNetworkConnection(viewController: UIViewController, completionHandler: (success: Bool, error: String?) -> Void) {
-
+        
         var reachability: Reachability?
         
         do {
@@ -23,12 +23,17 @@ extension UdacityClient {
             print("Cannot create Reachability")
         }
         
-        if let reachable = reachability?.isReachable() where reachable{
-            completionHandler(success: true, error: nil)
-        }
-        else {
+        guard let reachable = reachability?.isReachable() where reachable else {
+            // Debug without network
+            if (UIApplication.sharedApplication().delegate as! AppDelegate).debugWithoutNetwork {
+                completionHandler(success: true, error: nil)
+                return
+            }
+            
             completionHandler(success: false, error: "Network unreachable")
+            return
         }
         
+        completionHandler(success: true, error: nil)
     }
 }

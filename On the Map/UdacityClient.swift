@@ -85,18 +85,7 @@ class UdacityClient: NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = convertObjectToJSONData(inputJSONBody)
-        
-        self.convertDataWithCompletionHandler(request.HTTPBody!) { (result, error) in
-            guard error == nil else {
-                print(error)
-                return
-            }
-            
-            if let result = result {
-                print(result)
-            }
-        }
-        
+                
         // (4) Make request
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
@@ -115,7 +104,7 @@ class UdacityClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX! \(response)")
+                sendError("Request returned a status code other that 2XX!\n" + "\(response)")
                 return
             }
             
@@ -146,6 +135,17 @@ class UdacityClient: NSObject {
         // (2) Build URL, (3) Configure Request
         let request = NSMutableURLRequest(URL: URLFromParameters(parameters, withPathExtension: resource))
         request.HTTPMethod = "DELETE"
+        
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" {
+                xsrfCookie = cookie
+            }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
         
         // (4) Make request
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -252,5 +252,9 @@ class UdacityClient: NSObject {
             static var sharedInstance = UdacityClient()
         }
         return Singleton.sharedInstance
+    }
+    
+    func clearData () {
+        accountKey = nil
     }
 }
