@@ -23,6 +23,8 @@
 		3E1765AA1CA5F2EC009BB886 /* UdacityClientReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */; };
 		3E2004D51CA9E9DA001B61FA /* UdacityParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2004D41CA9E9DA001B61FA /* UdacityParseClient.swift */; };
 		3E2004D71CA9EA1B001B61FA /* UdacityParseClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2004D61CA9EA1B001B61FA /* UdacityParseClientConstants.swift */; };
+		3E2004D91CAA1B59001B61FA /* UdacityParseClientReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2004D81CAA1B59001B61FA /* UdacityParseClientReachability.swift */; };
+		3E2004DB1CAA205A001B61FA /* UdacityParseStudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2004DA1CAA205A001B61FA /* UdacityParseStudentLocation.swift */; };
 		3EDAAE7D1CA7337D0096FADF /* MapTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDAAE7C1CA7337D0096FADF /* MapTabBarController.swift */; };
 		3EDAAE7F1CA742F40096FADF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDAAE7E1CA742F40096FADF /* MapViewController.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +60,8 @@
 		3E1765A91CA5F2EC009BB886 /* UdacityClientReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientReachability.swift; sourceTree = "<group>"; };
 		3E2004D41CA9E9DA001B61FA /* UdacityParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseClient.swift; sourceTree = "<group>"; };
 		3E2004D61CA9EA1B001B61FA /* UdacityParseClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseClientConstants.swift; sourceTree = "<group>"; };
+		3E2004D81CAA1B59001B61FA /* UdacityParseClientReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseClientReachability.swift; sourceTree = "<group>"; };
+		3E2004DA1CAA205A001B61FA /* UdacityParseStudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseStudentLocation.swift; sourceTree = "<group>"; };
 		3EDAAE7C1CA7337D0096FADF /* MapTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTabBarController.swift; sourceTree = "<group>"; };
 		3EDAAE7E1CA742F40096FADF /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,6 +165,8 @@
 			children = (
 				3E2004D41CA9E9DA001B61FA /* UdacityParseClient.swift */,
 				3E2004D61CA9EA1B001B61FA /* UdacityParseClientConstants.swift */,
+				3E2004D81CAA1B59001B61FA /* UdacityParseClientReachability.swift */,
+				3E2004DA1CAA205A001B61FA /* UdacityParseStudentLocation.swift */,
 			);
 			name = UdacityParse;
 			sourceTree = "<group>";
@@ -297,10 +303,12 @@
 				3E1765AA1CA5F2EC009BB886 /* UdacityClientReachability.swift in Sources */,
 				3E2004D71CA9EA1B001B61FA /* UdacityParseClientConstants.swift in Sources */,
 				3E1765A21CA4FD80009BB886 /* UdacityUser.swift in Sources */,
+				3E2004D91CAA1B59001B61FA /* UdacityParseClientReachability.swift in Sources */,
 				3E2004D51CA9E9DA001B61FA /* UdacityParseClient.swift in Sources */,
 				3E17659E1CA4ABD7009BB886 /* UdacityClientConstants.swift in Sources */,
 				3E1765761CA48632009BB886 /* AppDelegate.swift in Sources */,
 				3EDAAE7D1CA7337D0096FADF /* MapTabBarController.swift in Sources */,
+				3E2004DB1CAA205A001B61FA /* UdacityParseStudentLocation.swift in Sources */,
 				3E17659A1CA4A6E0009BB886 /* UdacityClient.swift in Sources */,
 				3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */,
 				3E17659C1CA4A78A009BB886 /* UdacityConfig.swift in Sources */,

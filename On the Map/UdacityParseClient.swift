@@ -14,7 +14,7 @@ class UdacityParseClient: NSObject {
     var session = NSURLSession.sharedSession()
     
     // Configuration Object
-    var config = UdacityConfig()
+//    var config = UdacityParseConfig()
     
     // Authentication State
     var applicationId: String? = nil
@@ -32,6 +32,8 @@ class UdacityParseClient: NSObject {
         
         // (2) Build URL, (3) Configure Request
         let request = NSMutableURLRequest(URL: URLFromParameters(parameters, withPathExtension: resource))
+        request.addValue(Constants.ApplicationId, forHTTPHeaderField: RequestKeys.ApplicationIdHeader)
+        request.addValue(Constants.APIKey, forHTTPHeaderField: RequestKeys.RESTAPIKey)
         
         // (4) Make request
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -82,7 +84,8 @@ class UdacityParseClient: NSObject {
         // (2) Build URL, (3) Configure Request
         let request = NSMutableURLRequest(URL: URLFromParameters(parameters, withPathExtension: resource))
         request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(Constants.ApplicationId, forHTTPHeaderField: RequestKeys.ApplicationIdHeader)
+        request.addValue(Constants.APIKey, forHTTPHeaderField: RequestKeys.RESTAPIKey)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = convertObjectToJSONData(inputJSONBody)
                 
@@ -126,26 +129,19 @@ class UdacityParseClient: NSObject {
         return task
     }
     
-    // MARK: DELETE
-    func taskForDELETEMethod(resource: String, parameters inputParameters: [String:AnyObject], completionHandlerForDelete: (results: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
+    // MARK: PUT
+    func taskForPUTMethod(resource: String, parameters inputParameters: [String:AnyObject], JSONBody inputJSONBody: [String:AnyObject], completionHandlerForPost: (results: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         // (1) Set Parameters
         var parameters = inputParameters
         
         // (2) Build URL, (3) Configure Request
         let request = NSMutableURLRequest(URL: URLFromParameters(parameters, withPathExtension: resource))
-        request.HTTPMethod = "DELETE"
-        
-        var xsrfCookie: NSHTTPCookie? = nil
-        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" {
-                xsrfCookie = cookie
-            }
-        }
-        if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-        }
+        request.HTTPMethod = "PUT"
+        request.addValue(Constants.ApplicationId, forHTTPHeaderField: RequestKeys.ApplicationIdHeader)
+        request.addValue(Constants.APIKey, forHTTPHeaderField: RequestKeys.RESTAPIKey)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = convertObjectToJSONData(inputJSONBody)
         
         // (4) Make request
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -154,7 +150,7 @@ class UdacityParseClient: NSObject {
             func sendError(error:String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForDelete(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+                completionHandlerForPost(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
             }
             
             // GUARD: Was there an error?
@@ -165,7 +161,7 @@ class UdacityParseClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!")
+                sendError("Request returned a status code other that 2XX!\n" + "\(response)")
                 return
             }
             
@@ -178,7 +174,7 @@ class UdacityParseClient: NSObject {
             // (5) Parse and (6) use data with completion handler
             data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForDelete)
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPost)
         }
         
         // (7) Start request
@@ -186,7 +182,6 @@ class UdacityParseClient: NSObject {
         
         return task
     }
-    
     
     // MARK: Helpers
     
@@ -247,14 +242,10 @@ class UdacityParseClient: NSObject {
     }
     
     // MARK: Shared Instance
-    class func sharedInstance() -> UdacityClient {
+    class func sharedInstance() -> UdacityParseClient {
         struct Singleton {
-            static var sharedInstance = UdacityClient()
+            static var sharedInstance = UdacityParseClient()
         }
         return Singleton.sharedInstance
-    }
-    
-    func clearData () {
-        accountKey = nil
     }
 }

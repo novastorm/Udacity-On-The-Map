@@ -66,33 +66,14 @@ extension UdacityParseClient {
         static let Results = "results"
         
         static let ObjectId = "objectId"
-        typealias ObjectIdType = String
-        
         static let UniqueKey = "uniqueKey"
-        typealias UniqueKeyType = String
-        
         static let FirstName = "firstName"
-        typealias FirstNameType = String
-        
         static let LastName = "lastName"
-        typealias LastNameType = String
-        
         static let MapString = "mapString"
-        typealias MapStringType = String
-        
         static let MediaURL = "mediaURL"
-        typealias MediaURLType = String
-        
         static let Latitude = "latitude"
-        typealias LatitudeType = Float
-        
         static let Longitude = "longitude"
-        typealias LongitudeType = Float
-        
         static let CreatedAt = "createdAt"
-        typealias CreatedAtType = String
-        
-        static let UpdatedAt = "updatedAt"
-        typealias UpdatedAtType = String
+        static let UpdatedAt = "updatedAt"    
     }
 }
