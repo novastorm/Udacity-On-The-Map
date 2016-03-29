@@ -13,9 +13,20 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
+    var studentLocationList = [UdacityParseStudentLocation]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
+        UdacityParseClient.sharedInstance().getStudentLocationList { (studentLocations, error) in
+            
+            guard let studentLocationList = studentLocations else {
+                print(error)
+                return
+            }
+            
+            print(studentLocationList)
+        }
     }
 }

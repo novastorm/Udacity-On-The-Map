@@ -64,8 +64,6 @@ class UdacityParseClient: NSObject {
             }
             
             // (5) Parse and (6) use data with completion handler
-            data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGet)
         }
         
@@ -118,8 +116,6 @@ class UdacityParseClient: NSObject {
             }
             
             // (5) Parse and (6) use data with completion handler
-            data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPost)
         }
         
@@ -172,8 +168,6 @@ class UdacityParseClient: NSObject {
             }
             
             // (5) Parse and (6) use data with completion handler
-            data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPost)
         }
         
