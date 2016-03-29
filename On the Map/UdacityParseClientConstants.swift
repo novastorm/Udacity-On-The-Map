@@ -21,77 +21,78 @@ extension UdacityParseClient {
         static let APIPath = "/1"
         
         static let AuthorizationURL = ""
+    }
+    
+    // MARK: Resources
+    struct Resources {
         
-        // MARK: Resources
-        struct Resources {
-
-            // MARK: Student Locations
-            static let ClassesStudentLocation = "/classes/StudentLocation"
-            static let ClassesStudentLocationId = "/classes/StudentLocation/{student_location_id}"
-            
-            // MARK:
-        }
+        // MARK: Student Locations
+        static let ClassesStudentLocation = "/classes/StudentLocation"
+        static let ClassesStudentLocationId = "/classes/StudentLocation/{student_location_id}"
         
-        // MARK: URL Keys
-        struct URLKeys {
-            static let StudentLocationId = "student_location_id"
-        }
+        // MARK:
+    }
+    
+    // MARK: URL Keys
+    struct URLKeys {
+        static let StudentLocationId = "student_location_id"
+    }
+    
+    // MARK: Parameter Keys
+    struct ParameterKeys {
+        static let Limit = "limit"
+        static let Skip = "skip"
+        static let Order = "order"
+        static let Where = "where"
+        static let ObjectId = "objectId"
+    }
+    
+    // MARK: Request Keys
+    struct RequestKeys {
+        static let ApplicationIdHeader = "X-Parse-Application-Id"
+        static let RESTAPIKey = "X-Parse-REST-API-Key"
+    }
+    
+    // MARK: Response Keys
+    struct ResponseKeys {
+    }
+    
+    // MARK: JSON Request Keys
+    struct JSONParameterKeys {
+    }
+    
+    // MARK: JSON Response Keys
+    struct JSONResponseKeys {
+        static let Results = "results"
         
-        // MARK: Parameter Keys
-        struct ParameterKeys {
-            static let Limit = "limit"
-            static let Skip = "skip"
-            static let Order = "order"
-            static let Where = "where"
-            static let ObjectId = "objectId"
-        }
+        static let ObjectId = "objectId"
+        typealias ObjectIdType = String
         
-        struct RequestKeys {
-            static let ApplicationIdHeader = "X-Parse-Application-Id"
-            static let RESTAPIKey = "X-Parse-REST-API-Key"
-        }
+        static let UniqueKey = "uniqueKey"
+        typealias UniqueKeyType = String
         
-        // MARK: Response Keys
-        struct ResponseKeys {
-        }
-
-        // MARK: JSON Request Keys
-        struct JSONParameterKeys {
-        }
+        static let FirstName = "firstName"
+        typealias FirstNameType = String
         
-        // MARK: JSON Response Keys
-        struct JSONResponseKeys {
-            static let Results = "results"
-            
-            static let ObjectId = "objectId"
-            typealias ObjectIdType = String
-            
-            static let UniqueKey = "UniqueKey"
-            typealias UniqueKeyType = String
-            
-            static let FirstName = "firstName"
-            typealias FirstNameType = String
-            
-            static let LastName = "lastName"
-            typealias LastNameType = String
-            
-            static let MapString = "mapString"
-            typealias MapStringType = String
-            
-            static let MediaURL = "mediaURL"
-            typealias MediaURLType = String
-            
-            static let Latitude = "latitude"
-            typealias LatitudeType = Float
-            
-            static let Longitude = "longitude"
-            typealias LongitudeType = Float
-            
-            static let CreatedAt = "createdAt"
-            typealias CreatedAtType = String
-            
-            static let UpdatedAt = "updatedAt"
-            typealias UpdatedAtType = String
-        }
+        static let LastName = "lastName"
+        typealias LastNameType = String
+        
+        static let MapString = "mapString"
+        typealias MapStringType = String
+        
+        static let MediaURL = "mediaURL"
+        typealias MediaURLType = String
+        
+        static let Latitude = "latitude"
+        typealias LatitudeType = Float
+        
+        static let Longitude = "longitude"
+        typealias LongitudeType = Float
+        
+        static let CreatedAt = "createdAt"
+        typealias CreatedAtType = String
+        
+        static let UpdatedAt = "updatedAt"
+        typealias UpdatedAtType = String
     }
 }
