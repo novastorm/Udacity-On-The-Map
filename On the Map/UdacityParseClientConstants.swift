@@ -39,6 +39,11 @@ extension UdacityParseClient {
         
         // MARK: Parameter Keys
         struct ParameterKeys {
+            static let Limit = "limit"
+            static let Skip = "skip"
+            static let Order = "order"
+            static let Where = "where"
+            static let ObjectId = "objectId"
         }
         
         struct RequestKeys {
