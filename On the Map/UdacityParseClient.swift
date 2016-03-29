@@ -58,7 +58,7 @@ class UdacityParseClient: NSObject {
             }
             
             // GUARD: Was any data returned?
-            guard var data = data else {
+            guard let data = data else {
                 sendError("No data returned by the request")
                 return
             }
@@ -110,7 +110,7 @@ class UdacityParseClient: NSObject {
             }
             
             // GUARD: Was any data returned?
-            guard var data = data else {
+            guard let data = data else {
                 sendError("No data returned by the request")
                 return
             }
@@ -162,7 +162,7 @@ class UdacityParseClient: NSObject {
             }
             
             // GUARD: Was any data returned?
-            guard var data = data else {
+            guard let data = data else {
                 sendError("No data returned by the request")
                 return
             }
@@ -204,8 +204,6 @@ class UdacityParseClient: NSObject {
     
     // given raw JSON, return a usable Foundation object
     private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
-        
-//        let data = inputData.subdataWithRange(NSMakeRange(5, inputData.length - 5))
         
         var parsedResult: AnyObject!
         do {

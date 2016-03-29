@@ -216,8 +216,6 @@ class UdacityClient: NSObject {
     // given raw JSON, return a usable Foundation object
     private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
         
-//        let data = inputData.subdataWithRange(NSMakeRange(5, inputData.length - 5))
-        
         var parsedResult: AnyObject!
         do {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
