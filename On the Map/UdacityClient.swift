@@ -90,15 +90,13 @@ class UdacityClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
+            func sendError(errorString:String) {
+                let userInfo: [String: AnyObject] = [NSLocalizedDescriptionKey: errorString]
                 completionHandlerForPost(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
             }
             
-            // GUARD: Was there an error?
             guard error == nil else {
-                sendError("There was an error with the request: \(error)")
+                sendError("There was an error with the request. \(error)")
                 return
             }
             

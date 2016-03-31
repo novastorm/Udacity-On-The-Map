@@ -11,7 +11,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var debugWithoutNetwork: Bool = true
+    var debugWithoutNetwork: Bool = false
 
     var window: UIWindow?
 

@@ -1,5 +1,5 @@
 //
-//  UdacityParseStudentLocation.swift
+//  StudentLocation.swift
 //  On the Map
 //
 //  Created by Adland Lee on 3/28/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UdacityParseStudentLocation {
+struct StudentLocation {
     
     typealias ObjectIdType = String
     typealias UniqueKeyType = String
@@ -49,13 +49,13 @@ struct UdacityParseStudentLocation {
         updatedAt = formatter.dateFromString((dictionary[UdacityParseClient.JSONResponseKeys.UpdatedAt] as? String)!)
     }
     
-    static func StutdentLocationListFromResults(results: [[String:AnyObject]]) -> [UdacityParseStudentLocation] {
+    static func ListFromResults(results: [[String:AnyObject]]) -> [StudentLocation] {
         
-        var studentLocationList = [UdacityParseStudentLocation]()
+        var studentLocationList = [StudentLocation]()
         
         // iterate through array of dictionaries, each Movie is a dictionary
         for result in results {
-            studentLocationList.append(UdacityParseStudentLocation(dictionary: result))
+            studentLocationList.append(StudentLocation(dictionary: result))
         }
         
         return studentLocationList
@@ -64,8 +64,8 @@ struct UdacityParseStudentLocation {
 
 // MARK: - UdacityParseStudentLocation: Equatable
 
-extension UdacityParseStudentLocation: Equatable {}
+extension StudentLocation: Equatable {}
 
-func ==(lhs: UdacityParseStudentLocation, rhs: UdacityParseStudentLocation) -> Bool {
+func ==(lhs: StudentLocation, rhs: StudentLocation) -> Bool {
     return lhs.objectId == rhs.objectId
 }

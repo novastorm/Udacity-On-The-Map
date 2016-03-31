@@ -22,6 +22,15 @@ class MapTabBarController: UITabBarController {
     
     @IBAction func refresh(sender: AnyObject) {
         print("refresh")
+        UdacityParseClient.sharedInstance().getStudentLocationList { (studentLocations, error) in
+            
+            guard let studentLocationList = studentLocations else {
+                print(error)
+                return
+            }
+            
+            print(studentLocationList)
+        }
     }
     
     @IBAction func showInformationDetail(sender: AnyObject) {

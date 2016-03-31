@@ -45,9 +45,11 @@ extension UdacityClient {
         taskForPOSTMethod(Resources.Session, parameters: parameters, JSONBody: JSONBody) { (results, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
+            func sendError(errorString:String) {
+                print("+++++")
+                print(errorString)
+                print("+++++")
+                let userInfo = [NSLocalizedDescriptionKey: errorString]
                 completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, error: NSError(domain: "getSession", code: 1, userInfo: userInfo))
             }
             

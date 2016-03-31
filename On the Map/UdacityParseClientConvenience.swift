@@ -13,7 +13,7 @@ import Foundation
 
 extension UdacityParseClient {
 
-    func getStudentLocationList(completionHandler: (studentLocations: [UdacityParseStudentLocation]?, error: NSError?) -> Void) {
+    func getStudentLocationList(completionHandler: (studentLocations: [StudentLocation]?, error: NSError?) -> Void) {
         
         // (1)
         let parameters = [
@@ -42,10 +42,10 @@ extension UdacityParseClient {
                 return
             }
 
-            var studentLocationList = [UdacityParseStudentLocation]()
+            var studentLocationList = [StudentLocation]()
             
             for result in results {
-                studentLocationList.append(UdacityParseStudentLocation(dictionary: result))
+                studentLocationList.append(StudentLocation(dictionary: result))
             }
             
             completionHandler(studentLocations: studentLocationList, error: nil)

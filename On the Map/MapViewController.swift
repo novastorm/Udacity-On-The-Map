@@ -12,12 +12,14 @@ import MapKit
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var studentLocationList = [UdacityParseStudentLocation]()
+    var studentLocationList = [StudentLocation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        startActivity()
         
         UdacityParseClient.sharedInstance().getStudentLocationList { (studentLocations, error) in
             
@@ -27,6 +29,19 @@ class MapViewController: UIViewController {
             }
             
             print(studentLocationList)
+            performUIUpdatesOnMain{
+                self.stopActivity()
+            }
         }
+    }
+    
+    func startActivity() {
+        activityIndicator.alpha = 1
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivity() {
+        activityIndicator.alpha = 0
+        activityIndicator.stopAnimating()
     }
 }

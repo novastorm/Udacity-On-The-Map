@@ -58,6 +58,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if emailField.text!.isEmpty || passwordField.text!.isEmpty {
             print("E-mail and password field required.")
+            showAlert(self, title: "Login Error", message: "E-mail and password field required.")
+
             return
         }
         
@@ -69,23 +71,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             UdacityClient.JSONBodyKeys.Password: password
         ]
         
-        UdacityClient.sharedInstance().checkNetworkConnection(self) { (success, error) in
+        checkNetworkConnection(UdacityClient.Constants.APIHost) { (success, error) in
             
-            if success {
-                UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, errorString) in
-                    performUIUpdatesOnMain {
-                        if success {
-                            self.completeLogin()
-                        }
-                        else {
-                            self.setTextFieldBorderToDanger(self.emailField)
-                            self.setTextFieldBorderToDanger(self.passwordField)
-                        }
+            if !success {
+                print(error!)
+                showNetworkAlert(self)
+                return
+            }
+
+            UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, errorString) in
+                performUIUpdatesOnMain {
+                    if success {
+                        self.completeLogin()
+                    }
+                    else {
+                        self.setTextFieldBorderToDanger(self.emailField)
+                        self.setTextFieldBorderToDanger(self.passwordField)
                     }
                 }
-            }
-            else {
-                print(error!)
             }
         }
     }
