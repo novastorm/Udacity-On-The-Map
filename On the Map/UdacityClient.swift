@@ -8,33 +8,6 @@
 
 import Foundation
 
-enum MFDUdacityClientErrorCodes: Int {
-    case GenericError
-    case NetworkError
-    case GenericRequestError
-    case HTTPUnsucessful
-    case NoData
-}
-
-extension MFDUdacityClientErrorCodes: CustomStringConvertible {
-    var description: String {
-        get {
-            switch self {
-            case .GenericError:
-                return "Generic Error"
-            case .NetworkError:
-                return "Network Error"
-            case .GenericRequestError:
-                return "There was an error with the request."
-            case .HTTPUnsucessful:
-                return "Request returned a status code other that 2XX!"
-            case .NoData:
-                return "No data returned by the request"
-            }
-        }
-    }
-}
-
 class UdacityClient: NSObject {
     
     // MARK: Properties
@@ -82,13 +55,13 @@ class UdacityClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError(MFDUdacityClientErrorCodes.HTTPUnsucessful.rawValue, errorString: MFDUdacityClientErrorCodes.HTTPUnsucessful.description)
+                sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard var data = data else {
-                sendError(MFDUdacityClientErrorCodes.NoData.rawValue, errorString: MFDUdacityClientErrorCodes.NoData.description)
+                sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
@@ -138,13 +111,13 @@ class UdacityClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError(MFDUdacityClientErrorCodes.HTTPUnsucessful.rawValue, errorString: MFDUdacityClientErrorCodes.HTTPUnsucessful.description)
+                sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard var data = data else {
-                sendError(MFDUdacityClientErrorCodes.NoData.rawValue, errorString: MFDUdacityClientErrorCodes.NoData.description)
+                sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
@@ -204,13 +177,13 @@ class UdacityClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError(MFDUdacityClientErrorCodes.HTTPUnsucessful.rawValue, errorString: MFDUdacityClientErrorCodes.HTTPUnsucessful.description)
+                sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard var data = data else {
-                sendError(MFDUdacityClientErrorCodes.NoData.rawValue, errorString: MFDUdacityClientErrorCodes.NoData.description)
+                sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             

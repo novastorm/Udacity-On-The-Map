@@ -25,21 +25,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         // ensure password field is cleared
         passwordField.text = ""
-        print([
-            "source": "viewWillAppear",
-            "accountKey": UdacityClient.sharedInstance().accountKey,
-            "sessionId": UdacityClient.sharedInstance().sessionId
-            ])
+//        print([
+//            "source": "viewWillAppear",
+//            "accountKey": UdacityClient.sharedInstance().accountKey,
+//            "sessionId": UdacityClient.sharedInstance().sessionId
+//            ])
     }
     
     override func viewDidDisappear(animated: Bool) {
         // clear password field
         passwordField.text = ""
-        print([
-            "source": "viewDidDisappear",
-            "accountKey": UdacityClient.sharedInstance().accountKey,
-            "sessionId": UdacityClient.sharedInstance().sessionId
-        ])
+//        print([
+//            "source": "viewDidDisappear",
+//            "accountKey": UdacityClient.sharedInstance().accountKey,
+//            "sessionId": UdacityClient.sharedInstance().sessionId
+//        ])
     }
 
     @IBAction func login(sender: AnyObject) {
@@ -73,11 +73,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         checkNetworkConnection(UdacityClient.Constants.APIHost) { (success, error) in
             
-            if !success {
-                print(error!)
-                showNetworkAlert(self)
-                return
-            }
+//            if !success {
+//                print(error!)
+//                showNetworkAlert(self)
+//                return
+//            }
 
             UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, error) in
                 performUIUpdatesOnMain {
@@ -92,6 +92,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             return
                         }
                         if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                            showAlert(self, title: "Authorization error.", message: "Check username and password" )
                             self.setTextFieldBorderToDanger(self.emailField)
                             self.setTextFieldBorderToDanger(self.passwordField)
                             return

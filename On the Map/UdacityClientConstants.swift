@@ -59,10 +59,4 @@ extension UdacityClient {
         // MARK: User
         static let User = "user"
     }
-    
-    struct Messages {
-        static let LoginError = "Login failed. Invalid authentication information."
-        static let LoginErrorTitle = "Login failed."
-        static let LoginErrorMessage = "Invalid authentication information."
-    }
 }
