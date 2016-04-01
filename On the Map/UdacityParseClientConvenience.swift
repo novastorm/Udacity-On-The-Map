@@ -25,9 +25,9 @@ extension UdacityParseClient {
         taskForGETMethod(Resources.ClassesStudentLocation, parameters: parameters) { (data, error) in
             
             // error function
-            func sendError(error: String) {
+            func sendError(errorString: String) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
+                let userInfo = [NSLocalizedDescriptionKey: errorString]
                 completionHandler(studentLocations: nil, error: NSError(domain: "getStudentLocationList", code: 1, userInfo: userInfo))
             }
             

@@ -45,26 +45,27 @@ extension UdacityClient {
         taskForPOSTMethod(Resources.Session, parameters: parameters, JSONBody: JSONBody) { (results, error) in
             
             // Custom error function
-            func sendError(errorString:String) {
-                print("+++++")
-                print(errorString)
-                print("+++++")
-                let userInfo = [NSLocalizedDescriptionKey: errorString]
-                completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, error: NSError(domain: "getSession", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                
+                completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, error: NSError(domain: "getSession", code: code, userInfo: userInfo))
             }
             
             // (3) Send to completion handler
             if let error = error {
-                sendError("There was an error with the request: \(error)")
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
 
             guard let sessionId = results[JSONResponseKeys.Session]??[JSONResponseKeys.SessionId] as? String else {
-                sendError("Could not find \(JSONResponseKeys.Session):\(JSONResponseKeys.SessionId) in \(results)")
+                sendError(1, errorString: "Could not find \(JSONResponseKeys.Session):\(JSONResponseKeys.SessionId) in \(results)")
                 return
             }
             guard let accountKey = results[JSONResponseKeys.Account]??[JSONResponseKeys.AccountKey] as? String else {
-                sendError("Could not find \(JSONResponseKeys.Account):\(JSONResponseKeys.AccountKey) in \(results)")
+                sendError(2, errorString: "Could not find \(JSONResponseKeys.Account):\(JSONResponseKeys.AccountKey) in \(results)")
                 return
             }
             

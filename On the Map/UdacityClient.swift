@@ -8,6 +8,33 @@
 
 import Foundation
 
+enum MFDUdacityClientErrorCodes: Int {
+    case GenericError
+    case NetworkError
+    case GenericRequestError
+    case HTTPUnsucessful
+    case NoData
+}
+
+extension MFDUdacityClientErrorCodes: CustomStringConvertible {
+    var description: String {
+        get {
+            switch self {
+            case .GenericError:
+                return "Generic Error"
+            case .NetworkError:
+                return "Network Error"
+            case .GenericRequestError:
+                return "There was an error with the request."
+            case .HTTPUnsucessful:
+                return "Request returned a status code other that 2XX!"
+            case .NoData:
+                return "No data returned by the request"
+            }
+        }
+    }
+}
+
 class UdacityClient: NSObject {
     
     // MARK: Properties
@@ -37,27 +64,31 @@ class UdacityClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForGet(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                userInfo["http_response"] = response
+                
+                completionHandlerForGet(results: nil, error: NSError(domain: "taskForGetMethod", code: code, userInfo: userInfo))
             }
             
             // GUARD: Was there an error?
-            guard error == nil else {
-                sendError("There was an error with the request: \(error)")
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!")
+                sendError(MFDUdacityClientErrorCodes.HTTPUnsucessful.rawValue, errorString: MFDUdacityClientErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard var data = data else {
-                sendError("No data returned by the request")
+                sendError(MFDUdacityClientErrorCodes.NoData.rawValue, errorString: MFDUdacityClientErrorCodes.NoData.description)
                 return
             }
             
@@ -90,25 +121,30 @@ class UdacityClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(errorString:String) {
-                let userInfo: [String: AnyObject] = [NSLocalizedDescriptionKey: errorString]
-                completionHandlerForPost(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                userInfo["http_response"] = response
+                
+                completionHandlerForPost(results: nil, error: NSError(domain: "taskForPostMethod", code: code, userInfo: userInfo))
             }
             
-            guard error == nil else {
-                sendError("There was an error with the request. \(error)")
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!\n" + "\(response)")
+                sendError(MFDUdacityClientErrorCodes.HTTPUnsucessful.rawValue, errorString: MFDUdacityClientErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard var data = data else {
-                sendError("No data returned by the request")
+                sendError(MFDUdacityClientErrorCodes.NoData.rawValue, errorString: MFDUdacityClientErrorCodes.NoData.description)
                 return
             }
             
@@ -149,27 +185,32 @@ class UdacityClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForDelete(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                userInfo["http_response"] = response
+                
+                completionHandlerForDelete(results: nil, error: NSError(domain: "taskForDeleteMethod", code: code, userInfo: userInfo))
             }
             
+            
             // GUARD: Was there an error?
-            guard error == nil else {
-                sendError("There was an error with the request: \(error)")
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!")
+                sendError(MFDUdacityClientErrorCodes.HTTPUnsucessful.rawValue, errorString: MFDUdacityClientErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard var data = data else {
-                sendError("No data returned by the request")
+                sendError(MFDUdacityClientErrorCodes.NoData.rawValue, errorString: MFDUdacityClientErrorCodes.NoData.description)
                 return
             }
             

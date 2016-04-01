@@ -79,15 +79,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 return
             }
 
-            UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, errorString) in
+            UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, error) in
                 performUIUpdatesOnMain {
-                    if success {
-                        self.completeLogin()
+                    
+                    if let error = error {
+                        if error.code == NSURLErrorNotConnectedToInternet {
+                            showAlert(self, title: nil, message: error.localizedDescription)
+                            return
+                        }
+                        if error.code == NSURLErrorTimedOut {
+                            showAlert(self, title: nil, message: error.localizedDescription)
+                            return
+                        }
+                        if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                            self.setTextFieldBorderToDanger(self.emailField)
+                            self.setTextFieldBorderToDanger(self.passwordField)
+                            return
+                        }
+
+                        print(error)
+                        return
                     }
-                    else {
-                        self.setTextFieldBorderToDanger(self.emailField)
-                        self.setTextFieldBorderToDanger(self.passwordField)
-                    }
+
+                    self.completeLogin()
                 }
             }
         }
