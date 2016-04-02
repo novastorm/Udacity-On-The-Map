@@ -179,7 +179,7 @@
         <!--Student Map-->
         <scene sceneID="oA7-9U-TJU">
             <objects>
-                <viewController title="Student Map" id="hSE-gW-N31" customClass="MapViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Student Map" id="hSE-gW-N31" customClass="StudentMapViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EWl-tu-DkJ"/>
                         <viewControllerLayoutGuide type="bottom" id="8Lw-MB-5kq"/>
@@ -231,10 +231,10 @@
             </objects>
             <point key="canvasLocation" x="1149" y="476"/>
         </scene>
-        <!--Map Tab Bar Controller-->
+        <!--Student Tab Bar Controller-->
         <scene sceneID="4bU-3s-PIW">
             <objects>
-                <tabBarController title="Map Tab Bar Controller" id="9Ec-88-yfE" customClass="MapTabBarController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController title="Student Tab Bar Controller" id="9Ec-88-yfE" customClass="StudentTabBarController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="On the Map" id="taA-1y-qXD">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="tPr-Lk-7Fo">
                             <connections>

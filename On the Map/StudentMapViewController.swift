@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  StudentMapViewController.swift
 //  On the Map
 //
 //  Created by Adland Lee on 3/26/16.
@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class StudentMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

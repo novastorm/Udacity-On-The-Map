@@ -1,5 +1,5 @@
 //
-//  MapTabBarController.swift
+//  StudentTabBarController.swift
 //  On the Map
 //
 //  Created by Adland Lee on 3/26/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MapTabBarController: UITabBarController {
+class StudentTabBarController: UITabBarController {
     
     @IBAction func logout(sender: AnyObject) {
         UdacityClient.sharedInstance().logoutSession { (success, error) in
@@ -23,6 +23,19 @@ class MapTabBarController: UITabBarController {
     @IBAction func refresh(sender: AnyObject) {
         print("refresh")
         UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
+            
+//            let vc = self.curre
+//            
+            if let error = error {
+                if error.code == NSURLErrorNotConnectedToInternet {
+                    showAlert(self, title: nil, message: error.localizedDescription)
+                    return
+                }
+                if error.code == NSURLErrorTimedOut {
+                    showAlert(self, title: nil, message: error.localizedDescription)
+                    return
+                }
+            }
             
             guard let studentInformationList = studentInformationList else {
                 print(error)
