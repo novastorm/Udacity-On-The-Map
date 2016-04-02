@@ -25,11 +25,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         // ensure password field is cleared
         passwordField.text = ""
-//        print([
-//            "source": "viewWillAppear",
-//            "accountKey": UdacityClient.sharedInstance().accountKey,
-//            "sessionId": UdacityClient.sharedInstance().sessionId
-//            ])
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -43,11 +38,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidDisappear(animated: Bool) {
         // clear password field
         passwordField.text = ""
-//        print([
-//            "source": "viewDidDisappear",
-//            "accountKey": UdacityClient.sharedInstance().accountKey,
-//            "sessionId": UdacityClient.sharedInstance().sessionId
-//        ])
     }
 
     @IBAction func login(sender: AnyObject) {

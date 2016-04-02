@@ -14,15 +14,7 @@ class UdacityParseClient: NSObject {
     var session = NSURLSession.sharedSession()
     
     // Configuration Object
-//    var config = UdacityParseConfig()
-    
-    // Authentication State
-    var applicationId: String? = nil
-    var ApiKey: String? = nil
-    
-    override init() {
-        super.init()
-    }
+    // var config = UdacityParseConfig()
     
     // MARK: GET
     func taskForGETMethod(resource: String, parameters inputParameters: [String:AnyObject], completionHandlerForGet: (results: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
@@ -39,26 +31,31 @@ class UdacityParseClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(errorString:String) {
-                let userInfo = [NSLocalizedDescriptionKey: errorString]
-                completionHandlerForGet(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                userInfo["http_response"] = response
+                
+                completionHandlerForGet(results: nil, error: NSError(domain: "taskForGetMethod", code: code, userInfo: userInfo))
             }
             
             // GUARD: Was there an error?
-            if let _ = error {
-                sendError("There was an error with the request:")
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!")
+                sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard let data = data else {
-                sendError("No data returned by the request")
+                sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
@@ -90,27 +87,31 @@ class UdacityParseClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPost(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                userInfo["http_response"] = response
+                
+                completionHandlerForPost(results: nil, error: NSError(domain: "taskForPostMethod", code: code, userInfo: userInfo))
             }
             
             // GUARD: Was there an error?
-            guard error == nil else {
-                sendError("There was an error with the request: \(error)")
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!\n" + "\(response)")
+                sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard let data = data else {
-                sendError("No data returned by the request")
+                sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
@@ -142,27 +143,31 @@ class UdacityParseClient: NSObject {
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPost(results: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                userInfo["http_response"] = response
+                
+                completionHandlerForPost(results: nil, error: NSError(domain: "taskForPostMethod", code: code, userInfo: userInfo))
             }
             
             // GUARD: Was there an error?
-            guard error == nil else {
-                sendError("There was an error with the request: \(error)")
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                sendError("Request returned a status code other that 2XX!\n" + "\(response)")
+                sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
             
             // GUARD: Was any data returned?
             guard let data = data else {
-                sendError("No data returned by the request")
+                sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             

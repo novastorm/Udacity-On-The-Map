@@ -20,8 +20,14 @@ class UdacityClient: NSObject {
     var sessionId: String? = nil
     var accountKey: String? = nil
     
-    override init() {
-        super.init()
+    /*
+     Special Note on Udacity JSON Responses
+     
+     FOR ALL RESPONSES FROM THE UDACITY API, YOU WILL NEED TO SKIP THE FIRST 5 CHARACTERS OF THE RESPONSE.
+     These characters are used for security purposes. In the examples, you will see that we subset the response data in order to skip over them.
+     */
+    private func trimSecurityfrom(data: NSData) -> NSData {
+        return data.subdataWithRange(NSMakeRange(5, data.length - 5))
     }
     
     // MARK: GET
@@ -60,15 +66,13 @@ class UdacityClient: NSObject {
             }
             
             // GUARD: Was any data returned?
-            guard var data = data else {
+            guard let data = data else {
                 sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
             // (5) Parse and (6) use data with completion handler
-            data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGet)
+            self.convertDataWithCompletionHandler(self.trimSecurityfrom(data), completionHandlerForConvertData: completionHandlerForGet)
         }
         
         // (7) Start request
@@ -104,6 +108,7 @@ class UdacityClient: NSObject {
                 completionHandlerForPost(results: nil, error: NSError(domain: "taskForPostMethod", code: code, userInfo: userInfo))
             }
             
+            // Check for error
             if let error = error {
                 sendError(error.code, errorString: error.localizedDescription)
                 return
@@ -116,15 +121,13 @@ class UdacityClient: NSObject {
             }
             
             // GUARD: Was any data returned?
-            guard var data = data else {
+            guard let data = data else {
                 sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
             // (5) Parse and (6) use data with completion handler
-            data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPost)
+            self.convertDataWithCompletionHandler(self.trimSecurityfrom(data), completionHandlerForConvertData: completionHandlerForPost)
         }
         
         // (7) Start request
@@ -182,15 +185,13 @@ class UdacityClient: NSObject {
             }
             
             // GUARD: Was any data returned?
-            guard var data = data else {
+            guard let data = data else {
                 sendError(ErrorCodes.NoData.rawValue, errorString: ErrorCodes.NoData.description)
                 return
             }
             
             // (5) Parse and (6) use data with completion handler
-            data = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForDelete)
+            self.convertDataWithCompletionHandler(self.trimSecurityfrom(data), completionHandlerForConvertData: completionHandlerForDelete)
         }
         
         // (7) Start request

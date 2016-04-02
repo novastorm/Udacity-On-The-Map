@@ -24,7 +24,6 @@ func showAlert(vc: UIViewController, title: String?, message: String?) {
 }
 
 func showNetworkAlert(vc: UIViewController) {
-    let NetworkError = "Network unreachable. Check network connection."
     let NetworkErrorTitle = "Network unreachable."
     let NetworkErrorMessage = "Check network connection"
     
@@ -41,9 +40,6 @@ func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool
     catch {
         print("Cannot create Reachability")
     }
-    
-//    print("reachability status: \(reachability?.currentReachabilityStatus)")
-//    print("reachable: \(reachability?.isReachable())")
     
     guard let reachable = reachability?.isReachable() where reachable else {
         // Debug without network

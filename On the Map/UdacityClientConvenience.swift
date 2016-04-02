@@ -13,7 +13,7 @@ import Foundation
 
 extension UdacityClient {
     
-    // MARK: - Authentication (GET) Methods)
+    // MARK: - Authentication Methods
     
     func authenticateWithParameters(inputParameters: [String: AnyObject], completionHandlerForAuth: (success: Bool, error: NSError?) -> Void) {
         
@@ -111,7 +111,7 @@ extension UdacityClient {
     
     // MARK: - GET Convenience Methods
     
-    func getUserById(userId: String, completionHandler: (result: UdacityUser?, error: NSError?) -> Void) {
+    func getAccountById(userId: String, completionHandler: (result: Account?, error: NSError?) -> Void) {
         
         // (1) Specify parameters
         let parameters = [String: AnyObject]()
@@ -126,7 +126,7 @@ extension UdacityClient {
                 return
             }
 
-            guard let user = results[JSONResponseKeys.User] as? UdacityUser else {
+            guard let user = results[JSONResponseKeys.User] as? Account else {
                 print("Could not find \(JSONResponseKeys.User) in \(results)")
                 completionHandler(result: nil, error: error)
                 return
