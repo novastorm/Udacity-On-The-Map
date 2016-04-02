@@ -32,6 +32,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //            ])
     }
     
+    override func viewDidAppear(animated: Bool) {
+        checkNetworkConnection(nil) { (success, error) in
+            if !success {
+                showAlert(self, title: "No Connection", message: "Internet connection required for use.")
+            }
+        }
+    }
+    
     override func viewDidDisappear(animated: Bool) {
         // clear password field
         passwordField.text = ""
@@ -71,43 +79,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             UdacityClient.JSONBodyKeys.Password: password
         ]
         
-        checkNetworkConnection(UdacityClient.Constants.APIHost) { (success, error) in
-            
-//            if !success {
-//                print(error!)
-//                showNetworkAlert(self)
-//                return
-//            }
-
-            UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, error) in
-                performUIUpdatesOnMain {
-                    
-                    if let error = error {
-                        if error.code == NSURLErrorNotConnectedToInternet {
-                            showAlert(self, title: nil, message: error.localizedDescription)
-                            return
-                        }
-                        if error.code == NSURLErrorTimedOut {
-                            showAlert(self, title: nil, message: error.localizedDescription)
-                            return
-                        }
-                        if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                            showAlert(self, title: "Authorization error.", message: "Check username and password" )
-                            self.setTextFieldBorderToDanger(self.emailField)
-                            self.setTextFieldBorderToDanger(self.passwordField)
-                            return
-                        }
-
-                        print(error)
+        UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, error) in
+            performUIUpdatesOnMain {
+                
+                if let error = error {
+                    if error.code == NSURLErrorNotConnectedToInternet {
+                        showAlert(self, title: nil, message: error.localizedDescription)
                         return
                     }
-
-                    self.completeLogin()
+                    if error.code == NSURLErrorTimedOut {
+                        showAlert(self, title: nil, message: error.localizedDescription)
+                        return
+                    }
+                    if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                        showAlert(self, title: "Authorization error.", message: "Check username and password" )
+                        self.setTextFieldBorderToDanger(self.emailField)
+                        self.setTextFieldBorderToDanger(self.passwordField)
+                        return
+                    }
+                    
+                    print(error)
+                    return
                 }
+                
+                self.completeLogin()
             }
         }
     }
-    
+
     func textFieldDidBeginEditing(textField: UITextField) {
         setTextFieldBorderToDefault(textField)
     }

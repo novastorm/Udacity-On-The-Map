@@ -10,10 +10,6 @@ import Foundation
 import Reachability
 import UIKit
 
-let NetworkError = "Network unreachable. Check network connection."
-let NetworkErrorTitle = "Network unreachable."
-let NetworkErrorMessage = "Check network connection"
-
 
 func showAlert(vc: UIViewController, title: String?, message: String?) {
     performUIUpdatesOnMain { 
@@ -28,10 +24,14 @@ func showAlert(vc: UIViewController, title: String?, message: String?) {
 }
 
 func showNetworkAlert(vc: UIViewController) {
+    let NetworkError = "Network unreachable. Check network connection."
+    let NetworkErrorTitle = "Network unreachable."
+    let NetworkErrorMessage = "Check network connection"
+    
     showAlert(vc, title: NetworkErrorTitle, message: NetworkErrorMessage)
 }
 
-func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool, error: String?) -> Void) {
+func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool, error: NSError?) -> Void) {
     
     var reachability: Reachability?
     
@@ -52,7 +52,11 @@ func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool
             return
         }
         
-        completionHandler(success: false, error: NetworkError)
+        let userInfo: [String:AnyObject] = [
+            NSLocalizedDescriptionKey: "Network not reachable"
+        ]
+        
+        completionHandler(success: false, error: NSError(domain: "checkNetworkConnection", code: 1, userInfo: userInfo))
         return
     }
     
