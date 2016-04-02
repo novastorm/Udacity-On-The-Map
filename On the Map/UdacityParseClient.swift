@@ -16,6 +16,8 @@ class UdacityParseClient: NSObject {
     // Configuration Object
     // var config = UdacityParseConfig()
     
+    var studentInformationList = [StudentInformation]()
+    
     // MARK: GET
     func taskForGETMethod(resource: String, parameters inputParameters: [String:AnyObject], completionHandlerForGet: (results: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
         

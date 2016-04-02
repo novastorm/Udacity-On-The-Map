@@ -14,21 +14,23 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var studentLocationList = [StudentLocation]()
+    var studentInformationList: [StudentInformation] {
+        return UdacityParseClient.sharedInstance().studentInformationList
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         startActivity()
         
-        UdacityParseClient.sharedInstance().getStudentLocationList { (studentLocations, error) in
+        UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
             
-            guard let studentLocationList = studentLocations else {
+            guard let studentInformationList = studentInformationList else {
                 print(error)
                 return
             }
             
-            print(studentLocationList)
+            print(studentInformationList)
             performUIUpdatesOnMain{
                 self.stopActivity()
             }

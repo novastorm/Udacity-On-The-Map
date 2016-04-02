@@ -14,8 +14,7 @@ import Foundation
 extension UdacityParseClient {
 
     // MARK: - GET Convenience Methods
-
-    func getStudentLocationList(completionHandler: (studentLocations: [StudentLocation]?, error: NSError?) -> Void) {
+    func getStudentInformationList(completionHandler: (studentInformationList: [StudentInformation]?, error: NSError?) -> Void) {
         
         // (1)
         let parameters = [
@@ -27,30 +26,35 @@ extension UdacityParseClient {
         taskForGETMethod(Resources.ClassesStudentLocation, parameters: parameters) { (data, error) in
             
             // error function
-            func sendError(errorString: String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: errorString]
-                completionHandler(studentLocations: nil, error: NSError(domain: "getStudentLocationList", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                
+                completionHandler(studentInformationList: nil, error: NSError(domain: "getStudentInformationList", code: code, userInfo: userInfo))
             }
             
             // (3)
             if let error = error {
-                sendError("There was an error with the request \(error)")
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
-            guard let results = data[JSONResponseKeys.Results] as? [[String:AnyObject]] else {
-                sendError("Could not find \(JSONResponseKeys.Results) in \(data)")
+            guard let responseResults = data[JSONResponseKeys.Results] as? [[String:AnyObject]] else {
+                sendError(1, errorString: "Could not find \(JSONResponseKeys.Results) in \(data)")
                 return
             }
 
-            var studentLocationList = [StudentLocation]()
+            var studentInformationList = [StudentInformation]()
             
-            for result in results {
-                studentLocationList.append(StudentLocation(dictionary: result))
+            for record in responseResults {
+                studentInformationList.append(StudentInformation(dictionary: record))
             }
             
-            completionHandler(studentLocations: studentLocationList, error: nil)
+            self.studentInformationList = studentInformationList
+            
+            completionHandler(studentInformationList: studentInformationList, error: nil)
         }
     }
     
