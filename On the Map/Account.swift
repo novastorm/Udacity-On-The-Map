@@ -1,5 +1,5 @@
 //
-//  UdacityUser.swift
+//  Account.swift
 //  On the Map
 //
 //  Created by Adland Lee on 3/24/16.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct UdacityUser {
+struct Account {
     
 }

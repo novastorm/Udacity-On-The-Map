@@ -17,7 +17,7 @@
 		3E17659C1CA4A78A009BB886 /* UdacityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */; };
 		3E17659E1CA4ABD7009BB886 /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */; };
 		3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */; };
-		3E1765A21CA4FD80009BB886 /* UdacityUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A11CA4FD80009BB886 /* UdacityUser.swift */; };
+		3E1765A21CA4FD80009BB886 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A11CA4FD80009BB886 /* Account.swift */; };
 		3E1765A41CA5C302009BB886 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A31CA5C302009BB886 /* GCDBlackBox.swift */; };
 		3E1765A71CA5EEAD009BB886 /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1765A51CA5EDF2009BB886 /* Reachability.framework */; };
 		3E2004D51CA9E9DA001B61FA /* UdacityParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2004D41CA9E9DA001B61FA /* UdacityParseClient.swift */; };
@@ -57,7 +57,7 @@
 		3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConfig.swift; sourceTree = "<group>"; };
 		3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientConstants.swift; sourceTree = "<group>"; };
 		3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientConvenience.swift; sourceTree = "<group>"; };
-		3E1765A11CA4FD80009BB886 /* UdacityUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityUser.swift; sourceTree = "<group>"; };
+		3E1765A11CA4FD80009BB886 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		3E1765A31CA5C302009BB886 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		3E1765A51CA5EDF2009BB886 /* Reachability.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reachability.framework; path = Carthage/Build/iOS/Reachability.framework; sourceTree = "<group>"; };
 		3E2004D41CA9E9DA001B61FA /* UdacityParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseClient.swift; sourceTree = "<group>"; };
@@ -143,6 +143,7 @@
 			children = (
 				3E2004DA1CAA205A001B61FA /* StudentLocation.swift */,
 				3EBA85011CAF760D00F11EF9 /* StudentInformation.swift */,
+				3E1765A11CA4FD80009BB886 /* Account.swift */,
 				3E1765961CA4A68D009BB886 /* Clients */,
 			);
 			name = Model;
@@ -164,7 +165,6 @@
 				3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */,
 				3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */,
 				3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */,
-				3E1765A11CA4FD80009BB886 /* UdacityUser.swift */,
 				3EBA84FF1CAF3F1000F11EF9 /* UdacityClientErrorCodes.swift */,
 			);
 			name = Udacity;
@@ -310,7 +310,7 @@
 				3E1765A41CA5C302009BB886 /* GCDBlackBox.swift in Sources */,
 				3E1765781CA48632009BB886 /* LoginViewController.swift in Sources */,
 				3E2004D71CA9EA1B001B61FA /* UdacityParseClientConstants.swift in Sources */,
-				3E1765A21CA4FD80009BB886 /* UdacityUser.swift in Sources */,
+				3E1765A21CA4FD80009BB886 /* Account.swift in Sources */,
 				3E2004D51CA9E9DA001B61FA /* UdacityParseClient.swift in Sources */,
 				3E17659E1CA4ABD7009BB886 /* UdacityClientConstants.swift in Sources */,
 				3EBA85021CAF760D00F11EF9 /* StudentInformation.swift in Sources */,
