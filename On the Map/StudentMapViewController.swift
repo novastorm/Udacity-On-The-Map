@@ -56,7 +56,9 @@ class StudentMapViewController: UIViewController {
             annotations.append(annotation)
         }
 
-        performUIUpdatesOnMain { 
+        performUIUpdatesOnMain {
+            
+            // mapView updates need to happen on main queue
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.mapView.addAnnotations(annotations)
         }
