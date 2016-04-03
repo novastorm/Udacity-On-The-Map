@@ -25,16 +25,35 @@ class StudentMapViewController: UIViewController {
         
         UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
             
-            guard let studentInformationList = studentInformationList else {
-                print(error)
-                return
-            }
-            
-            print(studentInformationList)
             performUIUpdatesOnMain{
+                self.updateLocations()
                 self.stopActivity()
             }
         }
+    }
+    
+    func updateLocations() {
+        var annotations = [MKPointAnnotation]()
+
+        for student in studentInformationList {
+            let lat = CLLocationDegrees(student.latitude!)
+            let lon = CLLocationDegrees(student.longitude!)
+            
+            let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            
+            let first = student.firstName!
+            let last = student.lastName!
+            let mediaURL = student.mediaURL
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coord
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            
+            annotations.append(annotation)
+        }
+        
+        mapView.addAnnotations(annotations)
     }
     
     func startActivity() {

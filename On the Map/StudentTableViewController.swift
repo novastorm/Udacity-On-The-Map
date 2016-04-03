@@ -10,6 +10,13 @@ import UIKit
 
 class StudentTableViewController: UITableViewController {
     
+//    var studentInformationList: [StudentInformation] {
+//        get {
+//            return UdacityParseClient.sharedInstance().studentInformationList
+//        }
+//    }
+
+    // simplify the declaration of a read-only computed property by removing the get keyword and its braces
     var studentInformationList: [StudentInformation] {
         return UdacityParseClient.sharedInstance().studentInformationList
     }
@@ -30,11 +37,16 @@ class StudentTableViewController: UITableViewController {
         
         cell.imageView?.image = UIImage(named: "marker pin")
         cell.textLabel?.text = "\(record.firstName!) \(record.lastName!)"
+        cell.detailTextLabel?.text = "\(record.createdAt!) \(record.updatedAt!)"
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let vc = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationDetailView")
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationDetailView") as! StudentDetailViewController
+        
+        vc.student = studentInformationList[indexPath.row]
+        
+        presentViewController(vc, animated: true, completion: nil)
     }
 }

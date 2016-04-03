@@ -7,3 +7,19 @@
 //
 
 import Foundation
+import UIKit
+
+class StudentDetailViewController: UIViewController {
+    
+    var student: StudentInformation!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print(student)
+    }
+
+    @IBAction func cancel(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}

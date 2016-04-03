@@ -13,6 +13,7 @@ class StudentTabBarController: UITabBarController {
     @IBAction func logout(sender: AnyObject) {
         UdacityClient.sharedInstance().logoutSession { (success, error) in
             if success {
+                UdacityParseClient.sharedInstance().studentInformationList.removeAll()
                 performUIUpdatesOnMain{
                     self.dismissViewControllerAnimated(true) {}
                 }
@@ -37,12 +38,12 @@ class StudentTabBarController: UITabBarController {
                 }
             }
             
-            guard let studentInformationList = studentInformationList else {
-                print(error)
-                return
-            }
-            
-            print(studentInformationList)
+//            guard let studentInformationList = studentInformationList else {
+//                print(error)
+//                return
+//            }
+//            
+//            print(studentInformationList)
         }
     }
     
