@@ -21,6 +21,10 @@ class StudentTableViewController: UITableViewController {
         return UdacityParseClient.sharedInstance().studentInformationList
     }
     
+    override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateStudentInformation), name: StudentInformationUpdatedNotification, object: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
@@ -48,5 +52,13 @@ class StudentTableViewController: UITableViewController {
         vc.student = studentInformationList[indexPath.row]
         
         presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func updateStudentInformation() {
+        self.tableView.reloadData()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

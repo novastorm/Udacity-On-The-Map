@@ -23,16 +23,19 @@ class StudentMapViewController: UIViewController {
         
         startActivity()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
+        
         UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
             
             performUIUpdatesOnMain{
-                self.updateLocations()
                 self.stopActivity()
             }
         }
     }
     
     func updateLocations() {
+        print(studentInformationList)
+        print("updateLocations")
         var annotations = [MKPointAnnotation]()
 
         for student in studentInformationList {
@@ -52,8 +55,11 @@ class StudentMapViewController: UIViewController {
             
             annotations.append(annotation)
         }
-        
-        mapView.addAnnotations(annotations)
+
+        performUIUpdatesOnMain { 
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.mapView.addAnnotations(annotations)
+        }
     }
     
     func startActivity() {
@@ -64,5 +70,9 @@ class StudentMapViewController: UIViewController {
     func stopActivity() {
         activityIndicator.alpha = 0
         activityIndicator.stopAnimating()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

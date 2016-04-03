@@ -8,6 +8,8 @@
 
 import Foundation
 
+let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
+
 class UdacityParseClient: NSObject {
     
     // MARK: Properties
