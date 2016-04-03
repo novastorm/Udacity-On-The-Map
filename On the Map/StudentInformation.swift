@@ -43,6 +43,7 @@ struct StudentInformation {
         firstName = dictionary[UdacityParseClient.JSONResponseKeys.FirstName] as? FirstNameType
         lastName = dictionary[UdacityParseClient.JSONResponseKeys.LastName] as? LastNameType
         mapString = dictionary[UdacityParseClient.JSONResponseKeys.MapString] as? MapStringType
+        mediaURL = dictionary[UdacityParseClient.JSONResponseKeys.MediaURL] as? MediaURLType
         latitude = dictionary[UdacityParseClient.JSONResponseKeys.Latitude] as? LatitudeType
         longitude = dictionary[UdacityParseClient.JSONResponseKeys.Longitude] as? LongitudeType
         createdAt = formatter.dateFromString((dictionary[UdacityParseClient.JSONResponseKeys.CreatedAt] as? String)!)
