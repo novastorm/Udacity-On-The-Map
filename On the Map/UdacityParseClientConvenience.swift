@@ -19,8 +19,7 @@ extension UdacityParseClient {
         // (1)
         let parameters = [
             ParameterKeys.Limit: 100,
-            ParameterKeys.Order: "createdAt"
-//            ParameterKeys.Order: "-updatedAt"
+            ParameterKeys.Order: "-updatedAt"
         ]
         
         // (2)

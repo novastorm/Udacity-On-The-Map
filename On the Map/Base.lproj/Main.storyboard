@@ -167,7 +167,7 @@
                             <constraint firstItem="0Ob-j9-7D0" firstAttribute="centerX" secondItem="e6I-6S-m1R" secondAttribute="centerX" id="zlM-wb-ZeU"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Map" id="f1V-JA-IFA"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map_location" id="f1V-JA-IFA"/>
                     <connections>
                         <outlet property="activityIndicator" destination="0Ob-j9-7D0" id="bgm-3y-TYe"/>
                         <outlet property="mapView" destination="3at-aQ-DZE" id="gbJ-Dx-Fy9"/>
@@ -216,7 +216,7 @@
                             <outlet property="delegate" destination="dcj-kN-coJ" id="keI-E6-hhO"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="List" id="HZb-MC-M17"/>
+                    <tabBarItem key="tabBarItem" title="List" image="list" id="HZb-MC-M17"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lDU-Ew-A7a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -308,6 +308,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="list" width="22" height="22"/>
+        <image name="map_location" width="22" height="22"/>
         <image name="marker pin" width="22" height="22"/>
         <image name="udacity_mark" width="868" height="734"/>
     </resources>

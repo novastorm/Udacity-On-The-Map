@@ -21,6 +21,8 @@ class StudentMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.delegate = self
+        
         startActivity()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
@@ -34,8 +36,7 @@ class StudentMapViewController: UIViewController {
     }
     
     func updateLocations() {
-        print(studentInformationList)
-        print("updateLocations")
+
         var annotations = [MKPointAnnotation]()
 
         for student in studentInformationList {
@@ -76,5 +77,36 @@ class StudentMapViewController: UIViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+}
+
+extension StudentMapViewController: MKMapViewDelegate {
+    
+    // add info icon to annotation
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let identifier = "pin"
+        var view: MKPinAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
+            dequeuedView.annotation = annotation
+            view = dequeuedView
+        }
+        else {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+        }
+        return view
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if let url = NSURL(string: (view.annotation?.subtitle)!!) {
+            UIApplication.sharedApplication().openURL(url)
+        }
+        else {
+            showAlert(self, title: nil, message: "Invalid URL")
+        }
     }
 }

@@ -19,6 +19,10 @@ func showAlert(vc: UIViewController, title: String?, message: String?) {
         let okAction = UIAlertAction(title: "ok", style: .Default, handler: nil)
         ac.addAction(okAction)
         
+        // workaround for this error:
+        // Snapshotting a view that has not been rendered results in an empty snapshot. Ensure your view has been rendered at least once before snapshotting or snapshot after screen updates.
+        ac.view.layoutIfNeeded()
+        // ***
         vc.presentViewController(ac, animated: true, completion: nil)
     }
 }
