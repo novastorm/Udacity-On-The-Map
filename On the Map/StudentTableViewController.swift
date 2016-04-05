@@ -41,17 +41,20 @@ class StudentTableViewController: UITableViewController {
         
         cell.imageView?.image = UIImage(named: "marker pin")
         cell.textLabel?.text = "\(record.firstName!) \(record.lastName!)"
-        cell.detailTextLabel?.text = "\(record.createdAt!) \(record.updatedAt!)"
+        cell.detailTextLabel?.text = "\(record.mediaURL)"
         
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let vc = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationDetailView") as! StudentDetailViewController
-        
-        vc.student = studentInformationList[indexPath.row]
-        
-        presentViewController(vc, animated: true, completion: nil)
+
+        let student = studentInformationList[indexPath.row]
+        let url = NSURL(string: student.mediaURL!)
+            
+        guard UIApplication.sharedApplication().openURL(url!) else {
+            showAlert(self, title: "Invalid URL", message: student.mediaURL!)
+            return
+        }
     }
     
     func updateStudentInformation() {
