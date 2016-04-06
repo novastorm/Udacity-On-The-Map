@@ -11,9 +11,9 @@ import Foundation
 struct Account {
     
     struct Keys {
-        static let firstName = UdacityClient.UserKeys.FirstName
-        static let lastName = UdacityClient.UserKeys.LastName
-        static let key = UdacityClient.UserKeys.Key
+        static let FirstName = UdacityClient.UserKeys.FirstName
+        static let LastName = UdacityClient.UserKeys.LastName
+        static let Key = UdacityClient.UserKeys.Key
     }
     
     typealias FirstNameType = String
@@ -26,9 +26,9 @@ struct Account {
 
     init(dictionary: [String:AnyObject]) {
         
-        firstName = dictionary[Keys.firstName] as? FirstNameType
-        lastName = dictionary[Keys.lastName] as? LastNameType
-        key = dictionary[Keys.key] as? KeyType
+        firstName = dictionary[Keys.FirstName] as? FirstNameType
+        lastName = dictionary[Keys.LastName] as? LastNameType
+        key = dictionary[Keys.Key] as? KeyType
     }
     
 }

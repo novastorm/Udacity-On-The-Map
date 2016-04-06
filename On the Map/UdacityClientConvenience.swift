@@ -21,12 +21,21 @@ extension UdacityClient {
         
         // Chain completion handlers for each request to run in sequence
         self.getSession(parameters) { (success, sessionId, accountKey, error) in
-            if success {
-                self.sessionId = sessionId
-                self.accountKey = accountKey
+            if !success {
+                completionHandlerForAuth(success: success, error: error)
+                return
             }
             
-            completionHandlerForAuth(success: success, error: error)
+            self.sessionId = sessionId
+            self.accountKey = accountKey
+            
+            self.getAccountById(self.accountKey!) { (success, account, error) in
+                if success {
+                    self.account = account
+                }
+                
+                completionHandlerForAuth(success: success, error: error)
+            }
         }
     }
     
@@ -111,28 +120,32 @@ extension UdacityClient {
     
     // MARK: - GET Convenience Methods
     
-    func getAccountById(userId: String, completionHandler: (result: Account?, error: NSError?) -> Void) {
+    func getAccountById(userId: String, completionHandler: (success: Bool, account: Account?, error: NSError?) -> Void) {
         
         // (1) Specify parameters
         let parameters = [String: AnyObject]()
         
+        let resource = subtituteKeyInMethod(Resources.UserId, key: URLKeys.UserId, value: UdacityClient.sharedInstance().accountKey!)!
+        
         // (2) Make the request
-        taskForGETMethod(Resources.Session, parameters: parameters) { (results, error) in
+        taskForGETMethod(resource, parameters: parameters) { (results, error) in
             
             // (3) Send to completion handler
             if let error = error {
                 print(error)
-                completionHandler(result: nil, error: error)
+                completionHandler(success: false, account: nil, error: error)
                 return
             }
 
-            guard let user = results[JSONResponseKeys.User] as? Account else {
+            guard let user = results[JSONResponseKeys.User] as? [String: AnyObject] else {
                 print("Could not find \(JSONResponseKeys.User) in \(results)")
-                completionHandler(result: nil, error: error)
+                completionHandler(success: false, account: nil, error: error)
                 return
             }
             
-            completionHandler(result: user, error: nil)
+            let account = Account(dictionary: user)
+            
+            completionHandler(success: true, account: account, error: nil)
         }
     }
     
