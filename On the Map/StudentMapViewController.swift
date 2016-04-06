@@ -21,7 +21,7 @@ class StudentMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
+//        mapView.delegate = self
         
         startActivity()
         

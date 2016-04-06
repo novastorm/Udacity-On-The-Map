@@ -29,7 +29,7 @@
 		3EBA85021CAF760D00F11EF9 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA85011CAF760D00F11EF9 /* StudentInformation.swift */; };
 		3EBA85061CAF7B5600F11EF9 /* UdacityParseClientErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA85051CAF7B5600F11EF9 /* UdacityParseClientErrorCodes.swift */; };
 		3EBA85081CB0335400F11EF9 /* StudentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA85071CB0335400F11EF9 /* StudentTableViewController.swift */; };
-		3EBA850C1CB0ACD400F11EF9 /* StudentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA850B1CB0ACD400F11EF9 /* StudentDetailViewController.swift */; };
+		3EBA850C1CB0ACD400F11EF9 /* StudentInformationPosting1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA850B1CB0ACD400F11EF9 /* StudentInformationPosting1ViewController.swift */; };
 		3EDAAE7D1CA7337D0096FADF /* StudentTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDAAE7C1CA7337D0096FADF /* StudentTabBarController.swift */; };
 		3EDAAE7F1CA742F40096FADF /* StudentMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDAAE7E1CA742F40096FADF /* StudentMapViewController.swift */; };
 /* End PBXBuildFile section */
@@ -71,7 +71,7 @@
 		3EBA85011CAF760D00F11EF9 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		3EBA85051CAF7B5600F11EF9 /* UdacityParseClientErrorCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseClientErrorCodes.swift; sourceTree = "<group>"; };
 		3EBA85071CB0335400F11EF9 /* StudentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentTableViewController.swift; sourceTree = "<group>"; };
-		3EBA850B1CB0ACD400F11EF9 /* StudentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentDetailViewController.swift; sourceTree = "<group>"; };
+		3EBA850B1CB0ACD400F11EF9 /* StudentInformationPosting1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationPosting1ViewController.swift; sourceTree = "<group>"; };
 		3EDAAE7C1CA7337D0096FADF /* StudentTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentTabBarController.swift; sourceTree = "<group>"; };
 		3EDAAE7E1CA742F40096FADF /* StudentMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,7 +123,7 @@
 				3E2004E21CAC926C001B61FA /* ErrorCodes.swift */,
 				3E1765951CA4A67C009BB886 /* Model */,
 				3E1765771CA48632009BB886 /* LoginViewController.swift */,
-				3EBA850B1CB0ACD400F11EF9 /* StudentDetailViewController.swift */,
+				3EBA850B1CB0ACD400F11EF9 /* StudentInformationPosting1ViewController.swift */,
 				3EDAAE7E1CA742F40096FADF /* StudentMapViewController.swift */,
 				3EBA85071CB0335400F11EF9 /* StudentTableViewController.swift */,
 				3EDAAE7C1CA7337D0096FADF /* StudentTabBarController.swift */,
@@ -328,7 +328,7 @@
 				3EBA85001CAF3F1000F11EF9 /* UdacityClientErrorCodes.swift in Sources */,
 				3E2004E31CAC926C001B61FA /* ErrorCodes.swift in Sources */,
 				3E17659A1CA4A6E0009BB886 /* UdacityClient.swift in Sources */,
-				3EBA850C1CB0ACD400F11EF9 /* StudentDetailViewController.swift in Sources */,
+				3EBA850C1CB0ACD400F11EF9 /* StudentInformationPosting1ViewController.swift in Sources */,
 				3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */,
 				3E17659C1CA4A78A009BB886 /* UdacityConfig.swift in Sources */,
 				3EBA85081CB0335400F11EF9 /* StudentTableViewController.swift in Sources */,

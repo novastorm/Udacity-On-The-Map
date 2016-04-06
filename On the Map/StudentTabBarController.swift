@@ -25,8 +25,6 @@ class StudentTabBarController: UITabBarController {
         print("refresh")
         UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
             
-//            let vc = self.curre
-//            
             if let error = error {
                 if error.code == NSURLErrorNotConnectedToInternet {
                     showAlert(self, title: nil, message: error.localizedDescription)
@@ -37,17 +35,6 @@ class StudentTabBarController: UITabBarController {
                     return
                 }
             }
-            
-//            guard let studentInformationList = studentInformationList else {
-//                print(error)
-//                return
-//            }
-//            
-//            print(studentInformationList)
         }
-    }
-    
-    @IBAction func showInformationDetail(sender: AnyObject) {
-        print("showInformationDetail")
     }
 }

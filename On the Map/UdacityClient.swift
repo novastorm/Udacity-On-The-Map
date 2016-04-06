@@ -20,6 +20,8 @@ class UdacityClient: NSObject {
     var sessionId: String? = nil
     var accountKey: String? = nil
     
+    var account: Account? = nil
+    
     /*
      Special Note on Udacity JSON Responses
      

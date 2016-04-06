@@ -49,6 +49,7 @@ class StudentTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         let student = studentInformationList[indexPath.row]
+        print(student)
         let url = NSURL(string: student.mediaURL!)
             
         guard UIApplication.sharedApplication().openURL(url!) else {

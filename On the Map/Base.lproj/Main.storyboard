@@ -152,6 +152,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3at-aQ-DZE">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <connections>
+                                    <outlet property="delegate" destination="hSE-gW-N31" id="FL4-Ef-06u"/>
+                                </connections>
                             </mapView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0Ob-j9-7D0">
                                 <rect key="frame" x="290" y="265" width="20" height="20"/>
@@ -222,10 +225,10 @@
             </objects>
             <point key="canvasLocation" x="2647" y="898"/>
         </scene>
-        <!--Student Information Detail-->
+        <!--Student Information Posting 1-->
         <scene sceneID="KUG-fm-hmr">
             <objects>
-                <viewController storyboardIdentifier="StudentInformationDetailView" title="Student Information Detail" id="wXm-Vz-Upg" customClass="StudentDetailViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StudentInformationDetailView" title="Student Information Posting 1" id="wXm-Vz-Upg" customClass="StudentInformationPosting1ViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mRp-gi-s56"/>
                         <viewControllerLayoutGuide type="bottom" id="paa-T1-mar"/>
@@ -241,17 +244,64 @@
                                     <action selector="cancel:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="Opq-5a-6Y0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN9-5b-r2s">
+                                <rect key="frame" x="245" y="530" width="111" height="30"/>
+                                <state key="normal" title="Find on the Map"/>
+                                <connections>
+                                    <action selector="findOnTheMap:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="8Dy-yu-Qjz"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-pB-79S">
+                                <rect key="frame" x="20" y="211" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tv9-RB-bLq">
+                                <rect key="frame" x="20" y="64" width="560" height="103"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Where are you " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ue-4Z-ofy">
+                                        <rect key="frame" x="203" y="0.0" width="155" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="studying" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjO-il-THL">
+                                        <rect key="frame" x="234" y="37" width="93" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xYY-Ck-kgm">
+                                        <rect key="frame" x="244" y="74" width="73" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="m0n-pB-79S" firstAttribute="centerX" secondItem="Aj1-JG-Hde" secondAttribute="centerX" id="3O6-iG-Kmf"/>
+                            <constraint firstItem="cN9-5b-r2s" firstAttribute="centerX" secondItem="Aj1-JG-Hde" secondAttribute="centerX" id="3Sg-jk-Wi3"/>
+                            <constraint firstItem="tv9-RB-bLq" firstAttribute="leading" secondItem="Aj1-JG-Hde" secondAttribute="leadingMargin" id="67Q-dC-e6P"/>
+                            <constraint firstItem="m0n-pB-79S" firstAttribute="top" secondItem="tv9-RB-bLq" secondAttribute="bottom" constant="44" id="CQJ-qs-fVC"/>
+                            <constraint firstItem="paa-T1-mar" firstAttribute="top" secondItem="cN9-5b-r2s" secondAttribute="bottom" constant="40" id="FdV-sF-RlL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="m0n-pB-79S" secondAttribute="trailing" id="NMH-qZ-HCm"/>
+                            <constraint firstItem="m0n-pB-79S" firstAttribute="leading" secondItem="Aj1-JG-Hde" secondAttribute="leadingMargin" id="RZZ-rK-SkP"/>
                             <constraint firstItem="PIJ-fI-x3H" firstAttribute="trailing" secondItem="Aj1-JG-Hde" secondAttribute="trailingMargin" id="feM-sF-wBW"/>
+                            <constraint firstItem="tv9-RB-bLq" firstAttribute="top" secondItem="mRp-gi-s56" secondAttribute="bottom" constant="44" id="lSF-BR-HEM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tv9-RB-bLq" secondAttribute="trailing" id="m6s-Hh-raZ"/>
                             <constraint firstItem="PIJ-fI-x3H" firstAttribute="top" secondItem="mRp-gi-s56" secondAttribute="bottom" constant="8" id="qrJ-qz-3Th"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="locationTextField" destination="m0n-pB-79S" id="cK1-Lv-Ctj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FLz-Eo-HVf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3466" y="517"/>
+            <point key="canvasLocation" x="3358" y="144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="h80-SV-I1X">
@@ -287,7 +337,7 @@
                             </barButtonItem>
                             <barButtonItem image="marker pin" id="wfE-gQ-IVi" userLabel="Info Detail">
                                 <connections>
-                                    <action selector="showInformationDetail:" destination="9Ec-88-yfE" id="mMJ-sF-SR6"/>
+                                    <segue destination="wXm-Vz-Upg" kind="presentation" identifier="ShowStudentInformationPosting1" id="MlY-fp-INl"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
