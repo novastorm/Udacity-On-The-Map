@@ -225,10 +225,68 @@
             </objects>
             <point key="canvasLocation" x="2647" y="898"/>
         </scene>
-        <!--Student Information Posting 1-->
+        <!--Student Information URL View Controller-->
+        <scene sceneID="75t-z5-azu">
+            <objects>
+                <viewController storyboardIdentifier="StudentInformationURLViewController" id="ntS-VU-QEC" customClass="StudentInformationURLViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Yy-2M-Mcs"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yi4-YH-7ih"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SFd-fS-GsN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shH-8m-YPG">
+                                <rect key="frame" x="532" y="20" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="ntS-VU-QEC" eventType="touchUpInside" id="2Fx-9n-hKB"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vam-cp-SlH">
+                                <rect key="frame" x="20" y="64" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a5R-fl-pTX">
+                                <rect key="frame" x="20" y="113" width="561" height="467"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE">
+                                <rect key="frame" x="276" y="521" width="49" height="30"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submit:" destination="ntS-VU-QEC" eventType="touchUpInside" id="hvL-HM-7iq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="shH-8m-YPG" firstAttribute="top" secondItem="2Yy-2M-Mcs" secondAttribute="bottom" id="Adb-ah-64C"/>
+                            <constraint firstItem="shH-8m-YPG" firstAttribute="trailing" secondItem="SFd-fS-GsN" secondAttribute="trailingMargin" id="IEs-Mc-xTX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="a5R-fl-pTX" secondAttribute="trailing" id="KDD-fc-q6z"/>
+                            <constraint firstItem="sJa-x8-RNE" firstAttribute="centerX" secondItem="SFd-fS-GsN" secondAttribute="centerX" id="SMA-3B-yHr"/>
+                            <constraint firstItem="sJa-x8-RNE" firstAttribute="top" secondItem="a5R-fl-pTX" secondAttribute="bottom" constant="-59" id="UcF-MO-nnl"/>
+                            <constraint firstItem="a5R-fl-pTX" firstAttribute="leading" secondItem="SFd-fS-GsN" secondAttribute="leadingMargin" id="cNO-I2-smf"/>
+                            <constraint firstItem="vam-cp-SlH" firstAttribute="trailing" secondItem="SFd-fS-GsN" secondAttribute="trailingMargin" id="ef7-rh-GbE"/>
+                            <constraint firstItem="Yi4-YH-7ih" firstAttribute="top" secondItem="a5R-fl-pTX" secondAttribute="bottom" constant="20" id="f7N-Zo-Dcc"/>
+                            <constraint firstItem="vam-cp-SlH" firstAttribute="top" secondItem="2Yy-2M-Mcs" secondAttribute="bottom" constant="44" id="hIx-u1-h7E"/>
+                            <constraint firstItem="vam-cp-SlH" firstAttribute="leading" secondItem="SFd-fS-GsN" secondAttribute="leadingMargin" id="wul-Jh-5Te"/>
+                            <constraint firstItem="a5R-fl-pTX" firstAttribute="top" secondItem="vam-cp-SlH" secondAttribute="bottom" constant="19" id="zZe-xC-wwa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="URLTextField" destination="vam-cp-SlH" id="zCB-uF-5xe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bv3-3a-jAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3358" y="898"/>
+        </scene>
+        <!--Student Information Location View Controller-->
         <scene sceneID="KUG-fm-hmr">
             <objects>
-                <viewController storyboardIdentifier="StudentInformationDetailView" title="Student Information Posting 1" id="wXm-Vz-Upg" customClass="StudentInformationPosting1ViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wXm-Vz-Upg" customClass="StudentInformationLocationViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mRp-gi-s56"/>
                         <viewControllerLayoutGuide type="bottom" id="paa-T1-mar"/>
@@ -237,20 +295,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIJ-fI-x3H">
-                                <rect key="frame" x="532" y="28" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancel:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="Opq-5a-6Y0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN9-5b-r2s">
-                                <rect key="frame" x="245" y="530" width="111" height="30"/>
-                                <state key="normal" title="Find on the Map"/>
-                                <connections>
-                                    <action selector="findOnTheMap:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="8Dy-yu-Qjz"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-pB-79S">
                                 <rect key="frame" x="20" y="211" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -279,6 +323,20 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIJ-fI-x3H">
+                                <rect key="frame" x="532" y="20" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="Opq-5a-6Y0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN9-5b-r2s">
+                                <rect key="frame" x="245" y="530" width="111" height="30"/>
+                                <state key="normal" title="Find on the Map"/>
+                                <connections>
+                                    <action selector="findOnTheMap:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="8Dy-yu-Qjz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -292,7 +350,7 @@
                             <constraint firstItem="PIJ-fI-x3H" firstAttribute="trailing" secondItem="Aj1-JG-Hde" secondAttribute="trailingMargin" id="feM-sF-wBW"/>
                             <constraint firstItem="tv9-RB-bLq" firstAttribute="top" secondItem="mRp-gi-s56" secondAttribute="bottom" constant="44" id="lSF-BR-HEM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tv9-RB-bLq" secondAttribute="trailing" id="m6s-Hh-raZ"/>
-                            <constraint firstItem="PIJ-fI-x3H" firstAttribute="top" secondItem="mRp-gi-s56" secondAttribute="bottom" constant="8" id="qrJ-qz-3Th"/>
+                            <constraint firstItem="PIJ-fI-x3H" firstAttribute="top" secondItem="mRp-gi-s56" secondAttribute="bottom" id="qrJ-qz-3Th"/>
                         </constraints>
                     </view>
                     <connections>
@@ -337,7 +395,7 @@
                             </barButtonItem>
                             <barButtonItem image="marker pin" id="wfE-gQ-IVi" userLabel="Info Detail">
                                 <connections>
-                                    <segue destination="wXm-Vz-Upg" kind="presentation" identifier="ShowStudentInformationPosting1" id="MlY-fp-INl"/>
+                                    <segue destination="wXm-Vz-Upg" kind="presentation" identifier="ShowStudentInformationLocation" id="MlY-fp-INl"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
