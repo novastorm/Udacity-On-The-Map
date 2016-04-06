@@ -59,4 +59,11 @@ extension UdacityClient {
         // MARK: User
         static let User = "user"
     }
+    
+    // MARK: JSON Response Keys
+    struct UserKeys {
+        static let FirstName = "first_name"
+        static let LastName = "last_name"
+        static let Key = "key"
+    }
 }
