@@ -21,8 +21,6 @@ class StudentMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        mapView.delegate = self
-        
         startActivity()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
