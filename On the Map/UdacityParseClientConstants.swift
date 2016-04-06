@@ -64,7 +64,10 @@ extension UdacityParseClient {
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
         static let Results = "results"
-        
+    }
+    
+    // MARK: Results Keys
+    struct ResultsKeys {
         static let ObjectId = "objectId"
         static let UniqueKey = "uniqueKey"
         static let FirstName = "firstName"
@@ -74,6 +77,6 @@ extension UdacityParseClient {
         static let Latitude = "latitude"
         static let Longitude = "longitude"
         static let CreatedAt = "createdAt"
-        static let UpdatedAt = "updatedAt"    
+        static let UpdatedAt = "updatedAt"
     }
 }
