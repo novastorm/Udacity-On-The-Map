@@ -100,11 +100,22 @@ extension StudentMapViewController: MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if let url = NSURL(string: (view.annotation?.subtitle)!!) {
-            UIApplication.sharedApplication().openURL(url)
+        
+        guard let components = NSURLComponents(string: (view.annotation?.subtitle)!!) else {
+            showAlert(self, title: nil, message: "Invalid URL components")
+            return
         }
-        else {
+
+        components.scheme = components.scheme ?? "http"
+
+        guard let url = components.URL else {
             showAlert(self, title: nil, message: "Invalid URL")
+            return
+        }
+
+        guard UIApplication.sharedApplication().openURL(url) else {
+            showAlert(self, title: "Cannot open URL", message: "\(url)")
+            return
         }
     }
 }

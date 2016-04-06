@@ -49,11 +49,21 @@ class StudentTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         let student = studentInformationList[indexPath.row]
-        print(student)
-        let url = NSURL(string: student.mediaURL!)
+        
+        guard let components = NSURLComponents(string: student.mediaURL!) else {
+            showAlert(self, title: "Invalid URL components", message: student.mediaURL)
+            return
+        }
+
+        components.scheme = components.scheme ?? "http"
+
+        guard let url = components.URL else {
+            showAlert(self, title: "Invalid URL", message: student.mediaURL)
+            return
+        }
             
-        guard UIApplication.sharedApplication().openURL(url!) else {
-            showAlert(self, title: "Invalid URL", message: student.mediaURL!)
+        guard UIApplication.sharedApplication().openURL(url) else {
+            showAlert(self, title: "Cannot open URL", message: "\(url)")
             return
         }
     }
