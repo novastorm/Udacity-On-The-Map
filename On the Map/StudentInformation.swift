@@ -10,6 +10,19 @@ import Foundation
 
 struct StudentInformation {
     
+    struct Keys {
+        static let ObjectId = UdacityParseClient.ResultsKeys.ObjectId
+        static let UniqueKey = UdacityParseClient.ResultsKeys.UniqueKey
+        static let FirstName = UdacityParseClient.ResultsKeys.FirstName
+        static let LastName = UdacityParseClient.ResultsKeys.LastName
+        static let MapString = UdacityParseClient.ResultsKeys.MapString
+        static let MediaURL = UdacityParseClient.ResultsKeys.MediaURL
+        static let Latitude = UdacityParseClient.ResultsKeys.Latitude
+        static let Longitude = UdacityParseClient.ResultsKeys.Longitude
+        static let CreatedAt = UdacityParseClient.ResultsKeys.CreatedAt
+        static let UpdatedAt = UdacityParseClient.ResultsKeys.UpdatedAt
+    }
+    
     typealias ObjectIdType = String
     typealias UniqueKeyType = String
     typealias FirstNameType = String
@@ -41,18 +54,18 @@ struct StudentInformation {
         return formatter.dateFromString(string)
     }
     
-    init(dictionary: [String:AnyObject]) {
+    init(dictionary: [String:AnyObject?]) {
         
-        objectId = dictionary[UdacityParseClient.JSONResponseKeys.ObjectId] as? ObjectIdType
-        uniqueKey = dictionary[UdacityParseClient.JSONResponseKeys.UniqueKey] as? UniqueKeyType
-        firstName = dictionary[UdacityParseClient.JSONResponseKeys.FirstName] as? FirstNameType
-        lastName = dictionary[UdacityParseClient.JSONResponseKeys.LastName] as? LastNameType
-        mapString = dictionary[UdacityParseClient.JSONResponseKeys.MapString] as? MapStringType
-        mediaURL = dictionary[UdacityParseClient.JSONResponseKeys.MediaURL] as? MediaURLType
-        latitude = dictionary[UdacityParseClient.JSONResponseKeys.Latitude] as? LatitudeType
-        longitude = dictionary[UdacityParseClient.JSONResponseKeys.Longitude] as? LongitudeType
-        createdAt = StudentInformation.dateFromString((dictionary[UdacityParseClient.JSONResponseKeys.CreatedAt] as? String)!)
-        updatedAt = StudentInformation.dateFromString((dictionary[UdacityParseClient.JSONResponseKeys.UpdatedAt] as? String)!)
+        objectId = dictionary[Keys.ObjectId] as? ObjectIdType
+        uniqueKey = dictionary[Keys.UniqueKey] as? UniqueKeyType
+        firstName = dictionary[Keys.FirstName] as? FirstNameType
+        lastName = dictionary[Keys.LastName] as? LastNameType
+        mapString = dictionary[Keys.MapString] as? MapStringType
+        mediaURL = dictionary[Keys.MediaURL] as? MediaURLType
+        latitude = dictionary[Keys.Latitude] as? LatitudeType
+        longitude = dictionary[Keys.Longitude] as? LongitudeType
+        createdAt = StudentInformation.dateFromString((dictionary[Keys.CreatedAt] as? String)!)
+        updatedAt = StudentInformation.dateFromString((dictionary[Keys.UpdatedAt] as? String)!)
     }
     
     static func ListFromResults(results: [[String:AnyObject]]) -> [StudentInformation] {
