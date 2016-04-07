@@ -244,13 +244,13 @@
                                     <action selector="cancel:" destination="ntS-VU-QEC" eventType="touchUpInside" id="2Fx-9n-hKB"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vam-cp-SlH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Info URL" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vam-cp-SlH">
                                 <rect key="frame" x="20" y="64" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a5R-fl-pTX">
-                                <rect key="frame" x="20" y="113" width="561" height="467"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a5R-fl-pTX">
+                                <rect key="frame" x="20" y="113" width="560" height="467"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE">
                                 <rect key="frame" x="276" y="521" width="49" height="30"/>
@@ -276,7 +276,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="URLTextField" destination="vam-cp-SlH" id="zCB-uF-5xe"/>
+                        <outlet property="URLTextField" destination="vam-cp-SlH" id="emc-4d-fdV"/>
+                        <outlet property="mapView" destination="a5R-fl-pTX" id="jkp-7j-ang"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bv3-3a-jAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -295,7 +296,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-pB-79S">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-pB-79S">
                                 <rect key="frame" x="20" y="211" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
