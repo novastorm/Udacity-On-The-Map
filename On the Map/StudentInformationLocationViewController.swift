@@ -1,5 +1,5 @@
 //
-//  StudentInformationURLViewController.swift
+//  StudentInformationLocationViewController.swift
 //  On the Map
 //
 //  Created by Adland Lee on 4/2/16.
@@ -9,19 +9,37 @@
 import Foundation
 import UIKit
 
-class StudentInformationURLViewController: UIViewController {
+class StudentInformationLocationViewController: UIViewController {
     
     var account: Account!
     
-    @IBOutlet weak var URLTextField: UITextField!
+    @IBOutlet weak var locationTextField: UITextField!
     
     @IBAction func cancel(sender: AnyObject) {
-        print("StudentInformationURLViewController::cancel")
         dismissViewControllerAnimated(true) {}
     }
     
-    @IBAction func submit(sender: AnyObject) {
-        print("StudentInformationURLViewController::submit")
-        print("URI: \(URLTextField.text)")
+    @IBAction func findOnTheMap(sender: AnyObject) {
+        print("findOnTheMap")
+        print("location \(locationTextField.text)")
+
+        guard let storyboard = storyboard else {
+            print("Unable to get storyboard")
+            return
+        }
+        
+        guard let destinationVC = storyboard.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController else {
+            print("View not found")
+            return
+        }
+        
+        guard let presentingVC = self.presentingViewController else {
+            print("Unable to get presenting view controller")
+            return
+        }
+
+        dismissViewControllerAnimated(false) {
+            presentingVC.presentViewController(destinationVC, animated: true) {}
+        }
     }
 }
