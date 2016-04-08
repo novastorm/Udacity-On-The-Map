@@ -269,5 +269,6 @@ class UdacityClient: NSObject {
     
     func logout () {
         accountKey = nil
+        account = nil
     }
 }

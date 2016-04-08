@@ -120,7 +120,7 @@
                                 </variation>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MBb-5d-vkG" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="246" y="526" width="108" height="30"/>
+                                <rect key="frame" x="20" y="526" width="560" height="30"/>
                                 <state key="normal" title="Facebook Login"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="1VJ-4g-KfE"/>
@@ -132,6 +132,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="MBb-5d-vkG" secondAttribute="trailing" id="Eqn-SH-5Yx"/>
                             <constraint firstItem="XSJ-P8-i42" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="JfH-Qc-OFN"/>
                             <constraint firstItem="XSJ-P8-i42" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Jm4-sh-Jdk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XSJ-P8-i42" secondAttribute="trailing" id="NyT-Uw-xLy"/>
@@ -139,6 +140,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MBb-5d-vkG" secondAttribute="bottom" constant="44" id="YGh-xb-vK2"/>
                             <constraint firstItem="MBb-5d-vkG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jtg-9Z-2Xi"/>
                             <constraint firstItem="iU5-mh-8nM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="u5F-93-YHu"/>
+                            <constraint firstItem="MBb-5d-vkG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="xde-rO-pg6"/>
                         </constraints>
                     </view>
                     <connections>
@@ -433,9 +435,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="list" width="22" height="22"/>
-        <image name="map_location" width="22" height="22"/>
-        <image name="marker pin" width="22" height="22"/>
-        <image name="udacity_mark" width="868" height="734"/>
+        <image name="list" width="32" height="32"/>
+        <image name="map_location" width="32" height="32"/>
+        <image name="marker pin" width="32" height="32"/>
+        <image name="udacity_mark" width="434" height="367"/>
     </resources>
 </document>
