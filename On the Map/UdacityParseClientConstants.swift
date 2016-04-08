@@ -59,6 +59,13 @@ extension UdacityParseClient {
     
     // MARK: JSON Request Keys
     struct JSONParameterKeys {
+        static let UniqueKey = "uniqueKey"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let MapString = "mapString"
+        static let MediaURL = "mediaURL"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
     }
     
     // MARK: JSON Response Keys
