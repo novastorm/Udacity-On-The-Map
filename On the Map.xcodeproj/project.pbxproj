@@ -28,7 +28,6 @@
 		3E51CB701CB7640900DB12F9 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 3E51CB6F1CB7640900DB12F9 /* README.md */; };
 		3E51CB7A1CB7755300DB12F9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E51CB771CB7755300DB12F9 /* FBSDKCoreKit.framework */; };
 		3E51CB7B1CB7755300DB12F9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E51CB781CB7755300DB12F9 /* FBSDKLoginKit.framework */; };
-		3E51CB7C1CB7755300DB12F9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E51CB791CB7755300DB12F9 /* FBSDKShareKit.framework */; };
 		3EBA85001CAF3F1000F11EF9 /* UdacityClientErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA84FF1CAF3F1000F11EF9 /* UdacityClientErrorCodes.swift */; };
 		3EBA85021CAF760D00F11EF9 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA85011CAF760D00F11EF9 /* StudentInformation.swift */; };
 		3EBA85061CAF7B5600F11EF9 /* UdacityParseClientErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA85051CAF7B5600F11EF9 /* UdacityParseClientErrorCodes.swift */; };
@@ -75,7 +74,6 @@
 		3E51CB6F1CB7640900DB12F9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3E51CB771CB7755300DB12F9 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Frameworks/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		3E51CB781CB7755300DB12F9 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Frameworks/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		3E51CB791CB7755300DB12F9 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Frameworks/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		3EBA84FF1CAF3F1000F11EF9 /* UdacityClientErrorCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientErrorCodes.swift; sourceTree = "<group>"; };
 		3EBA85011CAF760D00F11EF9 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		3EBA85051CAF7B5600F11EF9 /* UdacityParseClientErrorCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityParseClientErrorCodes.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				3E1765A71CA5EEAD009BB886 /* Reachability.framework in Frameworks */,
 				3E51CB7A1CB7755300DB12F9 /* FBSDKCoreKit.framework in Frameworks */,
 				3E51CB7B1CB7755300DB12F9 /* FBSDKLoginKit.framework in Frameworks */,
-				3E51CB7C1CB7755300DB12F9 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +203,6 @@
 			children = (
 				3E51CB771CB7755300DB12F9 /* FBSDKCoreKit.framework */,
 				3E51CB781CB7755300DB12F9 /* FBSDKLoginKit.framework */,
-				3E51CB791CB7755300DB12F9 /* FBSDKShareKit.framework */,
 				3E1765A51CA5EDF2009BB886 /* Reachability.framework */,
 			);
 			name = Resources;
