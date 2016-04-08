@@ -16,12 +16,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.emailField.delegate = self
         self.passwordField.delegate = self
+        
+        stopActivity(activityIndicator)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,6 +49,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func udacityLogin(sender: AnyObject) {
         
         view.endEditing(true)
+        startActivity(activityIndicator)
         
         if emailField.text!.isEmpty {
             // Change email field to red
@@ -58,9 +62,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         if emailField.text!.isEmpty || passwordField.text!.isEmpty {
-            print("E-mail and password field required.")
-            showAlert(self, title: "Login Error", message: "E-mail and password field required.")
-
+            displayError("E-mail and password field required.", title: "Login Error")
             return
         }
         
@@ -72,15 +74,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 if let error = error {
                     if error.code == NSURLErrorNotConnectedToInternet {
-                        showAlert(self, title: nil, message: error.localizedDescription)
+                        self.displayError(error.localizedDescription)
                         return
                     }
                     if error.code == NSURLErrorTimedOut {
-                        showAlert(self, title: nil, message: error.localizedDescription)
+                        self.displayError(error.localizedDescription)
                         return
                     }
                     if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                        showAlert(self, title: "Authorization error.", message: "Check username and password" )
+                        self.displayError("Check username and password", title: "Authorization error.")
                         self.setTextFieldBorderToDanger(self.emailField)
                         self.setTextFieldBorderToDanger(self.passwordField)
                         return
@@ -119,13 +121,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
+        stopActivity(activityIndicator)
         presentViewController(controller, animated: true, completion: nil)
     }
     
-    private func displayError(errorString: String?) {
-        if let errorString = errorString {
-            print("error: \(errorString)")
-        }
+    private func displayError(message: String?, title: String? = nil) {
+        showAlert(self, title: title, message: message)
+        stopActivity(activityIndicator)
     }
 }
 
@@ -133,36 +135,36 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 // MARK: Facebook Login
 extension LoginViewController: FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        print("facebook login")
+
+        view.endEditing(true)
+        startActivity(activityIndicator)
+        
         if let _ = error {
-            showAlert(self, title: "Login Fail", message: error.description)
+            displayError(error.localizedDescription, title: "Login Failed")
             return
         }
         if ((result == nil) || result.isCancelled) {
-            showAlert(self, title: "Login Cancelled", message: "User cancelled login")
+            displayError("User cancelled login", title: "Login Cancelled")
             return
         }
 
         guard let tokenString = result.token.tokenString else {
-            showAlert(self, title: "Token not found", message: "No token in results")
+            displayError("No token in results", title: "Token not found")
             return
         }
-        print(tokenString)
+        
         UdacityClient.sharedInstance().authenticateViaFacebook(tokenString) { (success, error) in
             performUIUpdatesOnMain {
                 
                 if let error = error {
                     if error.code == NSURLErrorNotConnectedToInternet {
-                        showAlert(self, title: nil, message: error.localizedDescription)
-                        return
+                        self.displayError(error.localizedDescription)
                     }
                     if error.code == NSURLErrorTimedOut {
-                        showAlert(self, title: nil, message: error.localizedDescription)
-                        return
+                        self.displayError(error.localizedDescription)
                     }
                     if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                        showAlert(self, title: "Authorization error.", message: "Check facebook account is linked" )
-                        return
+                        self.displayError("Check facebook account is linked", title: "Authorization error." )
                     }
                     
                     print(error)
