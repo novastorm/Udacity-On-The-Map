@@ -11,7 +11,7 @@ import Foundation
 import MapKit
 import UIKit
 
-class StudentInformationURLViewController: UIViewController {
+class StudentInformationURLViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var URLTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
@@ -23,6 +23,9 @@ class StudentInformationURLViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+
+        URLTextField.delegate = self
+        
         let annotation = MKPointAnnotation()
         annotation.coordinate = (placemark.location?.coordinate)!
         mapView.addAnnotation(annotation)
@@ -36,12 +39,25 @@ class StudentInformationURLViewController: UIViewController {
     }
     
     @IBAction func submit(sender: AnyObject) {
+        
+        guard let url = URLTextField.text else {
+            showAlert(self, title: nil, message: "Unable to unwrap location string")
+            return
+        }
+        
+        if url.isEmpty {
+            setTextFieldBorderToDanger(URLTextField)
+            showAlert(self, title: "Enter a location", message: "A location is needed to display where you are at the moment.")
+            return
+        }
+
+        
         let studentInformation = StudentInformation(dictionary: [
             StudentInformation.Keys.UniqueKey: account!.key!,
             StudentInformation.Keys.FirstName: account!.firstName!,
             StudentInformation.Keys.LastName: account!.lastName!,
             StudentInformation.Keys.MapString: placemark.name!,
-            StudentInformation.Keys.MediaURL: URLTextField.text!,
+            StudentInformation.Keys.MediaURL: url,
             StudentInformation.Keys.Latitude: (placemark.location?.coordinate.latitude)!,
             StudentInformation.Keys.Longitude: (placemark.location?.coordinate.longitude)!
         ])
@@ -58,5 +74,21 @@ class StudentInformationURLViewController: UIViewController {
 
             self.dismissViewControllerAnimated(true) {}
         }
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        setTextFieldBorderToDefault(textField)
+    }
+    
+    private func setTextFieldBorderToDanger(textField: UITextField) {
+        textField.layer.borderColor = UIColor.redColor().CGColor
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 5.0
+    }
+    
+    private func setTextFieldBorderToDefault(textField: UITextField) {
+        textField.layer.borderColor = nil
+        textField.layer.borderWidth = 0
+        textField.layer.cornerRadius = 5.0
     }
 }
