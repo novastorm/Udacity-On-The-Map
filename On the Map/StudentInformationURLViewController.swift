@@ -23,8 +23,6 @@ class StudentInformationURLViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-//        print(placemark)
-        
         let annotation = MKPointAnnotation()
         annotation.coordinate = (placemark.location?.coordinate)!
         mapView.addAnnotation(annotation)
@@ -34,12 +32,31 @@ class StudentInformationURLViewController: UIViewController {
     }
     
     @IBAction func cancel(sender: AnyObject) {
-        print("StudentInformationURLViewController::cancel")
         dismissViewControllerAnimated(true) {}
     }
     
     @IBAction func submit(sender: AnyObject) {
-        print("StudentInformationURLViewController::submit")
-        print("URI: \(URLTextField.text)")
+        let studentInformation = StudentInformation(dictionary: [
+            StudentInformation.Keys.UniqueKey: account!.key!,
+            StudentInformation.Keys.FirstName: account!.firstName!,
+            StudentInformation.Keys.LastName: account!.lastName!,
+            StudentInformation.Keys.MapString: placemark.name!,
+            StudentInformation.Keys.MediaURL: URLTextField.text!,
+            StudentInformation.Keys.Latitude: (placemark.location?.coordinate.latitude)!,
+            StudentInformation.Keys.Longitude: (placemark.location?.coordinate.longitude)!
+        ])
+        
+        UdacityParseClient.sharedInstance().storeStudentInformation(studentInformation) { (success, error) in
+            if let error = error {
+                showAlert(self, title: nil, message: error.localizedDescription)
+                return
+            }
+            
+            UdacityParseClient.sharedInstance().getStudentInformationList() { (studentInformationList, error) in
+                return
+            }
+
+            self.dismissViewControllerAnimated(true) {}
+        }
     }
 }

@@ -64,8 +64,8 @@ struct StudentInformation {
         mediaURL = dictionary[Keys.MediaURL] as? MediaURLType
         latitude = dictionary[Keys.Latitude] as? LatitudeType
         longitude = dictionary[Keys.Longitude] as? LongitudeType
-        createdAt = StudentInformation.dateFromString((dictionary[Keys.CreatedAt] as? String)!)
-        updatedAt = StudentInformation.dateFromString((dictionary[Keys.UpdatedAt] as? String)!)
+        createdAt = dictionary[Keys.CreatedAt] != nil ? StudentInformation.dateFromString((dictionary[Keys.CreatedAt] as? String)!) : nil
+        updatedAt = dictionary[Keys.UpdatedAt] != nil ? StudentInformation.dateFromString((dictionary[Keys.UpdatedAt] as? String)!) : nil
     }
     
     static func ListFromResults(results: [[String:AnyObject]]) -> [StudentInformation] {

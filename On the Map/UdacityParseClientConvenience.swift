@@ -59,5 +59,43 @@ extension UdacityParseClient {
     }
     
     // MARK: - POST Convenience Methods
+    
+    func storeStudentInformation(student: StudentInformation, completionHandler: (success: Bool, error: NSError?) -> Void) {
+        
+        // 1
+        let parameters = [String:AnyObject]()
+        let JSONBody: [String:AnyObject] = [
+            JSONParameterKeys.UniqueKey: student.uniqueKey!,
+            JSONParameterKeys.FirstName: student.firstName!,
+            JSONParameterKeys.LastName: student.lastName!,
+            JSONParameterKeys.MapString: student.mapString!,
+            JSONParameterKeys.MediaURL: student.mediaURL!,
+            JSONParameterKeys.Latitude: student.latitude!,
+            JSONParameterKeys.Longitude: student.longitude!
+        ]
+        
+        // 2
+        taskForPOSTMethod(Resources.ClassesStudentLocation, parameters: parameters, JSONBody: JSONBody) { (results, error) in
+            
+            // Custom error function
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                
+                completionHandler(success: false, error: NSError(domain: "storeStudentInformation", code: code, userInfo: userInfo))
+            }
+            
+            // (3) Send to completion handler
+            if let error = error {
+                sendError(error.code, errorString: error.localizedDescription)
+                return
+            }
+
+            completionHandler(success: true, error: nil)
+        }
+    }
+    
     // MARK: - DELETE Convenience Methods
 }

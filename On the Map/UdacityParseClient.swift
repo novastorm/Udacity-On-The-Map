@@ -86,7 +86,7 @@ class UdacityParseClient: NSObject {
         request.addValue(Constants.APIKey, forHTTPHeaderField: RequestKeys.RESTAPIKey)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = convertObjectToJSONData(inputJSONBody)
-                
+        
         // (4) Make request
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
@@ -109,6 +109,7 @@ class UdacityParseClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
+                print(response!)
                 sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }

@@ -21,9 +21,6 @@ class StudentInformationLocationViewController: UIViewController {
     }
     
     @IBAction func findOnTheMap(sender: AnyObject) {
-        print("findOnTheMap")
-        print("location \(locationTextField.text)")
-
         guard let addressString = locationTextField.text else {
             showAlert(self, title: nil, message: "Unable to unwrap location string")
             return

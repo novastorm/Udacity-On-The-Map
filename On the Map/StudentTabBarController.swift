@@ -22,7 +22,6 @@ class StudentTabBarController: UITabBarController {
     }
     
     @IBAction func refresh(sender: AnyObject) {
-        print("refresh")
         UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
             
             if let error = error {
