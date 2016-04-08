@@ -41,7 +41,7 @@ class StudentTableViewController: UITableViewController {
         
         cell.imageView?.image = UIImage(named: "marker pin")
         cell.textLabel?.text = "\(record.firstName!) \(record.lastName!)"
-        cell.detailTextLabel?.text = "\(record.mediaURL)"
+        cell.detailTextLabel?.text = "\(record.mediaURL!)"
         
         return cell
     }
