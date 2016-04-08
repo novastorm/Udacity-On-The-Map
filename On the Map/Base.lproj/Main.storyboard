@@ -30,7 +30,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Udacity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3i-vG-YO1">
-                                        <rect key="frame" x="217.5" y="208" width="125" height="20"/>
+                                        <rect key="frame" x="217" y="208" width="125" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="CDg-GN-2EB"/>
                                         </constraints>
@@ -126,17 +126,23 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="1VJ-4g-KfE"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iU5-mh-8nM">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XSJ-P8-i42" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="JfH-Qc-OFN"/>
                             <constraint firstItem="XSJ-P8-i42" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Jm4-sh-Jdk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XSJ-P8-i42" secondAttribute="trailing" id="NyT-Uw-xLy"/>
+                            <constraint firstItem="iU5-mh-8nM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="QtG-VJ-W23"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MBb-5d-vkG" secondAttribute="bottom" constant="44" id="YGh-xb-vK2"/>
                             <constraint firstItem="MBb-5d-vkG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jtg-9Z-2Xi"/>
+                            <constraint firstItem="iU5-mh-8nM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="u5F-93-YHu"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="iU5-mh-8nM" id="oP3-i2-UZs"/>
                         <outlet property="emailField" destination="kSC-RE-uxU" id="AKW-bL-Fhf"/>
                         <outlet property="facebookLoginButton" destination="MBb-5d-vkG" id="Tj8-kB-zLe"/>
                         <outlet property="loginButton" destination="P31-aN-eJy" id="mHs-hw-m3B"/>
