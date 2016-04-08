@@ -114,8 +114,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signUp(sender: AnyObject) {
-        print("signup")
+        let signUpURL = "https://www.udacity.com/account/auth#!/signup"
+        UIApplication.sharedApplication().openURL(NSURL(string: signUpURL)!)
     }
+    
     
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
