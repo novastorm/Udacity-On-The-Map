@@ -6,6 +6,7 @@
 //  Copyright © 2016 Adland Lee. All rights reserved.
 //
 
+import FBSDKLoginKit
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -14,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         // ensure password field is cleared
         passwordField.text = ""
+//        facebookLoginButton
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -40,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.text = ""
     }
 
-    @IBAction func login(sender: AnyObject) {
+    @IBAction func udacityLogin(sender: AnyObject) {
         
         view.endEditing(true)
         
@@ -64,12 +67,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let email = emailField.text!
         let password = passwordField.text!
         
-        let parameters: [String:AnyObject] = [
-            UdacityClient.JSONBodyKeys.Username: email,
-            UdacityClient.JSONBodyKeys.Password: password
-        ]
-        
-        UdacityClient.sharedInstance().authenticateWithParameters(parameters) { (success, error) in
+        UdacityClient.sharedInstance().authenticateViaUdacity(username: email, password: password) { (success, error) in
             performUIUpdatesOnMain {
                 
                 if let error = error {
@@ -131,3 +129,51 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+
+// MARK: Facebook Login
+extension LoginViewController: FBSDKLoginButtonDelegate {
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        print("facebook login")
+        if let _ = error {
+            showAlert(self, title: "Login Fail", message: error.description)
+            return
+        }
+        if ((result == nil) || result.isCancelled) {
+            showAlert(self, title: "Login Cancelled", message: "User cancelled login")
+            return
+        }
+
+        guard let tokenString = result.token.tokenString else {
+            showAlert(self, title: "Token not found", message: "No token in results")
+            return
+        }
+        print(tokenString)
+        UdacityClient.sharedInstance().authenticateViaFacebook(tokenString) { (success, error) in
+            performUIUpdatesOnMain {
+                
+                if let error = error {
+                    if error.code == NSURLErrorNotConnectedToInternet {
+                        showAlert(self, title: nil, message: error.localizedDescription)
+                        return
+                    }
+                    if error.code == NSURLErrorTimedOut {
+                        showAlert(self, title: nil, message: error.localizedDescription)
+                        return
+                    }
+                    if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                        showAlert(self, title: "Authorization error.", message: "Check facebook account is linked" )
+                        return
+                    }
+                    
+                    print(error)
+                    return
+                }
+                
+                self.completeLogin()
+            }
+
+        }
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {}
+}

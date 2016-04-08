@@ -6,8 +6,9 @@
 //  Copyright © 2016 Adland Lee. All rights reserved.
 //
 
-import UIKit
+import FBSDKLoginKit
 import Foundation
+import UIKit
 
 // MARK: UdacityClient (Convenient Resource Methods)
 
@@ -15,12 +16,19 @@ extension UdacityClient {
     
     // MARK: - Authentication Methods
     
-    func authenticateWithParameters(inputParameters: [String: AnyObject], completionHandlerForAuth: (success: Bool, error: NSError?) -> Void) {
+    func authenticateViaUdacity(username username: String, password: String, completionHandlerForAuth: (success: Bool, error: NSError?) -> Void) {
         
-        let parameters = inputParameters
+        let parameters = [String:AnyObject]()
+        let JSONBody = [
+            JSONBodyKeys.Udacity: [
+                JSONBodyKeys.Username: username,
+                JSONBodyKeys.Password: password
+            ]
+        ]
+
         
         // Chain completion handlers for each request to run in sequence
-        self.getSession(parameters) { (success, sessionId, accountKey, error) in
+        self.getSession(parameters, JSONBody: JSONBody) { (success, sessionId, accountKey, error) in
             if !success {
                 completionHandlerForAuth(success: success, error: error)
                 return
@@ -39,16 +47,40 @@ extension UdacityClient {
         }
     }
     
-    private func getSession(inputParameters: [String:AnyObject], completionHandlerForSession: (success: Bool, sessionId: String?, accountKey: String?, error: NSError?) -> Void) {
+    func authenticateViaFacebook(token: String, completionHandlerForAuth: (success: Bool, error: NSError?) -> Void) {
+        
+        let parameters = [String:AnyObject]()
+        let JSONBody = [
+            JSONBodyKeys.FacebookMobile: [
+                JSONBodyKeys.AccessToken: token
+            ]
+        ]
+        
+        
+        // Chain completion handlers for each request to run in sequence
+        self.getSession(parameters, JSONBody: JSONBody) { (success, sessionId, accountKey, error) in
+            if !success {
+                completionHandlerForAuth(success: success, error: error)
+                return
+            }
+            
+            self.sessionId = sessionId
+            self.accountKey = accountKey
+            
+            self.getAccountById(self.accountKey!) { (success, account, error) in
+                if success {
+                    self.account = account
+                }
+                
+                completionHandlerForAuth(success: success, error: error)
+            }
+        }
+    }
+    
+    private func getSession(inputParameters: [String:AnyObject], JSONBody: [String:AnyObject], completionHandlerForSession: (success: Bool, sessionId: String?, accountKey: String?, error: NSError?) -> Void) {
         
         // (1) Specify parameters
         let parameters = [String:AnyObject]()
-        let JSONBody = [
-            "udacity": [
-                JSONBodyKeys.Username: inputParameters[JSONBodyKeys.Username] as! String,
-                JSONBodyKeys.Password: inputParameters[JSONBodyKeys.Password] as! String
-            ]
-        ]
         
         // (2) Make the request
         taskForPOSTMethod(Resources.Session, parameters: parameters, JSONBody: JSONBody) { (results, error) in
@@ -113,9 +145,10 @@ extension UdacityClient {
                 return
             }
             
-            UdacityClient.sharedInstance().clearData()
+            UdacityClient.sharedInstance().logout()
             completionHandler(success: true, error: nil)
         }
+        FBSDKLoginManager().logOut()
     }
     
     // MARK: - GET Convenience Methods

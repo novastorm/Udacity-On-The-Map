@@ -267,7 +267,7 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
     
-    func clearData () {
+    func logout () {
         accountKey = nil
     }
 }
