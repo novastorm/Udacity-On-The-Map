@@ -274,8 +274,11 @@
                                     <outletCollection property="gestureRecognizers" destination="Fda-FA-EAM" appends="YES" id="ZP5-TA-I5C"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE">
-                                <rect key="frame" x="276" y="521" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE" customClass="SubmitInformationButton" customModule="On_the_Map" customModuleProvider="target">
+                                <rect key="frame" x="269" y="521" width="63" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="63" id="jjD-x1-88t"/>
+                                </constraints>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submit:" destination="ntS-VU-QEC" eventType="touchUpInside" id="hvL-HM-7iq"/>
