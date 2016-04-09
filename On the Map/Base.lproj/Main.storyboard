@@ -251,7 +251,7 @@
                         <viewControllerLayoutGuide type="top" id="2Yy-2M-Mcs"/>
                         <viewControllerLayoutGuide type="bottom" id="Yi4-YH-7ih"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SFd-fS-GsN">
+                    <view key="view" contentMode="scaleToFill" id="SFd-fS-GsN" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -269,6 +269,10 @@
                             </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a5R-fl-pTX">
                                 <rect key="frame" x="20" y="113" width="560" height="467"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Fda-FA-EAM" appends="YES" id="ZP5-TA-I5C"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE">
                                 <rect key="frame" x="276" y="521" width="49" height="30"/>
@@ -292,6 +296,9 @@
                             <constraint firstItem="vam-cp-SlH" firstAttribute="leading" secondItem="SFd-fS-GsN" secondAttribute="leadingMargin" id="wul-Jh-5Te"/>
                             <constraint firstItem="a5R-fl-pTX" firstAttribute="top" secondItem="vam-cp-SlH" secondAttribute="bottom" constant="19" id="zZe-xC-wwa"/>
                         </constraints>
+                        <connections>
+                            <action selector="userTappedBackground:" destination="ntS-VU-QEC" eventType="touchDown" id="KID-pd-Ro7"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="URLTextField" destination="vam-cp-SlH" id="emc-4d-fdV"/>
@@ -299,6 +306,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bv3-3a-jAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Fda-FA-EAM">
+                    <connections>
+                        <action selector="userTappedBackground:" destination="ntS-VU-QEC" id="Up3-Uo-6lo"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3358" y="898"/>
         </scene>
