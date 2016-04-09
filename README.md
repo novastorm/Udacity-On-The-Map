@@ -9,7 +9,7 @@ On The Map allows users to share their location and a URL with fellow students. 
 Before building the project please retrieve dependencies with carthage:
 
 ~~~
-carthage upgrade --platform iOS
+carthage bootstrap --platform iOS
 ~~~
 
 The project uses the following frameworks:
