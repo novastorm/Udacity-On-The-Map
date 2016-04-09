@@ -61,6 +61,15 @@ class StudentInformationLocationViewController: UIViewController, UITextFieldDel
     func textFieldDidBeginEditing(textField: UITextField) {
         setTextFieldBorderToDefault(textField)
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @IBAction func userTappedBackground(sender: AnyObject) {
+        view.endEditing(true)
+    }
 
     private func setTextFieldBorderToDanger(textField: UITextField) {
         textField.layer.borderColor = UIColor.redColor().CGColor
