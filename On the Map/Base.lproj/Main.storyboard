@@ -251,7 +251,7 @@
                         <viewControllerLayoutGuide type="top" id="2Yy-2M-Mcs"/>
                         <viewControllerLayoutGuide type="bottom" id="Yi4-YH-7ih"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SFd-fS-GsN">
+                    <view key="view" contentMode="scaleToFill" id="SFd-fS-GsN" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -262,13 +262,17 @@
                                     <action selector="cancel:" destination="ntS-VU-QEC" eventType="touchUpInside" id="2Fx-9n-hKB"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Info URL" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vam-cp-SlH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Share Link" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vam-cp-SlH">
                                 <rect key="frame" x="20" y="64" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a5R-fl-pTX">
                                 <rect key="frame" x="20" y="113" width="560" height="467"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Fda-FA-EAM" appends="YES" id="ZP5-TA-I5C"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE">
                                 <rect key="frame" x="276" y="521" width="49" height="30"/>
@@ -292,6 +296,9 @@
                             <constraint firstItem="vam-cp-SlH" firstAttribute="leading" secondItem="SFd-fS-GsN" secondAttribute="leadingMargin" id="wul-Jh-5Te"/>
                             <constraint firstItem="a5R-fl-pTX" firstAttribute="top" secondItem="vam-cp-SlH" secondAttribute="bottom" constant="19" id="zZe-xC-wwa"/>
                         </constraints>
+                        <connections>
+                            <action selector="userTappedBackground:" destination="ntS-VU-QEC" eventType="touchDown" id="KID-pd-Ro7"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="URLTextField" destination="vam-cp-SlH" id="emc-4d-fdV"/>
@@ -299,6 +306,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bv3-3a-jAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Fda-FA-EAM">
+                    <connections>
+                        <action selector="userTappedBackground:" destination="ntS-VU-QEC" id="Up3-Uo-6lo"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3358" y="898"/>
         </scene>
@@ -310,7 +322,7 @@
                         <viewControllerLayoutGuide type="top" id="mRp-gi-s56"/>
                         <viewControllerLayoutGuide type="bottom" id="paa-T1-mar"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Aj1-JG-Hde">
+                    <view key="view" contentMode="scaleToFill" id="Aj1-JG-Hde" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -318,8 +330,25 @@
                                 <rect key="frame" x="20" y="211" width="560" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="wXm-Vz-Upg" id="LRk-y8-tOp"/>
+                                </connections>
                             </textField>
-                            <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tv9-RB-bLq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIJ-fI-x3H">
+                                <rect key="frame" x="532" y="20" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="Opq-5a-6Y0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN9-5b-r2s">
+                                <rect key="frame" x="245" y="530" width="111" height="30"/>
+                                <state key="normal" title="Find on the Map"/>
+                                <connections>
+                                    <action selector="findOnTheMap:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="8Dy-yu-Qjz"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tv9-RB-bLq">
                                 <rect key="frame" x="20" y="64" width="560" height="103"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Where are you " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ue-4Z-ofy">
@@ -342,20 +371,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIJ-fI-x3H">
-                                <rect key="frame" x="532" y="20" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancel:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="Opq-5a-6Y0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN9-5b-r2s">
-                                <rect key="frame" x="245" y="530" width="111" height="30"/>
-                                <state key="normal" title="Find on the Map"/>
-                                <connections>
-                                    <action selector="findOnTheMap:" destination="wXm-Vz-Upg" eventType="touchUpInside" id="8Dy-yu-Qjz"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -371,6 +386,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="tv9-RB-bLq" secondAttribute="trailing" id="m6s-Hh-raZ"/>
                             <constraint firstItem="PIJ-fI-x3H" firstAttribute="top" secondItem="mRp-gi-s56" secondAttribute="bottom" id="qrJ-qz-3Th"/>
                         </constraints>
+                        <connections>
+                            <action selector="userTappedBackground:" destination="wXm-Vz-Upg" eventType="touchDown" id="Qku-Jf-HLz"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="locationTextField" destination="m0n-pB-79S" id="cK1-Lv-Ctj"/>

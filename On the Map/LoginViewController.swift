@@ -30,7 +30,35 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         // ensure password field is cleared
         passwordField.text = ""
-//        facebookLoginButton
+
+        if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
+            startActivity(activityIndicator)
+            if let tokenString = currentAccessToken.tokenString {
+                UdacityClient.sharedInstance().authenticateViaFacebook(tokenString) { (success, error) in
+                    performUIUpdatesOnMain {
+                        
+                        if let error = error {
+                            if error.code == NSURLErrorNotConnectedToInternet {
+                                self.displayError(error.localizedDescription)
+                            }
+                            if error.code == NSURLErrorTimedOut {
+                                self.displayError(error.localizedDescription)
+                            }
+                            if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
+                                self.displayError("Check facebook account is linked", title: "Authorization error." )
+                                FBSDKLoginManager().logOut()
+                            }
+                            stopActivity(self.activityIndicator)
+                            print(error)
+                        }
+                        
+                        if success {
+                            self.completeLogin()
+                        }
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -173,7 +201,6 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
                 
                 self.completeLogin()
             }
-
         }
     }
     

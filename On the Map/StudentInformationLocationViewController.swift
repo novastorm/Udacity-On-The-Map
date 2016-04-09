@@ -10,7 +10,7 @@ import CoreLocation
 import Foundation
 import UIKit
 
-class StudentInformationLocationViewController: UIViewController {
+class StudentInformationLocationViewController: UIViewController, UITextFieldDelegate {
     
     var geocoder: CLGeocoder?
     
@@ -21,8 +21,15 @@ class StudentInformationLocationViewController: UIViewController {
     }
     
     @IBAction func findOnTheMap(sender: AnyObject) {
+        
         guard let addressString = locationTextField.text else {
             showAlert(self, title: nil, message: "Unable to unwrap location string")
+            return
+        }
+        
+        if addressString.isEmpty {
+            setTextFieldBorderToDanger(locationTextField)
+            showAlert(self, title: "Enter a location", message: "A location is needed to display where you are at the moment.")
             return
         }
         
@@ -51,6 +58,31 @@ class StudentInformationLocationViewController: UIViewController {
         })
     }
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        setTextFieldBorderToDefault(textField)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @IBAction func userTappedBackground(sender: AnyObject) {
+        view.endEditing(true)
+    }
+
+    private func setTextFieldBorderToDanger(textField: UITextField) {
+        textField.layer.borderColor = UIColor.redColor().CGColor
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 5.0
+    }
+    
+    private func setTextFieldBorderToDefault(textField: UITextField) {
+        textField.layer.borderColor = nil
+        textField.layer.borderWidth = 0
+        textField.layer.cornerRadius = 5.0
+    }
+
     func showStudentInformationURLView(placemark: CLPlacemark) {
         guard let storyboard = storyboard else {
             print("Unable to get storyboard")
