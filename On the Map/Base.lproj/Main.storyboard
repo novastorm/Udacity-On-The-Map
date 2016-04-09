@@ -274,8 +274,11 @@
                                     <outletCollection property="gestureRecognizers" destination="Fda-FA-EAM" appends="YES" id="ZP5-TA-I5C"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE">
-                                <rect key="frame" x="276" y="521" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJa-x8-RNE" customClass="SubmitInformationButton" customModule="On_the_Map" customModuleProvider="target">
+                                <rect key="frame" x="256" y="523" width="89" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="89" id="jjD-x1-88t"/>
+                                </constraints>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submit:" destination="ntS-VU-QEC" eventType="touchUpInside" id="hvL-HM-7iq"/>
@@ -288,7 +291,7 @@
                             <constraint firstItem="shH-8m-YPG" firstAttribute="trailing" secondItem="SFd-fS-GsN" secondAttribute="trailingMargin" id="IEs-Mc-xTX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="a5R-fl-pTX" secondAttribute="trailing" id="KDD-fc-q6z"/>
                             <constraint firstItem="sJa-x8-RNE" firstAttribute="centerX" secondItem="SFd-fS-GsN" secondAttribute="centerX" id="SMA-3B-yHr"/>
-                            <constraint firstItem="sJa-x8-RNE" firstAttribute="top" secondItem="a5R-fl-pTX" secondAttribute="bottom" constant="-59" id="UcF-MO-nnl"/>
+                            <constraint firstItem="sJa-x8-RNE" firstAttribute="top" secondItem="a5R-fl-pTX" secondAttribute="bottom" constant="-57" id="UcF-MO-nnl"/>
                             <constraint firstItem="a5R-fl-pTX" firstAttribute="leading" secondItem="SFd-fS-GsN" secondAttribute="leadingMargin" id="cNO-I2-smf"/>
                             <constraint firstItem="vam-cp-SlH" firstAttribute="trailing" secondItem="SFd-fS-GsN" secondAttribute="trailingMargin" id="ef7-rh-GbE"/>
                             <constraint firstItem="Yi4-YH-7ih" firstAttribute="top" secondItem="a5R-fl-pTX" secondAttribute="bottom" constant="20" id="f7N-Zo-Dcc"/>
