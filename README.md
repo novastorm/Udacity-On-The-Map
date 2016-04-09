@@ -4,17 +4,32 @@ On The Map allows users to share their location and a URL with fellow students. 
 
 ---
 
-Install remote frameworks via Carthage
+### Building
+
+Before building the project please retrieve dependencies with carthage:
 
 ~~~
 carthage upgrade --platform iOS
 ~~~
 
-Resource authorization
+The project uses the following frameworks:
 
-* add the appropriate API Key and ApplicationId to the file:
+* [Reachability.swift](https://github.com/ashleymills/Reachability.swift)  
+Monitor the network state of an iOS device. (Replacement for Apple's Reachability sample, re-written in Swift.)
+  
+Carthage is used to manage project dependencies. Install carthage via homebrew:
 
+~~~
+brew install carthage
+~~~
+
+### Resource authorization
+
+Add the appropriate API Key and ApplicationId to the file:
+
+~~~
 On the Map/UdacityParseClientConstants.swift
+~~~
 
 ~~~
 extension UdacityParseClient {
