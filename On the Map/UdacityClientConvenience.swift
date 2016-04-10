@@ -145,7 +145,7 @@ extension UdacityClient {
                 return
             }
             
-            UdacityClient.sharedInstance().logout()
+            UdacityClient.sharedInstance.logout()
             completionHandler(success: true, error: nil)
         }
         FBSDKLoginManager().logOut()
@@ -158,7 +158,7 @@ extension UdacityClient {
         // (1) Specify parameters
         let parameters = [String: AnyObject]()
         
-        let resource = subtituteKeyInMethod(Resources.UserId, key: URLKeys.UserId, value: UdacityClient.sharedInstance().accountKey!)!
+        let resource = subtituteKeyInMethod(Resources.UserId, key: URLKeys.UserId, value: UdacityClient.sharedInstance.accountKey!)!
         
         // (2) Make the request
         taskForGETMethod(resource, parameters: parameters) { (results, error) in

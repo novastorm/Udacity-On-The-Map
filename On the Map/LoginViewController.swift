@@ -34,7 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
             startActivity(activityIndicator)
             if let tokenString = currentAccessToken.tokenString {
-                UdacityClient.sharedInstance().authenticateViaFacebook(tokenString) { (success, error) in
+                UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
                     performUIUpdatesOnMain {
                         
                         if let error = error {
@@ -97,7 +97,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let email = emailField.text!
         let password = passwordField.text!
         
-        UdacityClient.sharedInstance().authenticateViaUdacity(username: email, password: password) { (success, error) in
+        UdacityClient.sharedInstance.authenticateViaUdacity(username: email, password: password) { (success, error) in
             performUIUpdatesOnMain {
                 
                 if let error = error {
@@ -181,7 +181,7 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             return
         }
         
-        UdacityClient.sharedInstance().authenticateViaFacebook(tokenString) { (success, error) in
+        UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
             performUIUpdatesOnMain {
                 
                 if let error = error {

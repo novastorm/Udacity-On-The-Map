@@ -19,7 +19,7 @@ class StudentInformationURLViewController: UIViewController, UITextFieldDelegate
     var placemark: CLPlacemark!
     
     var account: Account? {
-        return UdacityClient.sharedInstance().account
+        return UdacityClient.sharedInstance.account
     }
     
     override func viewDidLoad() {

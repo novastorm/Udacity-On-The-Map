@@ -11,7 +11,7 @@ import UIKit
 class StudentTabBarController: UITabBarController {
     
     @IBAction func logout(sender: AnyObject) {
-        UdacityClient.sharedInstance().logoutSession { (success, error) in
+        UdacityClient.sharedInstance.logoutSession { (success, error) in
             if success {
                 UdacityParseClient.sharedInstance().studentInformationList.removeAll()
                 performUIUpdatesOnMain{
