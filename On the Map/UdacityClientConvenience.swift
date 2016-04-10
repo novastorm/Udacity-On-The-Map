@@ -181,7 +181,4 @@ extension UdacityClient {
             completionHandler(success: true, account: account, error: nil)
         }
     }
-    
-    // MARK: - POST Convenience Methods
-    // MARK: - DELETE Convenience Methods
 }
