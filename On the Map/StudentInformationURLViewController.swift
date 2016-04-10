@@ -62,13 +62,13 @@ class StudentInformationURLViewController: UIViewController, UITextFieldDelegate
             StudentInformation.Keys.Longitude: (placemark.location?.coordinate.longitude)!
         ])
         
-        UdacityParseClient.sharedInstance().storeStudentInformation(studentInformation) { (success, error) in
+        UdacityParseClient.sharedInstance.storeStudentInformation(studentInformation) { (success, error) in
             if let error = error {
                 showAlert(self, title: nil, message: error.localizedDescription)
                 return
             }
             
-            UdacityParseClient.sharedInstance().getStudentInformationList() { (studentInformationList, error) in
+            UdacityParseClient.sharedInstance.getStudentInformationList() { (studentInformationList, error) in
                 return
             }
 

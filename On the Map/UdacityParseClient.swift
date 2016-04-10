@@ -12,6 +12,10 @@ let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotificati
 
 class UdacityParseClient: NSObject {
     
+    // MARK: Shared Instance
+    static let sharedInstance = UdacityParseClient()
+    private override init() {} // Disable default initializer
+    
     // MARK: Properties
     var session = NSURLSession.sharedSession()
     
@@ -240,13 +244,5 @@ class UdacityParseClient: NSObject {
         }
         
         return components.URL!
-    }
-    
-    // MARK: Shared Instance
-    class func sharedInstance() -> UdacityParseClient {
-        struct Singleton {
-            static var sharedInstance = UdacityParseClient()
-        }
-        return Singleton.sharedInstance
     }
 }

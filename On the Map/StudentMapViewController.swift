@@ -15,7 +15,7 @@ class StudentMapViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var studentInformationList: [StudentInformation] {
-        return UdacityParseClient.sharedInstance().studentInformationList
+        return UdacityParseClient.sharedInstance.studentInformationList
     }
 
     override func viewDidLoad() {
@@ -25,7 +25,7 @@ class StudentMapViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
         
-        UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
+        UdacityParseClient.sharedInstance.getStudentInformationList { (studentInformationList, error) in
             
             performUIUpdatesOnMain{
                 self.stopActivity()
