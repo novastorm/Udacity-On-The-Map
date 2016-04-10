@@ -8,11 +8,13 @@
 
 import Foundation
 
-class UdacityClient: NSObject {
+// MARK: UdacityClient
+
+class UdacityClient {
 
     // MARK: Shared Instance
     static let sharedInstance = UdacityClient()
-    private override init() {} // Disable default initializer
+    private init() {} // Disable default initializer
 
     // MARK: Properties
     var session = NSURLSession.sharedSession()

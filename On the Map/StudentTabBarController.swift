@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: StudentTabBarController: UITabBarController
+
 class StudentTabBarController: UITabBarController {
     
     // MARK: Actions

@@ -12,6 +12,7 @@ import MapKit
 import UIKit
 
 // MARK: StudentInformationURLViewController: UIViewController
+
 class StudentInformationURLViewController: UIViewController {
     
     // MARK: Properties
@@ -110,6 +111,7 @@ class StudentInformationURLViewController: UIViewController {
 
 
 // MARK: - StudentInformationURLViewController: UITextFieldDelegate
+
 extension StudentInformationURLViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -125,6 +127,7 @@ extension StudentInformationURLViewController: UITextFieldDelegate {
 
 
 // MARK: - SubmitInformationButton: UIButton
+
 class SubmitInformationButton: UIButton {
     
     // MARK: Properties

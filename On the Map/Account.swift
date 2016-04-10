@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Account
+
 struct Account {
     
     struct Keys {
@@ -33,10 +35,13 @@ struct Account {
     
 }
 
-// MARK: - UdacityParseStudentLocation: Equatable
+
+// MARK: - Account: Equatable
 
 extension Account: Equatable {}
 
+
+// MARK: - Overloaded Operators
 func ==(lhs: Account, rhs: Account) -> Bool {
     return lhs.key == rhs.key
 }

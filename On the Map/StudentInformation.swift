@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: StudentInformation
+
 struct StudentInformation {
     
     struct Keys {

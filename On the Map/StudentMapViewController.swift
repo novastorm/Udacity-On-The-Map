@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 
 // MARK: StudentMapViewController: UIViewController
+
 class StudentMapViewController: UIViewController {
     
     // MARK: Properties
@@ -94,6 +95,7 @@ class StudentMapViewController: UIViewController {
 
 
 // MARK: - StudentMapViewController: MKMapViewDelegate
+
 extension StudentMapViewController: MKMapViewDelegate {
     
     // add info icon to annotation

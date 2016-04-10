@@ -9,7 +9,11 @@
 import UIKit
 import Foundation
 
-// MARK: UdacityParseClient (Convenient Resource Methods)
+// MARK: Notification Identifiers
+
+let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
+
+// MARK: - UdacityParseClient (Convenient Resource Methods)
 
 extension UdacityParseClient {
 

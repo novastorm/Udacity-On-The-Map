@@ -11,6 +11,7 @@ import Foundation
 import UIKit
 
 // MARK: StudentInformationLocationViewController: UIViewController
+
 class StudentInformationLocationViewController: UIViewController {
     
     // MARK: Properties

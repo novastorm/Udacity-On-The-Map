@@ -8,13 +8,13 @@
 
 import Foundation
 
-let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
+// MARK: UdacityParseClient
 
-class UdacityParseClient: NSObject {
+class UdacityParseClient {
     
     // MARK: Shared Instance
     static let sharedInstance = UdacityParseClient()
-    private override init() {} // Disable default initializer
+    private init() {} // Disable default initializer
     
     // MARK: Properties
     var session = NSURLSession.sharedSession()
