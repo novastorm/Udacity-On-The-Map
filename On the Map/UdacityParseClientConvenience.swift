@@ -17,9 +17,9 @@ extension UdacityParseClient {
     func getStudentInformationList(completionHandler: (studentInformationList: [StudentInformation]?, error: NSError?) -> Void) {
         
         // (1)
-        let parameters = [
-            ParameterKeys.Limit: 100,
-            ParameterKeys.Order: "-updatedAt"
+        let parameters: [String: AnyObject] = [
+            ParameterKeys.Limit: ParameterValues.Limit,
+            ParameterKeys.Order: ParameterValues.UpdatedAtDescending
         ]
         
         // (2)

@@ -10,12 +10,6 @@ import UIKit
 
 class StudentTableViewController: UITableViewController {
     
-//    var studentInformationList: [StudentInformation] {
-//        get {
-//            return UdacityParseClient.sharedInstance().studentInformationList
-//        }
-//    }
-
     // simplify the declaration of a read-only computed property by removing the get keyword and its braces
     var studentInformationList: [StudentInformation] {
         return UdacityParseClient.sharedInstance.studentInformationList
