@@ -105,30 +105,38 @@ class LoginViewController: UIViewController {
         let email = emailField.text!
         let password = passwordField.text!
         
-        UdacityClient.sharedInstance.authenticateViaUdacity(username: email, password: password) { (success, error) in
-            performUIUpdatesOnMain {
-                
-                if let error = error {
-                    if error.code == NSURLErrorNotConnectedToInternet {
-                        self.displayError(error.localizedDescription)
-                        return
-                    }
-                    if error.code == NSURLErrorTimedOut {
-                        self.displayError(error.localizedDescription)
-                        return
-                    }
-                    if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                        self.displayError("Check username and password", title: "Authorization error.")
-                        self.setTextFieldBorderToDanger(self.emailField)
-                        self.setTextFieldBorderToDanger(self.passwordField)
+        checkNetworkConnection(UdacityClient.Constants.APIHost) { (success, error) in
+            
+            if let _ = error {
+                showNetworkAlert(self)
+                return
+            }
+            
+            UdacityClient.sharedInstance.authenticateViaUdacity(username: email, password: password) { (success, error) in
+                performUIUpdatesOnMain {
+                    
+                    if let error = error {
+                        if error.code == NSURLErrorNotConnectedToInternet {
+                            self.displayError(error.localizedDescription)
+                            return
+                        }
+                        if error.code == NSURLErrorTimedOut {
+                            self.displayError(error.localizedDescription)
+                            return
+                        }
+                        if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                            self.displayError("Check username and password", title: "Authorization error.")
+                            self.setTextFieldBorderToDanger(self.emailField)
+                            self.setTextFieldBorderToDanger(self.passwordField)
+                            return
+                        }
+                        
+                        print(error)
                         return
                     }
                     
-                    print(error)
-                    return
+                    self.completeLogin()
                 }
-                
-                self.completeLogin()
             }
         }
     }
