@@ -11,16 +11,25 @@ import Foundation
 import MapKit
 import UIKit
 
-class StudentInformationURLViewController: UIViewController, UITextFieldDelegate {
+// MARK: StudentInformationURLViewController: UIViewController
+class StudentInformationURLViewController: UIViewController {
     
-    @IBOutlet weak var URLTextField: UITextField!
-    @IBOutlet weak var mapView: MKMapView!
-
+    // MARK: Properties
+    
     var placemark: CLPlacemark!
     
     var account: Account? {
         return UdacityClient.sharedInstance.account
     }
+
+    
+    // MARK: Outlets
+    
+    @IBOutlet weak var URLTextField: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
+    
+    
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
 
@@ -33,6 +42,9 @@ class StudentInformationURLViewController: UIViewController, UITextFieldDelegate
         let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 500, 500)
         mapView.setRegion(region, animated: true)
     }
+    
+    
+    // MARK: Actions
     
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true) {}
@@ -76,6 +88,30 @@ class StudentInformationURLViewController: UIViewController, UITextFieldDelegate
         }
     }
     
+    @IBAction func userTappedBackground(sender: AnyObject) {
+        view.endEditing(true)
+    }
+    
+    
+    // MARK: Help Utilities
+    
+    func setTextFieldBorderToDanger(textField: UITextField) {
+        textField.layer.borderColor = UIColor.redColor().CGColor
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 5.0
+    }
+    
+    func setTextFieldBorderToDefault(textField: UITextField) {
+        textField.layer.borderColor = nil
+        textField.layer.borderWidth = 0
+        textField.layer.cornerRadius = 5.0
+    }
+}
+
+
+// MARK: - StudentInformationURLViewController: UITextFieldDelegate
+extension StudentInformationURLViewController: UITextFieldDelegate {
+    
     func textFieldDidBeginEditing(textField: UITextField) {
         setTextFieldBorderToDefault(textField)
     }
@@ -85,23 +121,10 @@ class StudentInformationURLViewController: UIViewController, UITextFieldDelegate
         return true
     }
     
-    @IBAction func userTappedBackground(sender: AnyObject) {
-        view.endEditing(true)
-    }
-    
-    private func setTextFieldBorderToDanger(textField: UITextField) {
-        textField.layer.borderColor = UIColor.redColor().CGColor
-        textField.layer.borderWidth = 1.0
-        textField.layer.cornerRadius = 5.0
-    }
-    
-    private func setTextFieldBorderToDefault(textField: UITextField) {
-        textField.layer.borderColor = nil
-        textField.layer.borderWidth = 0
-        textField.layer.cornerRadius = 5.0
-    }
 }
 
+
+// MARK: - SubmitInformationButton: UIButton
 class SubmitInformationButton: UIButton {
     
     // MARK: Properties

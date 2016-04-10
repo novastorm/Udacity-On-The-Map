@@ -9,8 +9,11 @@
 import FBSDKLoginKit
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+// MARK: LoginViewController: UIViewController
+class LoginViewController: UIViewController {
 
+    // MARK: Outlets
+    
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -18,6 +21,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+
+    // MARK: Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,18 +80,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.text = ""
     }
 
+    
+    // MARK: Actions
+
     @IBAction func udacityLogin(sender: AnyObject) {
         
         view.endEditing(true)
         startActivity(activityIndicator)
         
         if emailField.text!.isEmpty {
-            // Change email field to red
             setTextFieldBorderToDanger(emailField)
         }
 
         if passwordField.text!.isEmpty {
-            // Change email field to red
             setTextFieldBorderToDanger(passwordField)
         }
         
@@ -124,22 +131,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-
-    func textFieldDidBeginEditing(textField: UITextField) {
-        setTextFieldBorderToDefault(textField)
-    }
-    
-    private func setTextFieldBorderToDanger(textField: UITextField) {
-        textField.layer.borderColor = UIColor.redColor().CGColor
-        textField.layer.borderWidth = 1.0
-        textField.layer.cornerRadius = 5.0
-    }
-    
-    private func setTextFieldBorderToDefault(textField: UITextField) {
-        textField.layer.borderColor = nil
-        textField.layer.borderWidth = 0
-        textField.layer.cornerRadius = 5.0
-    }
     
     @IBAction func signUp(sender: AnyObject) {
         let signUpURL = "https://www.udacity.com/account/auth#!/signup"
@@ -147,20 +138,46 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    // MARK: Login
+
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
         stopActivity(activityIndicator)
         presentViewController(controller, animated: true, completion: nil)
     }
     
-    private func displayError(message: String?, title: String? = nil) {
+    
+    // MARK: Helper Utilities
+    
+    func displayError(message: String?, title: String? = nil) {
         showAlert(self, title: title, message: message)
         stopActivity(activityIndicator)
+    }
+    
+    func setTextFieldBorderToDanger(textField: UITextField) {
+        textField.layer.borderColor = UIColor.redColor().CGColor
+        textField.layer.borderWidth = 1.0
+        textField.layer.cornerRadius = 5.0
+    }
+    
+    func setTextFieldBorderToDefault(textField: UITextField) {
+        textField.layer.borderColor = nil
+        textField.layer.borderWidth = 0
+        textField.layer.cornerRadius = 5.0
     }
 }
 
 
-// MARK: Facebook Login
+// MARK: - LoginViewController: UITextFieldDelegate
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        setTextFieldBorderToDefault(textField)
+    }
+}
+
+
+// MARK: - LoginViewController: FBSDKLoginButtonDelegate
 extension LoginViewController: FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
 

@@ -10,6 +10,8 @@ import UIKit
 
 class StudentTabBarController: UITabBarController {
     
+    // MARK: Actions
+    
     @IBAction func logout(sender: AnyObject) {
         UdacityClient.sharedInstance.logoutSession { (success, error) in
             if success {

@@ -10,11 +10,20 @@ import CoreLocation
 import Foundation
 import UIKit
 
-class StudentInformationLocationViewController: UIViewController, UITextFieldDelegate {
+// MARK: StudentInformationLocationViewController: UIViewController
+class StudentInformationLocationViewController: UIViewController {
+    
+    // MARK: Properties
     
     var geocoder: CLGeocoder?
     
+    
+    // MARK: Outlets
+    
     @IBOutlet weak var locationTextField: UITextField!
+    
+    
+    // MARK: Actions
     
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true) {}
@@ -58,26 +67,20 @@ class StudentInformationLocationViewController: UIViewController, UITextFieldDel
         })
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        setTextFieldBorderToDefault(textField)
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
     @IBAction func userTappedBackground(sender: AnyObject) {
         view.endEditing(true)
     }
+    
+    
+    // MARK: Helper Utilities
 
-    private func setTextFieldBorderToDanger(textField: UITextField) {
+    func setTextFieldBorderToDanger(textField: UITextField) {
         textField.layer.borderColor = UIColor.redColor().CGColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 5.0
     }
     
-    private func setTextFieldBorderToDefault(textField: UITextField) {
+    func setTextFieldBorderToDefault(textField: UITextField) {
         textField.layer.borderColor = nil
         textField.layer.borderWidth = 0
         textField.layer.cornerRadius = 5.0
@@ -104,5 +107,19 @@ class StudentInformationLocationViewController: UIViewController, UITextFieldDel
         dismissViewControllerAnimated(false) {
             presentingVC.presentViewController(destinationVC, animated: true) {}
         }
+    }
+}
+
+
+// MARK: - StudentInformationLocationViewController: UITextFieldDelegate
+extension StudentInformationLocationViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        setTextFieldBorderToDefault(textField)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

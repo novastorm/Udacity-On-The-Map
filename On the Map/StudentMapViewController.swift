@@ -9,15 +9,24 @@
 import UIKit
 import MapKit
 
+// MARK: StudentMapViewController: UIViewController
 class StudentMapViewController: UIViewController {
-
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    // MARK: Properties
     
     var studentInformationList: [StudentInformation] {
         return UdacityParseClient.sharedInstance.studentInformationList
     }
 
+    
+    // MARK: Outlets
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
+    
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +41,9 @@ class StudentMapViewController: UIViewController {
             }
         }
     }
+    
+    
+    // MARK: Helper Utilities
     
     func updateLocations() {
 
@@ -73,11 +85,15 @@ class StudentMapViewController: UIViewController {
         activityIndicator.stopAnimating()
     }
     
+    
+    // MARK: Deinit
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
+
+// MARK: - StudentMapViewController: MKMapViewDelegate
 extension StudentMapViewController: MKMapViewDelegate {
     
     // add info icon to annotation
