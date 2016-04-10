@@ -17,9 +17,6 @@ class UdacityClient: NSObject {
     // MARK: Properties
     var session = NSURLSession.sharedSession()
     
-    // Configuration Object
-    var config = UdacityConfig()
-    
     // Authentication State
     var sessionId: String? = nil
     var accountKey: String? = nil

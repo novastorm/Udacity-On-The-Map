@@ -14,7 +14,6 @@
 		3E1765801CA48632009BB886 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E17657E1CA48632009BB886 /* LaunchScreen.storyboard */; };
 		3E17658B1CA48633009BB886 /* On_the_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17658A1CA48633009BB886 /* On_the_MapTests.swift */; };
 		3E17659A1CA4A6E0009BB886 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765991CA4A6E0009BB886 /* UdacityClient.swift */; };
-		3E17659C1CA4A78A009BB886 /* UdacityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */; };
 		3E17659E1CA4ABD7009BB886 /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */; };
 		3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */; };
 		3E1765A21CA4FD80009BB886 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1765A11CA4FD80009BB886 /* Account.swift */; };
@@ -60,7 +59,6 @@
 		3E17658A1CA48633009BB886 /* On_the_MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_MapTests.swift; sourceTree = "<group>"; };
 		3E17658C1CA48633009BB886 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E1765991CA4A6E0009BB886 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
-		3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConfig.swift; sourceTree = "<group>"; };
 		3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientConstants.swift; sourceTree = "<group>"; };
 		3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClientConvenience.swift; sourceTree = "<group>"; };
 		3E1765A11CA4FD80009BB886 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 			children = (
 				3E1765991CA4A6E0009BB886 /* UdacityClient.swift */,
 				3E17659F1CA4D63C009BB886 /* UdacityClientConvenience.swift */,
-				3E17659B1CA4A78A009BB886 /* UdacityConfig.swift */,
 				3E17659D1CA4ABD7009BB886 /* UdacityClientConstants.swift */,
 				3EBA84FF1CAF3F1000F11EF9 /* UdacityClientErrorCodes.swift */,
 			);
@@ -345,7 +342,6 @@
 				3E17659A1CA4A6E0009BB886 /* UdacityClient.swift in Sources */,
 				3EBA850C1CB0ACD400F11EF9 /* StudentInformationURLViewController.swift in Sources */,
 				3E1765A01CA4D63C009BB886 /* UdacityClientConvenience.swift in Sources */,
-				3E17659C1CA4A78A009BB886 /* UdacityConfig.swift in Sources */,
 				3EBA85081CB0335400F11EF9 /* StudentTableViewController.swift in Sources */,
 				3E51CB701CB7640900DB12F9 /* README.md in Sources */,
 				3EDAAE7F1CA742F40096FADF /* StudentMapViewController.swift in Sources */,
