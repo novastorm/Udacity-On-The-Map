@@ -38,40 +38,44 @@ class LoginViewController: UIViewController {
         // ensure password field is cleared
         passwordField.text = ""
 
-        if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
-            startActivity(activityIndicator)
-            if let tokenString = currentAccessToken.tokenString {
-                UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
-                    performUIUpdatesOnMain {
-                        
-                        if let error = error {
-                            if error.code == NSURLErrorNotConnectedToInternet {
-                                self.displayError(error.localizedDescription)
-                            }
-                            if error.code == NSURLErrorTimedOut {
-                                self.displayError(error.localizedDescription)
-                            }
-                            if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
-                                self.displayError("Check facebook account is linked", title: "Authorization error." )
-                                FBSDKLoginManager().logOut()
-                            }
-                            stopActivity(self.activityIndicator)
-                            print(error)
-                        }
-                        
-                        if success {
-                            self.completeLogin()
-                        }
-                    }
-                }
-            }
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
         checkNetworkConnection(nil) { (success, error) in
-            if !success {
+            if let _ = error {
                 showAlert(self, title: "No Connection", message: "Internet connection required for use.")
+                return
+            }
+            
+            if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
+                //            startActivity(activityIndicator)
+                ProgressOverlay.sharedInstance.start(self, message: "Logging in")
+                if let tokenString = currentAccessToken.tokenString {
+                    UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
+                        performUIUpdatesOnMain {
+                            
+                            if let error = error {
+                                if error.code == NSURLErrorNotConnectedToInternet {
+                                    self.displayError(error.localizedDescription)
+                                }
+                                if error.code == NSURLErrorTimedOut {
+                                    self.displayError(error.localizedDescription)
+                                }
+                                if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
+                                    self.displayError("Check facebook account is linked", title: "Authorization error." )
+                                    FBSDKLoginManager().logOut()
+                                }
+                                //                            stopActivity(self.activityIndicator)
+                                ProgressOverlay.sharedInstance.stop()
+                                print(error)
+                            }
+                            
+                            if success {
+                                self.completeLogin()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -111,7 +115,8 @@ class LoginViewController: UIViewController {
                 showNetworkAlert(self)
                 return
             }
-            
+
+            ProgressOverlay.sharedInstance.start(self, message: "Logging in")
             UdacityClient.sharedInstance.authenticateViaUdacity(username: email, password: password) { (success, error) in
                 performUIUpdatesOnMain {
                     
@@ -152,6 +157,7 @@ class LoginViewController: UIViewController {
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
         stopActivity(activityIndicator)
+        ProgressOverlay.sharedInstance.stop()
         presentViewController(controller, animated: true, completion: nil)
     }
     
@@ -188,10 +194,10 @@ extension LoginViewController: UITextFieldDelegate {
 
 // MARK: - LoginViewController: FBSDKLoginButtonDelegate
 extension LoginViewController: FBSDKLoginButtonDelegate {
+    
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
 
         view.endEditing(true)
-        startActivity(activityIndicator)
         
         if let _ = error {
             displayError(error.localizedDescription, title: "Login Failed")
@@ -202,32 +208,6 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             return
         }
 
-        guard let tokenString = result.token.tokenString else {
-            displayError("No token in results", title: "Token not found")
-            return
-        }
-        
-        UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
-            performUIUpdatesOnMain {
-                
-                if let error = error {
-                    if error.code == NSURLErrorNotConnectedToInternet {
-                        self.displayError(error.localizedDescription)
-                    }
-                    if error.code == NSURLErrorTimedOut {
-                        self.displayError(error.localizedDescription)
-                    }
-                    if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                        self.displayError("Check facebook account is linked", title: "Authorization error." )
-                    }
-                    
-                    print(error)
-                    return
-                }
-                
-                self.completeLogin()
-            }
-        }
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {}
