@@ -23,7 +23,6 @@ class StudentMapViewController: UIViewController {
     // MARK: Outlets
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     
     // MARK: Life Cycle
@@ -31,16 +30,9 @@ class StudentMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startActivity()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
         
-        UdacityParseClient.sharedInstance.getStudentInformationList { (studentInformationList, error) in
-            
-            performUIUpdatesOnMain{
-                self.stopActivity()
-            }
-        }
+        (self.tabBarController as! StudentTabBarController).refreshStudentInformationList()
     }
     
     
@@ -74,16 +66,6 @@ class StudentMapViewController: UIViewController {
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.mapView.addAnnotations(annotations)
         }
-    }
-    
-    func startActivity() {
-        activityIndicator.alpha = 1
-        activityIndicator.startAnimating()
-    }
-    
-    func stopActivity() {
-        activityIndicator.alpha = 0
-        activityIndicator.stopAnimating()
     }
     
     

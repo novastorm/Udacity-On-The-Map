@@ -62,14 +62,3 @@ func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool
     
     completionHandler(success: true, error: nil)
 }
-
-func startActivity(activityIndicator: UIActivityIndicatorView) {
-    activityIndicator.alpha = 1
-    activityIndicator.startAnimating()
-}
-
-func stopActivity(activityIndicator: UIActivityIndicatorView) {
-    activityIndicator.alpha = 0
-    activityIndicator.stopAnimating()
-}
-

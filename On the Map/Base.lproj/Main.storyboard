@@ -126,9 +126,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="1VJ-4g-KfE"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="iU5-mh-8nM">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -136,15 +133,12 @@
                             <constraint firstItem="XSJ-P8-i42" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="JfH-Qc-OFN"/>
                             <constraint firstItem="XSJ-P8-i42" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Jm4-sh-Jdk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XSJ-P8-i42" secondAttribute="trailing" id="NyT-Uw-xLy"/>
-                            <constraint firstItem="iU5-mh-8nM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="QtG-VJ-W23"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MBb-5d-vkG" secondAttribute="bottom" constant="44" id="YGh-xb-vK2"/>
                             <constraint firstItem="MBb-5d-vkG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jtg-9Z-2Xi"/>
-                            <constraint firstItem="iU5-mh-8nM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="u5F-93-YHu"/>
                             <constraint firstItem="MBb-5d-vkG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="xde-rO-pg6"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="iU5-mh-8nM" id="oP3-i2-UZs"/>
                         <outlet property="emailField" destination="kSC-RE-uxU" id="AKW-bL-Fhf"/>
                         <outlet property="facebookLoginButton" destination="MBb-5d-vkG" id="Tj8-kB-zLe"/>
                         <outlet property="loginButton" destination="P31-aN-eJy" id="mHs-hw-m3B"/>
@@ -174,23 +168,17 @@
                                     <outlet property="delegate" destination="hSE-gW-N31" id="FL4-Ef-06u"/>
                                 </connections>
                             </mapView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0Ob-j9-7D0">
-                                <rect key="frame" x="290" y="265" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3at-aQ-DZE" firstAttribute="leading" secondItem="e6I-6S-m1R" secondAttribute="leadingMargin" constant="-20" id="MiT-D4-9SR"/>
                             <constraint firstItem="3at-aQ-DZE" firstAttribute="top" secondItem="EWl-tu-DkJ" secondAttribute="bottom" id="ax2-fw-nZM"/>
-                            <constraint firstItem="0Ob-j9-7D0" firstAttribute="centerY" secondItem="e6I-6S-m1R" secondAttribute="centerY" id="d3R-AT-Y1q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3at-aQ-DZE" secondAttribute="trailing" constant="-20" id="wwq-wz-kPY"/>
                             <constraint firstItem="8Lw-MB-5kq" firstAttribute="top" secondItem="3at-aQ-DZE" secondAttribute="bottom" id="zDt-ZR-1MJ"/>
-                            <constraint firstItem="0Ob-j9-7D0" firstAttribute="centerX" secondItem="e6I-6S-m1R" secondAttribute="centerX" id="zlM-wb-ZeU"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map_location" id="f1V-JA-IFA"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="0Ob-j9-7D0" id="bgm-3y-TYe"/>
                         <outlet property="mapView" destination="3at-aQ-DZE" id="gbJ-Dx-Fy9"/>
                     </connections>
                 </viewController>

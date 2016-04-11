@@ -75,17 +75,21 @@ class StudentInformationURLViewController: UIViewController {
             StudentInformation.Keys.Longitude: (placemark.location?.coordinate.longitude)!
         ])
         
-        UdacityParseClient.sharedInstance.storeStudentInformation(studentInformation) { (success, error) in
-            if let error = error {
-                showAlert(self, title: nil, message: error.localizedDescription)
-                return
-            }
-            
-            UdacityParseClient.sharedInstance.getStudentInformationList() { (studentInformationList, error) in
-                return
-            }
+        ProgressOverlay.start(self, message: "Uploading Information ...") {
+            UdacityParseClient.sharedInstance.storeStudentInformation(studentInformation) { (success, error) in
+                performUIUpdatesOnMain() {
+                    ProgressOverlay.stop() {
+                        if let error = error {
+                            showAlert(self, title: nil, message: error.localizedDescription)
+                            return
+                        }
+                        
+                        (self.tabBarController as! StudentTabBarController).refreshStudentInformationList()
 
-            self.dismissViewControllerAnimated(true) {}
+                        self.dismissViewControllerAnimated(true) {}
+                    }
+                }
+            }
         }
     }
     

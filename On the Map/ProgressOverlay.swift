@@ -13,7 +13,7 @@ class ProgressOverlay {
     // MARK: Properties
     
     static let sharedInstance = ProgressOverlay()
-    var presentingVC: UIViewController!
+    var presentingVC: UIViewController?
     
     let alertView = UIAlertController()
     let activityIndicator = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50))
@@ -29,21 +29,21 @@ class ProgressOverlay {
     }
     
     
-    func start(vc: UIViewController, title: String? = nil, message: String? = nil) {
-        presentingVC = vc
-        alertView.view.layoutIfNeeded()
+    static func start(vc: UIViewController, title: String? = nil, message: String? = nil, completion: (() -> Void)?) {
+        sharedInstance.presentingVC = vc
+        sharedInstance.alertView.view.layoutIfNeeded()
         
-        alertView.title = title
-        alertView.message = message
+        sharedInstance.alertView.title = title
+        sharedInstance.alertView.message = message
         
-        activityIndicator.startAnimating()
-        presentingVC.presentViewController(alertView, animated: true, completion: nil)
+        sharedInstance.activityIndicator.startAnimating()
+        sharedInstance.presentingVC!.presentViewController(sharedInstance.alertView, animated: true, completion: completion)
     }
     
-    func stop() {
-        activityIndicator.stopAnimating()
-        alertView.dismissViewControllerAnimated(true, completion: nil)
-        presentingVC = nil
+    static func stop(completion: (() -> Void)?) {
+        sharedInstance.activityIndicator.stopAnimating()
+        sharedInstance.alertView.dismissViewControllerAnimated(true, completion: completion)
+        sharedInstance.presentingVC = nil
     }
 
 }

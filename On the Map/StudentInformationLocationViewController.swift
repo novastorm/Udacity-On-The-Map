@@ -53,19 +53,25 @@ class StudentInformationLocationViewController: UIViewController {
         }
         
         geocoder.cancelGeocode()
-        geocoder.geocodeAddressString(addressString, completionHandler: { (placemarks, error) in
-            if error != nil {
-                showAlert(self, title: "Error", message: "\(error)")
-                return
+        ProgressOverlay.start(self, message: "Getting location ...") {
+            geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+                performUIUpdatesOnMain() {
+                    ProgressOverlay.stop() {
+                        if error != nil {
+                            showAlert(self, title: "Error", message: "\(error)")
+                            return
+                        }
+                        
+                        guard let placemark = placemarks?.first else {
+                            showAlert(self, title: nil, message: "Unable to get first plackmark")
+                            return
+                        }
+                        
+                        self.showStudentInformationURLView(placemark)
+                    }
+                }
             }
-            
-            guard let placemark = placemarks?.first else {
-                showAlert(self, title: nil, message: "Unable to get first plackmark")
-                return
-            }
-            
-            self.showStudentInformationURLView(placemark)
-        })
+        }
     }
     
     @IBAction func userTappedBackground(sender: AnyObject) {

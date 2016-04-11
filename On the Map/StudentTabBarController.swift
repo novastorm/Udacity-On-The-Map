@@ -26,16 +26,18 @@ class StudentTabBarController: UITabBarController {
     }
     
     @IBAction func refresh(sender: AnyObject) {
-        UdacityParseClient.sharedInstance.getStudentInformationList { (studentInformationList, error) in
-            
-            if let error = error {
-                if error.code == NSURLErrorNotConnectedToInternet {
-                    showAlert(self, title: nil, message: error.localizedDescription)
-                    return
-                }
-                if error.code == NSURLErrorTimedOut {
-                    showAlert(self, title: nil, message: error.localizedDescription)
-                    return
+        refreshStudentInformationList()
+    }
+    
+    func refreshStudentInformationList() {
+        ProgressOverlay.start(self, message: "Retrieving data ...") {
+            UdacityParseClient.sharedInstance.getStudentInformationList { (studentInformationList, error) in
+                performUIUpdatesOnMain() {
+                    ProgressOverlay.stop() {
+                        if let error = error {
+                            showAlert(self, title: nil, message: error.localizedDescription)
+                        }
+                    }
                 }
             }
         }
