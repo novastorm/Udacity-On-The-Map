@@ -16,7 +16,7 @@ class StudentInformationLocationViewController: UIViewController {
     
     // MARK: Properties
     
-    var geocoder: CLGeocoder?
+    var geocoder = CLGeocoder()
     
     
     // MARK: Outlets
@@ -43,29 +43,34 @@ class StudentInformationLocationViewController: UIViewController {
             return
         }
         
-        if geocoder == nil {
-            geocoder = CLGeocoder()
-        }
-
-        guard let geocoder = geocoder else {
-            showAlert(self, title: "Error", message: "Error unwrapping geocoder object")
-            return
-        }
-        
         geocoder.cancelGeocode()
-        geocoder.geocodeAddressString(addressString, completionHandler: { (placemarks, error) in
-            if error != nil {
-                showAlert(self, title: "Error", message: "\(error)")
-                return
+        ProgressOverlay.start(self, message: "Getting location ...") {
+            self.geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+                performUIUpdatesOnMain() {
+                    ProgressOverlay.stop() {
+                        if let error = error {
+                            if error.code == CLError.Network.rawValue {
+                                showNetworkAlert(self)
+                            }
+                            else if error.code == CLError.GeocodeFoundNoResult.rawValue {
+                                showAlert(self, title: "No Location Found", message: "Check location and try again.")
+                            }
+                            else {
+                                showAlert(self, title: "Error Getting Location", message: error.localizedDescription)
+                            }
+                            return
+                        }
+                        
+                        guard let placemark = placemarks?.first else {
+                            showAlert(self, title: nil, message: "Unable to get first plackmark")
+                            return
+                        }
+                        
+                        self.showStudentInformationURLView(placemark)
+                    }
+                }
             }
-            
-            guard let placemark = placemarks?.first else {
-                showAlert(self, title: nil, message: "Unable to get first plackmark")
-                return
-            }
-            
-            self.showStudentInformationURLView(placemark)
-        })
+        }
     }
     
     @IBAction func userTappedBackground(sender: AnyObject) {
@@ -88,21 +93,8 @@ class StudentInformationLocationViewController: UIViewController {
     }
 
     func showStudentInformationURLView(placemark: CLPlacemark) {
-        guard let storyboard = storyboard else {
-            print("Unable to get storyboard")
-            return
-        }
-        
-        guard let presentingVC = self.presentingViewController else {
-            print("Unable to get presenting view controller")
-            return
-        }
-        
-        guard let destinationVC = storyboard.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController else {
-            print("View not found")
-            return
-        }
-        
+        let presentingVC = self.presentingViewController!
+        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as! StudentInformationURLViewController
         destinationVC.placemark = placemark
         
         dismissViewControllerAnimated(false) {
@@ -119,8 +111,10 @@ extension StudentInformationLocationViewController: UITextFieldDelegate {
         setTextFieldBorderToDefault(textField)
     }
     
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        findOnTheMap(self)
         return true
     }
 }

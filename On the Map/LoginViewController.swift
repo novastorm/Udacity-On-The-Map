@@ -20,7 +20,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
 
     // MARK: Life Cycle
@@ -30,48 +29,52 @@ class LoginViewController: UIViewController {
 
         self.emailField.delegate = self
         self.passwordField.delegate = self
-        
-        stopActivity(activityIndicator)
     }
     
     override func viewWillAppear(animated: Bool) {
         // ensure password field is cleared
         passwordField.text = ""
 
-        if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
-            startActivity(activityIndicator)
-            if let tokenString = currentAccessToken.tokenString {
-                UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
-                    performUIUpdatesOnMain {
-                        
-                        if let error = error {
-                            if error.code == NSURLErrorNotConnectedToInternet {
-                                self.displayError(error.localizedDescription)
-                            }
-                            if error.code == NSURLErrorTimedOut {
-                                self.displayError(error.localizedDescription)
-                            }
-                            if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
-                                self.displayError("Check facebook account is linked", title: "Authorization error." )
-                                FBSDKLoginManager().logOut()
-                            }
-                            stopActivity(self.activityIndicator)
-                            print(error)
-                        }
-                        
-                        if success {
-                            self.completeLogin()
-                        }
-                    }
-                }
-            }
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
         checkNetworkConnection(nil) { (success, error) in
-            if !success {
-                showAlert(self, title: "No Connection", message: "Internet connection required for use.")
+            if let _ = error {
+                showNetworkAlert(self)
+                return
+            }
+            
+            if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
+                ProgressOverlay.start(self, message: "Logging in") {
+                    guard let tokenString = currentAccessToken.tokenString else {
+                        return
+                    }
+                    
+                    UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
+                        performUIUpdatesOnMain {
+                            ProgressOverlay.stop() {
+                                if let error = error {
+                                    if error.code == NSURLErrorNotConnectedToInternet {
+                                        self.displayError(error.localizedDescription)
+                                    }
+                                    else if error.code == NSURLErrorTimedOut {
+                                        self.displayError(error.localizedDescription)
+                                    }
+                                    else if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
+                                        self.displayError("Check facebook account is linked", title: "Authorization error." )
+                                        FBSDKLoginManager().logOut()
+                                    }
+                                    else {
+                                        self.displayError("\(error)")
+                                    }
+                                    return
+                                }
+                                
+                                self.completeLogin()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -87,7 +90,6 @@ class LoginViewController: UIViewController {
     @IBAction func udacityLogin(sender: AnyObject) {
         
         view.endEditing(true)
-        startActivity(activityIndicator)
         
         if emailField.text!.isEmpty {
             setTextFieldBorderToDanger(emailField)
@@ -111,31 +113,35 @@ class LoginViewController: UIViewController {
                 showNetworkAlert(self)
                 return
             }
-            
-            UdacityClient.sharedInstance.authenticateViaUdacity(username: email, password: password) { (success, error) in
-                performUIUpdatesOnMain {
-                    
-                    if let error = error {
-                        if error.code == NSURLErrorNotConnectedToInternet {
-                            self.displayError(error.localizedDescription)
-                            return
+
+            ProgressOverlay.start(self, message: "Logging in") {
+                UdacityClient.sharedInstance.authenticateViaUdacity(username: email, password: password) { (success, error) in
+                    performUIUpdatesOnMain {
+                        ProgressOverlay.stop() {
+                            if let error = error {
+                                if error.code == NSURLErrorNotConnectedToInternet {
+                                    self.displayError(error.localizedDescription)
+                                    return
+                                }
+                                else if error.code == NSURLErrorTimedOut {
+                                    self.displayError(error.localizedDescription)
+                                    return
+                                }
+                                else if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                                    self.displayError("Check username and password", title: "Authorization error.")
+                                    self.setTextFieldBorderToDanger(self.emailField)
+                                    self.setTextFieldBorderToDanger(self.passwordField)
+                                    return
+                                }
+                                else {
+                                    self.displayError("\(error)")
+                                }
+                                return
+                            }
+                            
+                            self.completeLogin()
                         }
-                        if error.code == NSURLErrorTimedOut {
-                            self.displayError(error.localizedDescription)
-                            return
-                        }
-                        if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                            self.displayError("Check username and password", title: "Authorization error.")
-                            self.setTextFieldBorderToDanger(self.emailField)
-                            self.setTextFieldBorderToDanger(self.passwordField)
-                            return
-                        }
-                        
-                        print(error)
-                        return
                     }
-                    
-                    self.completeLogin()
                 }
             }
         }
@@ -151,8 +157,7 @@ class LoginViewController: UIViewController {
 
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
-        stopActivity(activityIndicator)
-        presentViewController(controller, animated: true, completion: nil)
+        self.presentViewController(controller, animated: true, completion: nil)
     }
     
     
@@ -160,7 +165,7 @@ class LoginViewController: UIViewController {
     
     func displayError(message: String?, title: String? = nil) {
         showAlert(self, title: title, message: message)
-        stopActivity(activityIndicator)
+        ProgressOverlay.stop() {}
     }
     
     func setTextFieldBorderToDanger(textField: UITextField) {
@@ -188,10 +193,10 @@ extension LoginViewController: UITextFieldDelegate {
 
 // MARK: - LoginViewController: FBSDKLoginButtonDelegate
 extension LoginViewController: FBSDKLoginButtonDelegate {
+    
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
 
         view.endEditing(true)
-        startActivity(activityIndicator)
         
         if let _ = error {
             displayError(error.localizedDescription, title: "Login Failed")
@@ -202,32 +207,6 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             return
         }
 
-        guard let tokenString = result.token.tokenString else {
-            displayError("No token in results", title: "Token not found")
-            return
-        }
-        
-        UdacityClient.sharedInstance.authenticateViaFacebook(tokenString) { (success, error) in
-            performUIUpdatesOnMain {
-                
-                if let error = error {
-                    if error.code == NSURLErrorNotConnectedToInternet {
-                        self.displayError(error.localizedDescription)
-                    }
-                    if error.code == NSURLErrorTimedOut {
-                        self.displayError(error.localizedDescription)
-                    }
-                    if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                        self.displayError("Check facebook account is linked", title: "Authorization error." )
-                    }
-                    
-                    print(error)
-                    return
-                }
-                
-                self.completeLogin()
-            }
-        }
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {}

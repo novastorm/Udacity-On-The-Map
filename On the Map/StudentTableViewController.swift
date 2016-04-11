@@ -16,7 +16,7 @@ class StudentTableViewController: UITableViewController {
     
     // simplify the declaration of a read-only computed property by removing the get keyword and its braces
     var studentInformationList: [StudentInformation] {
-        return UdacityParseClient.sharedInstance.studentInformationList
+        return StudentInformation.list
     }
     
     

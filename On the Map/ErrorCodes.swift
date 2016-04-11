@@ -14,6 +14,7 @@ enum ErrorCodes: Int, CustomStringConvertible {
     case GenericRequestError
     case HTTPUnsucessful
     case NoData
+    case DataError
     
     var description: String {
         get {
@@ -28,6 +29,8 @@ enum ErrorCodes: Int, CustomStringConvertible {
                 return "Request returned a status code other that 2XX!"
             case .NoData:
                 return "No data returned by the request"
+            case .DataError:
+                return "There was a data error"
             }
         }
     }

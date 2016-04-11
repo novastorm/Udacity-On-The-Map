@@ -261,9 +261,4 @@ class UdacityClient {
         
         return components.URL!
     }
-    
-    func logout () {
-        accountKey = nil
-        account = nil
-    }
 }
