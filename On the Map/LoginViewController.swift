@@ -71,7 +71,7 @@ class LoginViewController: UIViewController {
                                         }
                                     }
                                     else {
-                                        self.displayError("\(error)")
+                                        self.displayError("Received unexpected error code: \(error.code) \(error.localizedDescription)")
                                     }
                                     return
                                 }
@@ -138,9 +138,12 @@ class LoginViewController: UIViewController {
                                         self.setTextFieldBorderToDanger(self.emailField)
                                         self.setTextFieldBorderToDanger(self.passwordField)
                                     }
+                                    else {
+                                        self.displayError("Recieved unexpected response code: \(response.statusCode)")
+                                    }
                                 }
                                 else {
-                                    self.displayError("\(error)")
+                                    self.displayError("Received unexpected error code: \(error.code) \(error.localizedDescription)")
                                 }
                                 return
                             }

@@ -6,13 +6,21 @@
 //  Copyright © 2016 Adland Lee. All rights reserved.
 //
 
+// MARK: Notification Identifiers
+
+let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
+
 import Foundation
 
 // MARK: StudentInformation
 
 struct StudentInformation {
     
-    static var list = [StudentInformation]()
+    static var list = [StudentInformation]() {
+        didSet {
+            NSNotificationCenter.defaultCenter().postNotificationName(StudentInformationUpdatedNotification, object: nil)
+        }
+    }
     
     struct Keys {
         static let ObjectId = UdacityParseClient.ResultsKeys.ObjectId
