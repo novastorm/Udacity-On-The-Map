@@ -41,3 +41,59 @@ static let APIKey = "REST API Key"
 // MARK: Application Id
 static let ApplicationId = "Parse Application ID"
 ~~~
+
+### Swift concepts utilized
+
+* NSNotifications  
+  Decouple classes using notifications. Messages used to notify changes replace hard coded dependencies between classes.
+
+* Concurrency  
+  Much of the project quietly uses concurrency to fetch data from remote resources. This project presented the challenge of managing tasks in background queues and when to update on the main queue.
+  
+* Customized UI Elements  
+  Some UI Elements needed customizing beyond what the UI Builder provides. Custom configurations allow for expansion upon UI Elements beyond the basic view.
+
+* Navigation Stack Manipulation  
+  Customized stack manipulation is used to simulate one view replacing another in the navigation stack.
+
+* External Framework Management  
+  Leverages carthage to manage external frameworks.
+
+* Error Management  
+  Utilize NSError for error management in callbacks.
+
+* Swift Singletons  
+  Utilize Swift Singleton expression.
+  
+~~~
+class UdacityClient {
+
+    // MARK: Shared Instance
+    static let sharedInstance = UdacityClient()
+    private init() {} // Disable default initializer
+    
+    ...
+}
+~~~
+  
+
+* if let and guard statements  
+  Used to flatten pyramids of doom.
+
+* LLDB  
+  Utilize LLDB debugging features to troublshoot project.
+
+* MapView and annotations  
+  Configure and display maps with custom annotations and annotation interactions.
+
+* Model and Collection Structures  
+  Utilize structs to provide base object data interaction.
+
+* External Resource Interaction  
+  Manage remote resource communication and common CRUD interactions with NSURLSession.
+  
+* Closures and callbacks  
+  Closures encapsulate self contained blocks of code within a larger function. Closures passed to functions allow the called function to call back and communicate to the calling funciton.
+  
+* typealias  
+  Abstracts internal variable types to simplify downcasting. Utilized in models to simplify interactions with properties.
