@@ -154,7 +154,7 @@ class LoginViewController: UIViewController {
 
     private func completeLogin() {
         let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
-            self.presentViewController(controller, animated: true, completion: nil)
+        self.presentViewController(controller, animated: true, completion: nil)
     }
     
     

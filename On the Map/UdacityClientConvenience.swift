@@ -97,16 +97,19 @@ extension UdacityClient {
             
             // (3) Send to completion handler
             if let error = error {
+                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                    completionHandlerForSession(success: false, sessionId: nil, accountKey: nil, error: NSError(domain: "getSession", code: error.code, userInfo: error.userInfo))
+                }
                 sendError(error.code, errorString: error.localizedDescription)
                 return
             }
 
             guard let sessionId = results[JSONResponseKeys.Session]??[JSONResponseKeys.SessionId] as? String else {
-                sendError(1, errorString: "Could not find \(JSONResponseKeys.Session):\(JSONResponseKeys.SessionId) in \(results)")
+                sendError(ErrorCodes.DataError.rawValue, errorString: "Could not find \(JSONResponseKeys.Session):\(JSONResponseKeys.SessionId) in \(results)")
                 return
             }
             guard let accountKey = results[JSONResponseKeys.Account]??[JSONResponseKeys.AccountKey] as? String else {
-                sendError(2, errorString: "Could not find \(JSONResponseKeys.Account):\(JSONResponseKeys.AccountKey) in \(results)")
+                sendError(ErrorCodes.DataError.rawValue, errorString: "Could not find \(JSONResponseKeys.Account):\(JSONResponseKeys.AccountKey) in \(results)")
                 return
             }
             
@@ -120,28 +123,34 @@ extension UdacityClient {
         let parameters = [String: AnyObject]()
         
         // (2)
-        taskForDELETEMethod(Resources.Session, parameters: parameters) { (results, error) in
+        taskForDELETEMethod(Resources.Session, parameters: parameters) { (data, error) in
             
             // Custom error function
-            func sendError(error:String) {
-                print(error)
-                let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandler(success: false, error: NSError(domain: "logoutSession", code: 1, userInfo: userInfo))
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                
+                completionHandler(success: false, error: NSError(domain: "logoutSession", code: code, userInfo: userInfo))
             }
             
             // (3)
             if let error = error {
-                sendError("There was an error with the request: \(error)")
+                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                    completionHandler(success: false, error: NSError(domain: "logoutSession", code: error.code, userInfo: error.userInfo))
+                }
+                sendError(error.code, errorString: "There was an error with the request.")
                 return
             }
             
-            guard let _ = results[JSONResponseKeys.Session] else {
-                sendError("Could not find \(JSONResponseKeys.Session) in \(results)")
+            guard let _ = data[JSONResponseKeys.Session] else {
+                sendError(ErrorCodes.DataError.rawValue, errorString: "Could not find \(JSONResponseKeys.Session) in \(data)")
                 return
             }
 
-            if results.allKeys.count != 1 {
-                sendError("Response contains more than one key in \(results)")
+            if data.allKeys.count != 1 {
+                sendError(ErrorCodes.DataError.rawValue, errorString: "Response contains more than one key in \(data)")
                 return
             }
             
@@ -163,16 +172,27 @@ extension UdacityClient {
         // (2) Make the request
         taskForGETMethod(resource, parameters: parameters) { (results, error) in
             
+            // Custom error function
+            func sendError(code: Int, errorString:String) {
+                var userInfo = [String: AnyObject]()
+                
+                userInfo[NSLocalizedDescriptionKey] = errorString
+                userInfo[NSUnderlyingErrorKey] = error
+                
+                completionHandler(success: false, account: nil, error: NSError(domain: "getAccountById", code: code, userInfo: userInfo))
+            }
+            
             // (3) Send to completion handler
             if let error = error {
-                print(error)
-                completionHandler(success: false, account: nil, error: error)
+                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                    completionHandler(success: false, account: nil, error: NSError(domain: "logoutSession", code: error.code, userInfo: error.userInfo))
+                }
+                sendError(error.code, errorString: error.localizedDescription)
                 return
             }
 
             guard let user = results[JSONResponseKeys.User] as? [String: AnyObject] else {
-                print("Could not find \(JSONResponseKeys.User) in \(results)")
-                completionHandler(success: false, account: nil, error: error)
+                sendError(ErrorCodes.DataError.rawValue, errorString: "Could not find \(JSONResponseKeys.User) in \(results)")
                 return
             }
             

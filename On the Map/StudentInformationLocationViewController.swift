@@ -93,18 +93,8 @@ class StudentInformationLocationViewController: UIViewController {
         textField.layer.cornerRadius = 5.0
     }
 
-    func showStudentInformationURLView(placemark: CLPlacemark) {
-        guard let storyboard = storyboard else {
-            print("Unable to get storyboard")
-            return
-        }
-        
-        guard let presentingVC = self.presentingViewController else {
-            print("Unable to get presenting view controller")
-            return
-        }
-        
-        guard let destinationVC = storyboard.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController else {
+    func showStudentInformationURLView(placemark: CLPlacemark) {        
+        guard let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController else {
             print("View not found")
             return
         }
@@ -112,7 +102,7 @@ class StudentInformationLocationViewController: UIViewController {
         destinationVC.placemark = placemark
         
         dismissViewControllerAnimated(false) {
-            presentingVC.presentViewController(destinationVC, animated: true) {}
+            self.presentingViewController!.presentViewController(destinationVC, animated: true) {}
         }
     }
 }

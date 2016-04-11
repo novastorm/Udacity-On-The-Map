@@ -113,7 +113,6 @@ class UdacityParseClient {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                print(response!)
                 sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
