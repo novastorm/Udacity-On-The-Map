@@ -43,22 +43,16 @@ class StudentInformationLocationViewController: UIViewController {
             return
         }
         
-//        if geocoder == nil {
-//            geocoder = CLGeocoder()
-//        }
-
-//        guard let geocoder = geocoder else {
-//            showAlert(self, title: "Error", message: "Error unwrapping geocoder object")
-//            return
-//        }
-        
         geocoder.cancelGeocode()
         ProgressOverlay.start(self, message: "Getting location ...") {
             self.geocoder.geocodeAddressString(addressString) { (placemarks, error) in
                 performUIUpdatesOnMain() {
                     ProgressOverlay.stop() {
                         if let error = error {
-                            if error.code == CLError.GeocodeFoundNoResult.rawValue {
+                            if error.code == CLError.Network.rawValue {
+                                showNetworkAlert(self)
+                            }
+                            else if error.code == CLError.GeocodeFoundNoResult.rawValue {
                                 showAlert(self, title: "No Location Found", message: "Check location and try again.")
                             }
                             else {
