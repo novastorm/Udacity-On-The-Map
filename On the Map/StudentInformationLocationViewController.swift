@@ -57,8 +57,13 @@ class StudentInformationLocationViewController: UIViewController {
             self.geocoder.geocodeAddressString(addressString) { (placemarks, error) in
                 performUIUpdatesOnMain() {
                     ProgressOverlay.stop() {
-                        if error != nil {
-                            showAlert(self, title: "Error", message: "\(error)")
+                        if let error = error {
+                            if error.code == CLError.GeocodeFoundNoResult.rawValue {
+                                showAlert(self, title: "No Location Found", message: "Check location and try again.")
+                            }
+                            else {
+                                showAlert(self, title: "Error Getting Location", message: error.localizedDescription)
+                            }
                             return
                         }
                         
