@@ -18,6 +18,7 @@ class StudentInformationURLViewController: UIViewController {
     // MARK: Properties
     
     var placemark: CLPlacemark!
+    var regionRadiusKm = 10.0
     
     var account: Account? {
         return UdacityClient.sharedInstance.account
@@ -39,9 +40,11 @@ class StudentInformationURLViewController: UIViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = (placemark.location?.coordinate)!
         mapView.addAnnotation(annotation)
+        
+        let radius = distanceInMeters(kilometers: regionRadiusKm)
 
-        let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 500, 500)
-        mapView.setRegion(region, animated: true)
+        let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, radius, radius)
+        mapView.setRegion(region, animated: false)
     }
     
     

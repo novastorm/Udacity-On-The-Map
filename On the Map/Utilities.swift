@@ -62,3 +62,7 @@ func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool
     
     completionHandler(success: true, error: nil)
 }
+
+func distanceInMeters(kilometers kilometers: Double) -> Double {
+    return kilometers * 1000
+}
