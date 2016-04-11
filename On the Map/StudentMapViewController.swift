@@ -68,6 +68,7 @@ class StudentMapViewController: UIViewController {
     
     
     // MARK: Deinit
+
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }

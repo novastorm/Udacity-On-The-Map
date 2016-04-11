@@ -94,10 +94,10 @@ class StudentInformationURLViewController: UIViewController {
                             }
                             return
                         }
-                        
-                        (self.tabBarController as! StudentTabBarController).refreshStudentInformationList()
 
-                        self.dismissViewControllerAnimated(true) {}
+                        self.dismissViewControllerAnimated(true) {
+                            NSNotificationCenter.defaultCenter().postNotificationName(RefreshStudentInformationListNotification, object: nil)
+                        }
                     }
                 }
             }
