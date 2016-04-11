@@ -6,6 +6,8 @@
 //  Copyright © 2016 Adland Lee. All rights reserved.
 //
 
+// MARK: UdacityClient (Constants)
+
 extension UdacityClient {
     
     // Mark Constants
@@ -52,8 +54,7 @@ extension UdacityClient {
     
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
-        // MARK: General
-        
+
         // MARK: Authorization
         static let Session = "session"
         static let SessionId = "id"

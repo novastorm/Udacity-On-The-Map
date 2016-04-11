@@ -63,13 +63,6 @@ func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool
     completionHandler(success: true, error: nil)
 }
 
-func startActivity(activityIndicator: UIActivityIndicatorView) {
-    activityIndicator.alpha = 1
-    activityIndicator.startAnimating()
+func distanceInMeters(kilometers kilometers: Double) -> Double {
+    return kilometers * 1000
 }
-
-func stopActivity(activityIndicator: UIActivityIndicatorView) {
-    activityIndicator.alpha = 0
-    activityIndicator.stopAnimating()
-}
-

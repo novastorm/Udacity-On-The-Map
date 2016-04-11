@@ -8,19 +8,19 @@
 
 import UIKit
 
+// MARK: StudentTableViewController: UITableViewController
+
 class StudentTableViewController: UITableViewController {
     
-//    var studentInformationList: [StudentInformation] {
-//        get {
-//            return UdacityParseClient.sharedInstance().studentInformationList
-//        }
-//    }
-
+    // MARK: Properties
+    
     // simplify the declaration of a read-only computed property by removing the get keyword and its braces
     var studentInformationList: [StudentInformation] {
-        return UdacityParseClient.sharedInstance().studentInformationList
+        return StudentInformation.list
     }
     
+    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateStudentInformation), name: StudentInformationUpdatedNotification, object: nil)
     }
@@ -29,6 +29,9 @@ class StudentTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
     }
+
+    
+    // MARK: Table view configuration
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentInformationList.count
@@ -68,9 +71,15 @@ class StudentTableViewController: UITableViewController {
         }
     }
     
+    
+    // MARK: Helper Utilities
+    
     func updateStudentInformation() {
         self.tableView.reloadData()
     }
+    
+    
+    // MARK: Deinit
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)

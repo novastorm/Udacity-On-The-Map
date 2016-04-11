@@ -10,11 +10,21 @@ import CoreLocation
 import Foundation
 import UIKit
 
-class StudentInformationLocationViewController: UIViewController, UITextFieldDelegate {
+// MARK: StudentInformationLocationViewController: UIViewController
+
+class StudentInformationLocationViewController: UIViewController {
     
-    var geocoder: CLGeocoder?
+    // MARK: Properties
+    
+    var geocoder = CLGeocoder()
+    
+    
+    // MARK: Outlets
     
     @IBOutlet weak var locationTextField: UITextField!
+    
+    
+    // MARK: Actions
     
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true) {}
@@ -33,76 +43,78 @@ class StudentInformationLocationViewController: UIViewController, UITextFieldDel
             return
         }
         
-        if geocoder == nil {
-            geocoder = CLGeocoder()
-        }
-
-        guard let geocoder = geocoder else {
-            showAlert(self, title: "Error", message: "Error unwrapping geocoder object")
-            return
-        }
-        
         geocoder.cancelGeocode()
-        geocoder.geocodeAddressString(addressString, completionHandler: { (placemarks, error) in
-            if error != nil {
-                showAlert(self, title: "Error", message: "\(error)")
-                return
+        ProgressOverlay.start(self, message: "Getting location ...") {
+            self.geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+                performUIUpdatesOnMain() {
+                    ProgressOverlay.stop() {
+                        if let error = error {
+                            if error.code == CLError.Network.rawValue {
+                                showNetworkAlert(self)
+                            }
+                            else if error.code == CLError.GeocodeFoundNoResult.rawValue {
+                                showAlert(self, title: "No Location Found", message: "Check location and try again.")
+                            }
+                            else {
+                                showAlert(self, title: "Error Getting Location", message: error.localizedDescription)
+                            }
+                            return
+                        }
+                        
+                        guard let placemark = placemarks?.first else {
+                            showAlert(self, title: nil, message: "Unable to get first plackmark")
+                            return
+                        }
+                        
+                        self.showStudentInformationURLView(placemark)
+                    }
+                }
             }
-            
-            guard let placemark = placemarks?.first else {
-                showAlert(self, title: nil, message: "Unable to get first plackmark")
-                return
-            }
-            
-            self.showStudentInformationURLView(placemark)
-        })
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        setTextFieldBorderToDefault(textField)
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+        }
     }
     
     @IBAction func userTappedBackground(sender: AnyObject) {
         view.endEditing(true)
     }
+    
+    
+    // MARK: Helper Utilities
 
-    private func setTextFieldBorderToDanger(textField: UITextField) {
+    func setTextFieldBorderToDanger(textField: UITextField) {
         textField.layer.borderColor = UIColor.redColor().CGColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 5.0
     }
     
-    private func setTextFieldBorderToDefault(textField: UITextField) {
+    func setTextFieldBorderToDefault(textField: UITextField) {
         textField.layer.borderColor = nil
         textField.layer.borderWidth = 0
         textField.layer.cornerRadius = 5.0
     }
 
     func showStudentInformationURLView(placemark: CLPlacemark) {
-        guard let storyboard = storyboard else {
-            print("Unable to get storyboard")
-            return
-        }
-        
-        guard let presentingVC = self.presentingViewController else {
-            print("Unable to get presenting view controller")
-            return
-        }
-        
-        guard let destinationVC = storyboard.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController else {
-            print("View not found")
-            return
-        }
-        
+        let presentingVC = self.presentingViewController!
+        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as! StudentInformationURLViewController
         destinationVC.placemark = placemark
         
         dismissViewControllerAnimated(false) {
             presentingVC.presentViewController(destinationVC, animated: true) {}
         }
+    }
+}
+
+
+// MARK: - StudentInformationLocationViewController: UITextFieldDelegate
+extension StudentInformationLocationViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        setTextFieldBorderToDefault(textField)
+    }
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        findOnTheMap(self)
+        return true
     }
 }

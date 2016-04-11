@@ -9,7 +9,11 @@
 import UIKit
 import Foundation
 
-// MARK: UdacityParseClient (Convenient Resource Methods)
+// MARK: Notification Identifiers
+
+let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
+
+// MARK: - UdacityParseClient (Convenient Resource Methods)
 
 extension UdacityParseClient {
 
@@ -17,9 +21,9 @@ extension UdacityParseClient {
     func getStudentInformationList(completionHandler: (studentInformationList: [StudentInformation]?, error: NSError?) -> Void) {
         
         // (1)
-        let parameters = [
-            ParameterKeys.Limit: 100,
-            ParameterKeys.Order: "-updatedAt"
+        let parameters: [String: AnyObject] = [
+            ParameterKeys.Limit: ParameterValues.Limit,
+            ParameterKeys.Order: ParameterValues.UpdatedAtDescending
         ]
         
         // (2)
@@ -37,12 +41,16 @@ extension UdacityParseClient {
             
             // (3)
             if let error = error {
+                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                    completionHandler(studentInformationList: nil, error:
+                        NSError(domain: "getStudentInformationList", code: error.code, userInfo: error.userInfo))
+                }
                 sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
             guard let responseResults = data[JSONResponseKeys.Results] as? [[String:AnyObject]] else {
-                sendError(1, errorString: "Could not find \(JSONResponseKeys.Results) in \(data)")
+                sendError(ErrorCodes.DataError.rawValue, errorString: "Could not find \(JSONResponseKeys.Results) in \(data)")
                 return
             }
 
@@ -52,7 +60,7 @@ extension UdacityParseClient {
                 studentInformationList.append(StudentInformation(dictionary: record))
             }
             
-            self.studentInformationList = studentInformationList
+            StudentInformation.list = studentInformationList
             NSNotificationCenter.defaultCenter().postNotificationName(StudentInformationUpdatedNotification, object: nil)
             completionHandler(studentInformationList: studentInformationList, error: nil)
         }
@@ -89,6 +97,9 @@ extension UdacityParseClient {
             
             // (3) Send to completion handler
             if let error = error {
+                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                    completionHandler(success: false, error: NSError(domain: "storeStudentInformation", code: error.code, userInfo: error.userInfo))
+                }
                 sendError(error.code, errorString: error.localizedDescription)
                 return
             }

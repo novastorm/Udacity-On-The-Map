@@ -8,12 +8,14 @@
 
 import Foundation
 
-enum ErrorCodes: Int32 {
-    case GenericError = -1
-    case NetworkError = -100
-}
-
-extension ErrorCodes: CustomStringConvertible {
+enum ErrorCodes: Int, CustomStringConvertible {
+    case GenericError
+    case NetworkError
+    case GenericRequestError
+    case HTTPUnsucessful
+    case NoData
+    case DataError
+    
     var description: String {
         get {
             switch self {
@@ -21,6 +23,14 @@ extension ErrorCodes: CustomStringConvertible {
                 return "Generic Error"
             case .NetworkError:
                 return "Network Error"
+            case .GenericRequestError:
+                return "There was an error with the request."
+            case .HTTPUnsucessful:
+                return "Request returned a status code other that 2XX!"
+            case .NoData:
+                return "No data returned by the request"
+            case .DataError:
+                return "There was a data error"
             }
         }
     }

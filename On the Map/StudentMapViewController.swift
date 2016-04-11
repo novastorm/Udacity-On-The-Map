@@ -9,29 +9,32 @@
 import UIKit
 import MapKit
 
-class StudentMapViewController: UIViewController {
+// MARK: StudentMapViewController: UIViewController
 
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+class StudentMapViewController: UIViewController {
+    
+    // MARK: Properties
     
     var studentInformationList: [StudentInformation] {
-        return UdacityParseClient.sharedInstance().studentInformationList
+        return StudentInformation.list
     }
 
+    
+    // MARK: Outlets
+    
+    @IBOutlet weak var mapView: MKMapView!
+
+    
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startActivity()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
-        
-        UdacityParseClient.sharedInstance().getStudentInformationList { (studentInformationList, error) in
-            
-            performUIUpdatesOnMain{
-                self.stopActivity()
-            }
-        }
     }
+    
+    
+    // MARK: Helper Utilities
     
     func updateLocations() {
 
@@ -63,20 +66,15 @@ class StudentMapViewController: UIViewController {
         }
     }
     
-    func startActivity() {
-        activityIndicator.alpha = 1
-        activityIndicator.startAnimating()
-    }
     
-    func stopActivity() {
-        activityIndicator.alpha = 0
-        activityIndicator.stopAnimating()
-    }
-    
+    // MARK: Deinit
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
+
+
+// MARK: - StudentMapViewController: MKMapViewDelegate
 
 extension StudentMapViewController: MKMapViewDelegate {
     

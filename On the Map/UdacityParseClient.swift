@@ -8,9 +8,13 @@
 
 import Foundation
 
-let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
+// MARK: UdacityParseClient
 
-class UdacityParseClient: NSObject {
+class UdacityParseClient {
+    
+    // MARK: Shared Instance
+    static let sharedInstance = UdacityParseClient()
+    private init() {} // Disable default initializer
     
     // MARK: Properties
     var session = NSURLSession.sharedSession()
@@ -18,7 +22,7 @@ class UdacityParseClient: NSObject {
     // Configuration Object
     // var config = UdacityParseConfig()
     
-    var studentInformationList = [StudentInformation]()
+//    var studentInformationList = [StudentInformation]()
     
     // MARK: GET
     func taskForGETMethod(resource: String, parameters inputParameters: [String:AnyObject], completionHandlerForGet: (results: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
@@ -109,7 +113,6 @@ class UdacityParseClient: NSObject {
             
             // GUARD: Was a successul 2XX response received?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where 200...299 ~= statusCode else {
-                print(response!)
                 sendError(ErrorCodes.HTTPUnsucessful.rawValue, errorString: ErrorCodes.HTTPUnsucessful.description)
                 return
             }
@@ -242,11 +245,7 @@ class UdacityParseClient: NSObject {
         return components.URL!
     }
     
-    // MARK: Shared Instance
-    class func sharedInstance() -> UdacityParseClient {
-        struct Singleton {
-            static var sharedInstance = UdacityParseClient()
-        }
-        return Singleton.sharedInstance
+    static func logout () {
+        StudentInformation.list.removeAll()
     }
 }

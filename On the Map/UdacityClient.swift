@@ -8,13 +8,16 @@
 
 import Foundation
 
-class UdacityClient: NSObject {
-    
+// MARK: UdacityClient
+
+class UdacityClient {
+
+    // MARK: Shared Instance
+    static let sharedInstance = UdacityClient()
+    private init() {} // Disable default initializer
+
     // MARK: Properties
     var session = NSURLSession.sharedSession()
-    
-    // Configuration Object
-    var config = UdacityConfig()
     
     // Authentication State
     var sessionId: String? = nil
@@ -257,18 +260,5 @@ class UdacityClient: NSObject {
         }
         
         return components.URL!
-    }
-    
-    // MARK: Shared Instance
-    class func sharedInstance() -> UdacityClient {
-        struct Singleton {
-            static var sharedInstance = UdacityClient()
-        }
-        return Singleton.sharedInstance
-    }
-    
-    func logout () {
-        accountKey = nil
-        account = nil
     }
 }
