@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         checkNetworkConnection(nil) { (success, error) in
             if let _ = error {
-                showAlert(self, title: "No Connection", message: "Internet connection required for use.")
+                showNetworkAlert(self)
                 return
             }
             
