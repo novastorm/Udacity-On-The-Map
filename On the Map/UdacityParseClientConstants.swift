@@ -6,6 +6,8 @@
 //  Copyright © 2016 Adland Lee. All rights reserved.
 //
 
+// MARK: UdacityParseClient (Constants)
+
 extension UdacityParseClient {
     
     struct Constants {
@@ -45,6 +47,12 @@ extension UdacityParseClient {
         static let Order = "order"
         static let Where = "where"
         static let ObjectId = "objectId"
+    }
+    
+    // MARK: Parameter Values
+    struct ParameterValues {
+        static let Limit = 100
+        static let UpdatedAtDescending = "-updatedAt"
     }
     
     // MARK: Request Keys
