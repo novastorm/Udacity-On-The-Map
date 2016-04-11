@@ -41,7 +41,15 @@ class StudentTabBarController: UITabBarController {
                 performUIUpdatesOnMain() {
                     ProgressOverlay.stop() {
                         if let error = error {
-                            showAlert(self, title: nil, message: error.localizedDescription)
+                            if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                                let response = error.userInfo["http_response"] as! NSHTTPURLResponse
+                                if response.statusCode == 401 {
+                                    showAlert(self, title:"Unauthorized", message: "Cannot access resource.")
+                                }
+                            }
+                            else {
+                                showAlert(self, title: nil, message: error.localizedDescription)
+                            }
                         }
                     }
                 }
