@@ -22,7 +22,7 @@ class UdacityParseClient {
     // Configuration Object
     // var config = UdacityParseConfig()
     
-    var studentInformationList = [StudentInformation]()
+//    var studentInformationList = [StudentInformation]()
     
     // MARK: GET
     func taskForGETMethod(resource: String, parameters inputParameters: [String:AnyObject], completionHandlerForGet: (results: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
@@ -243,5 +243,9 @@ class UdacityParseClient {
         }
         
         return components.URL!
+    }
+    
+    static func logout () {
+        StudentInformation.list.removeAll()
     }
 }

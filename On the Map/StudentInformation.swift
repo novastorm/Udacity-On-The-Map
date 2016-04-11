@@ -12,6 +12,8 @@ import Foundation
 
 struct StudentInformation {
     
+    static var list = [StudentInformation]()
+    
     struct Keys {
         static let ObjectId = UdacityParseClient.ResultsKeys.ObjectId
         static let UniqueKey = UdacityParseClient.ResultsKeys.UniqueKey

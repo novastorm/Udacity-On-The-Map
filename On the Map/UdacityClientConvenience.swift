@@ -14,6 +14,21 @@ import UIKit
 
 extension UdacityClient {
     
+    // MARK: Logout
+    
+    static func logout (completion: ((success: Bool, error: NSError?) -> Void)?) {
+        sharedInstance.logoutSession { (success, error) in
+            if success {
+                sharedInstance.accountKey = nil
+                sharedInstance.account = nil
+            }
+
+            if let completion = completion {
+                completion(success: success, error: error)
+            }
+        }
+    }
+    
     // MARK: - Authentication Methods
     
     func authenticateViaUdacity(username username: String, password: String, completionHandlerForAuth: (success: Bool, error: NSError?) -> Void) {
@@ -154,7 +169,6 @@ extension UdacityClient {
                 return
             }
             
-            UdacityClient.sharedInstance.logout()
             completionHandler(success: true, error: nil)
         }
         FBSDKLoginManager().logOut()

@@ -60,7 +60,7 @@ extension UdacityParseClient {
                 studentInformationList.append(StudentInformation(dictionary: record))
             }
             
-            self.studentInformationList = studentInformationList
+            StudentInformation.list = studentInformationList
             NSNotificationCenter.defaultCenter().postNotificationName(StudentInformationUpdatedNotification, object: nil)
             completionHandler(studentInformationList: studentInformationList, error: nil)
         }

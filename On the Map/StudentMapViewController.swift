@@ -16,7 +16,7 @@ class StudentMapViewController: UIViewController {
     // MARK: Properties
     
     var studentInformationList: [StudentInformation] {
-        return UdacityParseClient.sharedInstance.studentInformationList
+        return StudentInformation.list
     }
 
     

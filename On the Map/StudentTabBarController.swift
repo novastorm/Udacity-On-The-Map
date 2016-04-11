@@ -21,9 +21,9 @@ class StudentTabBarController: UITabBarController {
     // MARK: Actions
     
     @IBAction func logout(sender: AnyObject) {
-        UdacityClient.sharedInstance.logoutSession { (success, error) in
+        UdacityClient.logout() { (success, error) in
             if success {
-                UdacityParseClient.sharedInstance.studentInformationList.removeAll()
+                StudentInformation.list.removeAll()
                 performUIUpdatesOnMain{
                     self.dismissViewControllerAnimated(true) {}
                 }
