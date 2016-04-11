@@ -93,12 +93,13 @@ class StudentInformationLocationViewController: UIViewController {
         textField.layer.cornerRadius = 5.0
     }
 
-    func showStudentInformationURLView(placemark: CLPlacemark) {        
-        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController        
-        destinationVC!.placemark = placemark
+    func showStudentInformationURLView(placemark: CLPlacemark) {
+        let presentingVC = self.presentingViewController!
+        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as! StudentInformationURLViewController
+        destinationVC.placemark = placemark
         
         dismissViewControllerAnimated(false) {
-            self.presentingViewController!.presentViewController(destinationVC!, animated: true) {}
+            presentingVC.presentViewController(destinationVC, animated: true) {}
         }
     }
 }
