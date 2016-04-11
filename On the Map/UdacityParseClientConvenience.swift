@@ -9,10 +9,6 @@
 import UIKit
 import Foundation
 
-// MARK: Notification Identifiers
-
-let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
-
 // MARK: - UdacityParseClient (Convenient Resource Methods)
 
 extension UdacityParseClient {
@@ -61,7 +57,6 @@ extension UdacityParseClient {
             }
             
             StudentInformation.list = studentInformationList
-            NSNotificationCenter.defaultCenter().postNotificationName(StudentInformationUpdatedNotification, object: nil)
             completionHandler(studentInformationList: studentInformationList, error: nil)
         }
     }

@@ -60,12 +60,18 @@ class LoginViewController: UIViewController {
                                     else if error.code == NSURLErrorTimedOut {
                                         self.displayError(error.localizedDescription)
                                     }
-                                    else if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
-                                        self.displayError("Check facebook account is linked", title: "Authorization error." )
-                                        FBSDKLoginManager().logOut()
+                                    else if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                                        let response = error.userInfo["http_response"] as! NSHTTPURLResponse
+                                        if response.statusCode == 403 {
+                                            self.displayError("Check facebook account is linked", title: "Authorization error." )
+                                            FBSDKLoginManager().logOut()
+                                        }
+                                        else {
+                                            self.displayError("Recieved unexpected response code: \(response.statusCode)")
+                                        }
                                     }
                                     else {
-                                        self.displayError("\(error)")
+                                        self.displayError("Received unexpected error code: \(error.code) \(error.localizedDescription)")
                                     }
                                     return
                                 }
@@ -121,20 +127,23 @@ class LoginViewController: UIViewController {
                             if let error = error {
                                 if error.code == NSURLErrorNotConnectedToInternet {
                                     self.displayError(error.localizedDescription)
-                                    return
                                 }
                                 else if error.code == NSURLErrorTimedOut {
                                     self.displayError(error.localizedDescription)
-                                    return
                                 }
-                                else if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
-                                    self.displayError("Check username and password", title: "Authorization error.")
-                                    self.setTextFieldBorderToDanger(self.emailField)
-                                    self.setTextFieldBorderToDanger(self.passwordField)
-                                    return
+                                else if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
+                                    let response = error.userInfo["http_response"] as! NSHTTPURLResponse
+                                    if response.statusCode == 403 {
+                                        self.displayError("Check username and password", title: "Authorization error.")
+                                        self.setTextFieldBorderToDanger(self.emailField)
+                                        self.setTextFieldBorderToDanger(self.passwordField)
+                                    }
+                                    else {
+                                        self.displayError("Recieved unexpected response code: \(response.statusCode)")
+                                    }
                                 }
                                 else {
-                                    self.displayError("\(error)")
+                                    self.displayError("Received unexpected error code: \(error.code) \(error.localizedDescription)")
                                 }
                                 return
                             }

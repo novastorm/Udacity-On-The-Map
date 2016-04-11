@@ -8,6 +8,10 @@
 
 import UIKit
 
+// MARK: Notification Identifiers
+
+let RefreshStudentInformationListNotification = "RefreshStudentInformationListNotification"
+
 // MARK: StudentTabBarController: UITabBarController
 
 class StudentTabBarController: UITabBarController {
@@ -15,6 +19,7 @@ class StudentTabBarController: UITabBarController {
     // MARK: Life Cycle
     
     override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.refreshStudentInformationList), name: RefreshStudentInformationListNotification, object: nil)
         refreshStudentInformationList()
     }
     
@@ -34,6 +39,9 @@ class StudentTabBarController: UITabBarController {
     @IBAction func refresh(sender: AnyObject) {
         refreshStudentInformationList()
     }
+    
+    
+    // MARK: Helper Utilities
     
     func refreshStudentInformationList() {
         ProgressOverlay.start(self, message: "Retrieving data ...") {
@@ -55,5 +63,12 @@ class StudentTabBarController: UITabBarController {
                 }
             }
         }
+    }
+    
+    
+    // MARK: Deinit
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
