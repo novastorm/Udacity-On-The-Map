@@ -111,8 +111,10 @@ extension StudentInformationLocationViewController: UITextFieldDelegate {
         setTextFieldBorderToDefault(textField)
     }
     
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        findOnTheMap(self)
         return true
     }
 }
