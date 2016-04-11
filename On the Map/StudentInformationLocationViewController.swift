@@ -16,7 +16,7 @@ class StudentInformationLocationViewController: UIViewController {
     
     // MARK: Properties
     
-    var geocoder: CLGeocoder?
+    var geocoder = CLGeocoder()
     
     
     // MARK: Outlets
@@ -43,18 +43,18 @@ class StudentInformationLocationViewController: UIViewController {
             return
         }
         
-        if geocoder == nil {
-            geocoder = CLGeocoder()
-        }
+//        if geocoder == nil {
+//            geocoder = CLGeocoder()
+//        }
 
-        guard let geocoder = geocoder else {
-            showAlert(self, title: "Error", message: "Error unwrapping geocoder object")
-            return
-        }
+//        guard let geocoder = geocoder else {
+//            showAlert(self, title: "Error", message: "Error unwrapping geocoder object")
+//            return
+//        }
         
         geocoder.cancelGeocode()
         ProgressOverlay.start(self, message: "Getting location ...") {
-            geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+            self.geocoder.geocodeAddressString(addressString) { (placemarks, error) in
                 performUIUpdatesOnMain() {
                     ProgressOverlay.stop() {
                         if error != nil {
@@ -94,15 +94,11 @@ class StudentInformationLocationViewController: UIViewController {
     }
 
     func showStudentInformationURLView(placemark: CLPlacemark) {        
-        guard let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController else {
-            print("View not found")
-            return
-        }
-        
-        destinationVC.placemark = placemark
+        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as? StudentInformationURLViewController        
+        destinationVC!.placemark = placemark
         
         dismissViewControllerAnimated(false) {
-            self.presentingViewController!.presentViewController(destinationVC, animated: true) {}
+            self.presentingViewController!.presentViewController(destinationVC!, animated: true) {}
         }
     }
 }

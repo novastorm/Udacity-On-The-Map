@@ -57,14 +57,16 @@ class LoginViewController: UIViewController {
                                     if error.code == NSURLErrorNotConnectedToInternet {
                                         self.displayError(error.localizedDescription)
                                     }
-                                    if error.code == NSURLErrorTimedOut {
+                                    else if error.code == NSURLErrorTimedOut {
                                         self.displayError(error.localizedDescription)
                                     }
-                                    if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
+                                    else if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as? NSHTTPURLResponse)?.statusCode == 403 {
                                         self.displayError("Check facebook account is linked", title: "Authorization error." )
                                         FBSDKLoginManager().logOut()
                                     }
-                                    print(error)
+                                    else {
+                                        self.displayError("\(error)")
+                                    }
                                     return
                                 }
                                 
@@ -121,18 +123,19 @@ class LoginViewController: UIViewController {
                                     self.displayError(error.localizedDescription)
                                     return
                                 }
-                                if error.code == NSURLErrorTimedOut {
+                                else if error.code == NSURLErrorTimedOut {
                                     self.displayError(error.localizedDescription)
                                     return
                                 }
-                                if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
+                                else if (error.userInfo[NSUnderlyingErrorKey]!.userInfo["http_response"] as! NSHTTPURLResponse).statusCode == 403 {
                                     self.displayError("Check username and password", title: "Authorization error.")
                                     self.setTextFieldBorderToDanger(self.emailField)
                                     self.setTextFieldBorderToDanger(self.passwordField)
                                     return
                                 }
-                                
-                                print(error)
+                                else {
+                                    self.displayError("\(error)")
+                                }
                                 return
                             }
                             
