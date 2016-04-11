@@ -31,8 +31,6 @@ class StudentMapViewController: UIViewController {
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
-        
-        (self.tabBarController as! StudentTabBarController).refreshStudentInformationList()
     }
     
     

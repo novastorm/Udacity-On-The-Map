@@ -12,6 +12,12 @@ import UIKit
 
 class StudentTabBarController: UITabBarController {
     
+    // MARK: Life Cycle
+    
+    override func viewDidLoad() {
+        refreshStudentInformationList()
+    }
+    
     // MARK: Actions
     
     @IBAction func logout(sender: AnyObject) {
