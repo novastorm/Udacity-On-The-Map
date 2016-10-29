@@ -19,8 +19,8 @@ extension UdacityParseClient {
         
         // MARK: URL information
         static let APIScheme = "https"
-        static let APIHost = "api.parse.com"
-        static let APIPath = "/1"
+        static let APIHost = "parse.udacity.com"
+        static let APIPath = "/parse"
         
         static let AuthorizationURL = ""
     }

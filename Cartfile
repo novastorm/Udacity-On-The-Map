@@ -1,2 +1,2 @@
-github "ashleymills/Reachability.swift"
+github "ashleymills/Reachability.swift" ~> 3.0
 github "facebook/facebook-ios-sdk"

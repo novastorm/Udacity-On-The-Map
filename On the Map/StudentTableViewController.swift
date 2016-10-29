@@ -22,24 +22,24 @@ class StudentTableViewController: UITableViewController {
     
     // MARK: Life Cycle
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateStudentInformation), name: StudentInformationUpdatedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStudentInformation), name: .studentInformationUpdated, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
 
     
     // MARK: Table view configuration
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentInformationList.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "StudentInformationTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)!
-        let record = studentInformationList[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)!
+        let record = studentInformationList[(indexPath as NSIndexPath).row]
         
         cell.imageView?.image = UIImage(named: "marker pin")
         cell.textLabel?.text = "\(record.firstName!) \(record.lastName!)"
@@ -48,26 +48,28 @@ class StudentTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let student = studentInformationList[indexPath.row]
+        let student = studentInformationList[(indexPath as NSIndexPath).row]
         
-        guard let components = NSURLComponents(string: student.mediaURL!) else {
+        guard var components = URLComponents(string: student.mediaURL!) else {
             showAlert(self, title: "Invalid URL components", message: student.mediaURL)
             return
         }
 
         components.scheme = components.scheme ?? "http"
 
-        guard let url = components.URL else {
+        guard let url = components.url else {
             showAlert(self, title: "Invalid URL", message: student.mediaURL)
             return
         }
-            
-        guard UIApplication.sharedApplication().openURL(url) else {
+        
+        guard UIApplication.shared.canOpenURL(url)  else {
             showAlert(self, title: "Cannot open URL", message: "\(url)")
             return
         }
+
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     
@@ -81,6 +83,6 @@ class StudentTableViewController: UITableViewController {
     // MARK: Deinit
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }

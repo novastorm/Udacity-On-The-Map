@@ -31,20 +31,20 @@ class LoginViewController: UIViewController {
         self.passwordField.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // ensure password field is cleared
         passwordField.text = ""
 
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         checkNetworkConnection(nil) { (success, error) in
             if let _ = error {
                 showNetworkAlert(self)
                 return
             }
             
-            if let currentAccessToken = FBSDKAccessToken.currentAccessToken() {
+            if let currentAccessToken = FBSDKAccessToken.current() {
                 ProgressOverlay.start(self, message: "Logging in") {
                     guard let tokenString = currentAccessToken.tokenString else {
                         return
@@ -60,8 +60,8 @@ class LoginViewController: UIViewController {
                                     else if error.code == NSURLErrorTimedOut {
                                         self.displayError(error.localizedDescription)
                                     }
-                                    else if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
-                                        let response = error.userInfo["http_response"] as! NSHTTPURLResponse
+                                    else if error.code == ErrorCodes.httpUnsucessful.rawValue {
+                                        let response = error.userInfo["http_response"] as! HTTPURLResponse
                                         if response.statusCode == 403 {
                                             self.displayError("Check facebook account is linked", title: "Authorization error." )
                                             FBSDKLoginManager().logOut()
@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         // clear password field
         passwordField.text = ""
     }
@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
     
     // MARK: Actions
 
-    @IBAction func udacityLogin(sender: AnyObject) {
+    @IBAction func udacityLogin(_ sender: AnyObject) {
         
         view.endEditing(true)
         
@@ -131,8 +131,8 @@ class LoginViewController: UIViewController {
                                 else if error.code == NSURLErrorTimedOut {
                                     self.displayError(error.localizedDescription)
                                 }
-                                else if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
-                                    let response = error.userInfo["http_response"] as! NSHTTPURLResponse
+                                else if error.code == ErrorCodes.httpUnsucessful.rawValue {
+                                    let response = error.userInfo["http_response"] as! HTTPURLResponse
                                     if response.statusCode == 403 {
                                         self.displayError("Check username and password", title: "Authorization error.")
                                         self.setTextFieldBorderToDanger(self.emailField)
@@ -156,34 +156,35 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @IBAction func signUp(sender: AnyObject) {
+    @IBAction func signUp(_ sender: AnyObject) {
         let signUpURL = "https://www.udacity.com/account/auth#!/signup"
-        UIApplication.sharedApplication().openURL(NSURL(string: signUpURL)!)
+        let url = URL(string: signUpURL)!
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     
     // MARK: Login
 
-    private func completeLogin() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("OnTheMapNavigationController") as! UINavigationController
-        self.presentViewController(controller, animated: true, completion: nil)
+    fileprivate func completeLogin() {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapNavigationController") as! UINavigationController
+        self.present(controller, animated: true, completion: nil)
     }
     
     
     // MARK: Helper Utilities
     
-    func displayError(message: String?, title: String? = nil) {
+    func displayError(_ message: String?, title: String? = nil) {
         showAlert(self, title: title, message: message)
         ProgressOverlay.stop() {}
     }
     
-    func setTextFieldBorderToDanger(textField: UITextField) {
-        textField.layer.borderColor = UIColor.redColor().CGColor
+    func setTextFieldBorderToDanger(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.red.cgColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 5.0
     }
     
-    func setTextFieldBorderToDefault(textField: UITextField) {
+    func setTextFieldBorderToDefault(_ textField: UITextField) {
         textField.layer.borderColor = nil
         textField.layer.borderWidth = 0
         textField.layer.cornerRadius = 5.0
@@ -194,7 +195,7 @@ class LoginViewController: UIViewController {
 // MARK: - LoginViewController: UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         setTextFieldBorderToDefault(textField)
     }
 }
@@ -203,7 +204,7 @@ extension LoginViewController: UITextFieldDelegate {
 // MARK: - LoginViewController: FBSDKLoginButtonDelegate
 extension LoginViewController: FBSDKLoginButtonDelegate {
     
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
 
         view.endEditing(true)
         
@@ -218,5 +219,5 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
 
     }
     
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {}
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {}
 }

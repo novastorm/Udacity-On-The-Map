@@ -26,11 +26,11 @@ class StudentInformationLocationViewController: UIViewController {
     
     // MARK: Actions
     
-    @IBAction func cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true) {}
+    @IBAction func cancel(_ sender: AnyObject) {
+        dismiss(animated: true) {}
     }
     
-    @IBAction func findOnTheMap(sender: AnyObject) {
+    @IBAction func findOnTheMap(_ sender: AnyObject) {
         
         guard let addressString = locationTextField.text else {
             showAlert(self, title: nil, message: "Unable to unwrap location string")
@@ -48,11 +48,11 @@ class StudentInformationLocationViewController: UIViewController {
             self.geocoder.geocodeAddressString(addressString) { (placemarks, error) in
                 performUIUpdatesOnMain() {
                     ProgressOverlay.stop() {
-                        if let error = error {
-                            if error.code == CLError.Network.rawValue {
+                        if let error = error as? NSError {
+                            if error.code == CLError.Code.network.rawValue {
                                 showNetworkAlert(self)
                             }
-                            else if error.code == CLError.GeocodeFoundNoResult.rawValue {
+                            else if error.code == CLError.Code.geocodeFoundNoResult.rawValue {
                                 showAlert(self, title: "No Location Found", message: "Check location and try again.")
                             }
                             else {
@@ -73,32 +73,32 @@ class StudentInformationLocationViewController: UIViewController {
         }
     }
     
-    @IBAction func userTappedBackground(sender: AnyObject) {
+    @IBAction func userTappedBackground(_ sender: AnyObject) {
         view.endEditing(true)
     }
     
     
     // MARK: Helper Utilities
 
-    func setTextFieldBorderToDanger(textField: UITextField) {
-        textField.layer.borderColor = UIColor.redColor().CGColor
+    func setTextFieldBorderToDanger(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.red.cgColor
         textField.layer.borderWidth = 1.0
         textField.layer.cornerRadius = 5.0
     }
     
-    func setTextFieldBorderToDefault(textField: UITextField) {
+    func setTextFieldBorderToDefault(_ textField: UITextField) {
         textField.layer.borderColor = nil
         textField.layer.borderWidth = 0
         textField.layer.cornerRadius = 5.0
     }
 
-    func showStudentInformationURLView(placemark: CLPlacemark) {
+    func showStudentInformationURLView(_ placemark: CLPlacemark) {
         let presentingVC = self.presentingViewController!
-        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("StudentInformationURLViewController") as! StudentInformationURLViewController
+        let destinationVC = storyboard!.instantiateViewController(withIdentifier: "StudentInformationURLViewController") as! StudentInformationURLViewController
         destinationVC.placemark = placemark
         
-        dismissViewControllerAnimated(false) {
-            presentingVC.presentViewController(destinationVC, animated: true) {}
+        dismiss(animated: false) {
+            presentingVC.present(destinationVC, animated: true) {}
         }
     }
 }
@@ -107,12 +107,12 @@ class StudentInformationLocationViewController: UIViewController {
 // MARK: - StudentInformationLocationViewController: UITextFieldDelegate
 extension StudentInformationLocationViewController: UITextFieldDelegate {
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         setTextFieldBorderToDefault(textField)
     }
     
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         findOnTheMap(self)
         return true

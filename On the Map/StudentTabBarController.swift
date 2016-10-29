@@ -19,24 +19,24 @@ class StudentTabBarController: UITabBarController {
     // MARK: Life Cycle
     
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.refreshStudentInformationList), name: RefreshStudentInformationListNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshStudentInformationList), name: NSNotification.Name(rawValue: RefreshStudentInformationListNotification), object: nil)
         refreshStudentInformationList()
     }
     
     // MARK: Actions
     
-    @IBAction func logout(sender: AnyObject) {
+    @IBAction func logout(_ sender: AnyObject) {
         UdacityClient.logout() { (success, error) in
             if success {
                 StudentInformation.list.removeAll()
                 performUIUpdatesOnMain{
-                    self.dismissViewControllerAnimated(true) {}
+                    self.dismiss(animated: true) {}
                 }
             }
         }
     }
     
-    @IBAction func refresh(sender: AnyObject) {
+    @IBAction func refresh(_ sender: AnyObject) {
         refreshStudentInformationList()
     }
     
@@ -49,8 +49,8 @@ class StudentTabBarController: UITabBarController {
                 performUIUpdatesOnMain() {
                     ProgressOverlay.stop() {
                         if let error = error {
-                            if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
-                                let response = error.userInfo["http_response"] as! NSHTTPURLResponse
+                            if error.code == ErrorCodes.httpUnsucessful.rawValue {
+                                let response = error.userInfo["http_response"] as! HTTPURLResponse
                                 if response.statusCode == 401 {
                                     showAlert(self, title:"Unauthorized", message: "Cannot access resource.")
                                 }
@@ -69,6 +69,6 @@ class StudentTabBarController: UITabBarController {
     // MARK: Deinit
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }

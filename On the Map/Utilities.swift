@@ -11,58 +11,53 @@ import Reachability
 import UIKit
 
 
-func showAlert(vc: UIViewController, title: String?, message: String?) {
+func showAlert(_ vc: UIViewController, title: String?, message: String?) {
     performUIUpdatesOnMain { 
     
         // display alert
-        let ac = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "ok", style: .Default, handler: nil)
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ok", style: .default, handler: nil)
         ac.addAction(okAction)
         
         // workaround for this error:
         // Snapshotting a view that has not been rendered results in an empty snapshot. Ensure your view has been rendered at least once before snapshotting or snapshot after screen updates.
         ac.view.layoutIfNeeded()
         // ***
-        vc.presentViewController(ac, animated: true, completion: nil)
+        vc.present(ac, animated: true, completion: nil)
     }
 }
 
-func showNetworkAlert(vc: UIViewController) {
+func showNetworkAlert(_ vc: UIViewController) {
     let NetworkErrorTitle = "Network unreachable."
     let NetworkErrorMessage = "Check network connection"
     
     showAlert(vc, title: NetworkErrorTitle, message: NetworkErrorMessage)
 }
 
-func checkNetworkConnection(hostname: String?, completionHandler: (success: Bool, error: NSError?) -> Void) {
+func checkNetworkConnection(_ hostname: String?, completionHandler: (_ success: Bool, _ error: NSError?) -> Void) {
     
     var reachability: Reachability?
     
-    do {
-        reachability = try hostname == nil ? Reachability.reachabilityForInternetConnection() : Reachability(hostname: hostname!)
-    }
-    catch {
-        print("Cannot create Reachability")
-    }
+    reachability = (hostname == nil) ? Reachability() : Reachability(hostname: hostname!)
     
-    guard let reachable = reachability?.isReachable() where reachable else {
+    guard let reachable = reachability?.isReachable , reachable else {
         // Debug without network
-        if (UIApplication.sharedApplication().delegate as! AppDelegate).debugWithoutNetwork {
-            completionHandler(success: true, error: nil)
+        if (UIApplication.shared.delegate as! AppDelegate).debugWithoutNetwork {
+            completionHandler(true, nil)
             return
         }
         
         let userInfo: [String:AnyObject] = [
-            NSLocalizedDescriptionKey: "Network not reachable"
+            NSLocalizedDescriptionKey: "Network not reachable" as AnyObject
         ]
         
-        completionHandler(success: false, error: NSError(domain: "checkNetworkConnection", code: 1, userInfo: userInfo))
+        completionHandler(false, NSError(domain: "checkNetworkConnection", code: 1, userInfo: userInfo))
         return
     }
     
-    completionHandler(success: true, error: nil)
+    completionHandler(true, nil)
 }
 
-func distanceInMeters(kilometers kilometers: Double) -> Double {
+func distanceInMeters(kilometers: Double) -> Double {
     return kilometers * 1000
 }

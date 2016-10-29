@@ -38,32 +38,32 @@ class SubmitInformationButton: UIButton {
         applyTheme()
     }
     
-    private func applyTheme() {
+    fileprivate func applyTheme() {
         layer.masksToBounds = true
         layer.cornerRadius = borderedButtonCornerRadius
         highlightedBackingColor = darkerBlue
         backingColor = lighterBlue
         backgroundColor = lighterBlue
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
+        setTitleColor(UIColor.white, for: UIControlState())
+        titleLabel?.font = UIFont.systemFont(ofSize: titleLabelFontSize)
     }
     
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         backgroundColor = highlightedBackingColor
         return true
     }
     
-    override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         backgroundColor = backingColor
     }
     
-    override func cancelTrackingWithEvent(event: UIEvent?) {
+    override func cancelTracking(with event: UIEvent?) {
         backgroundColor = backingColor
     }
     
-    override func sizeThatFits(size: CGSize) -> CGSize {
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
         let extraButtonPadding : CGFloat = phoneBorderedButtonExtraPadding
-        var sizeThatFits = CGSizeZero
+        var sizeThatFits = CGSize.zero
         sizeThatFits.width = super.sizeThatFits(size).width + extraButtonPadding
         sizeThatFits.height = borderedButtonHeight
         return sizeThatFits

@@ -14,39 +14,40 @@ import Foundation
 extension UdacityParseClient {
 
     // MARK: - GET Convenience Methods
-    func getStudentInformationList(completionHandler: (studentInformationList: [StudentInformation]?, error: NSError?) -> Void) {
+    func getStudentInformationList(_ completionHandler: @escaping (_ studentInformationList: [StudentInformation]?, _ error: NSError?) -> Void) {
         
         // (1)
         let parameters: [String: AnyObject] = [
-            ParameterKeys.Limit: ParameterValues.Limit,
-            ParameterKeys.Order: ParameterValues.UpdatedAtDescending
+            ParameterKeys.Limit: ParameterValues.Limit as AnyObject,
+            ParameterKeys.Order: ParameterValues.UpdatedAtDescending as AnyObject
         ]
         
         // (2)
-        taskForGETMethod(Resources.ClassesStudentLocation, parameters: parameters) { (data, error) in
+        let _ = taskForGETMethod(Resources.ClassesStudentLocation, parameters: parameters) { (data, error) in
             
             // error function
-            func sendError(code: Int, errorString:String) {
-                var userInfo = [String: AnyObject]()
+            func sendError(_ code: Int, errorString:String) {
+                var userInfo = [String: Any]()
                 
                 userInfo[NSLocalizedDescriptionKey] = errorString
                 userInfo[NSUnderlyingErrorKey] = error
                 
-                completionHandler(studentInformationList: nil, error: NSError(domain: "getStudentInformationList", code: code, userInfo: userInfo))
+                completionHandler(nil, NSError(domain: "getStudentInformationList", code: code, userInfo: userInfo))
             }
             
             // (3)
             if let error = error {
-                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
-                    completionHandler(studentInformationList: nil, error:
-                        NSError(domain: "getStudentInformationList", code: error.code, userInfo: error.userInfo))
+                if error.code == ErrorCodes.httpUnsucessful.rawValue {
+                    completionHandler(nil, NSError(domain: "getStudentInformationList", code: error.code, userInfo: error.userInfo))
                 }
                 sendError(error.code, errorString: error.localizedDescription)
                 return
             }
             
+            let data = data as! [String: AnyObject]
+            
             guard let responseResults = data[JSONResponseKeys.Results] as? [[String:AnyObject]] else {
-                sendError(ErrorCodes.DataError.rawValue, errorString: "Could not find \(JSONResponseKeys.Results) in \(data)")
+                sendError(ErrorCodes.dataError.rawValue, errorString: "Could not find \(JSONResponseKeys.Results) in \(data)")
                 return
             }
 
@@ -57,49 +58,49 @@ extension UdacityParseClient {
             }
             
             StudentInformation.list = studentInformationList
-            completionHandler(studentInformationList: studentInformationList, error: nil)
+            completionHandler(studentInformationList, nil)
         }
     }
     
     // MARK: - POST Convenience Methods
     
-    func storeStudentInformation(student: StudentInformation, completionHandler: (success: Bool, error: NSError?) -> Void) {
+    func storeStudentInformation(_ student: StudentInformation, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> Void) {
         
         // 1
         let parameters = [String:AnyObject]()
         let JSONBody: [String:AnyObject] = [
-            JSONParameterKeys.UniqueKey: student.uniqueKey!,
-            JSONParameterKeys.FirstName: student.firstName!,
-            JSONParameterKeys.LastName: student.lastName!,
-            JSONParameterKeys.MapString: student.mapString!,
-            JSONParameterKeys.MediaURL: student.mediaURL!,
-            JSONParameterKeys.Latitude: student.latitude!,
-            JSONParameterKeys.Longitude: student.longitude!
+            JSONParameterKeys.UniqueKey: student.uniqueKey! as AnyObject,
+            JSONParameterKeys.FirstName: student.firstName! as AnyObject,
+            JSONParameterKeys.LastName: student.lastName! as AnyObject,
+            JSONParameterKeys.MapString: student.mapString! as AnyObject,
+            JSONParameterKeys.MediaURL: student.mediaURL! as AnyObject,
+            JSONParameterKeys.Latitude: student.latitude! as AnyObject,
+            JSONParameterKeys.Longitude: student.longitude! as AnyObject
         ]
         
         // 2
-        taskForPOSTMethod(Resources.ClassesStudentLocation, parameters: parameters, JSONBody: JSONBody) { (results, error) in
+        let _ = taskForPOSTMethod(Resources.ClassesStudentLocation, parameters: parameters, JSONBody: JSONBody) { (results, error) in
             
             // Custom error function
-            func sendError(code: Int, errorString:String) {
-                var userInfo = [String: AnyObject]()
+            func sendError(_ code: Int, errorString:String) {
+                var userInfo = [String: Any]()
                 
                 userInfo[NSLocalizedDescriptionKey] = errorString
                 userInfo[NSUnderlyingErrorKey] = error
                 
-                completionHandler(success: false, error: NSError(domain: "storeStudentInformation", code: code, userInfo: userInfo))
+                completionHandler(false, NSError(domain: "storeStudentInformation", code: code, userInfo: userInfo))
             }
             
             // (3) Send to completion handler
             if let error = error {
-                if error.code == ErrorCodes.HTTPUnsucessful.rawValue {
-                    completionHandler(success: false, error: NSError(domain: "storeStudentInformation", code: error.code, userInfo: error.userInfo))
+                if error.code == ErrorCodes.httpUnsucessful.rawValue {
+                    completionHandler(false, NSError(domain: "storeStudentInformation", code: error.code, userInfo: error.userInfo))
                 }
                 sendError(error.code, errorString: error.localizedDescription)
                 return
             }
 
-            completionHandler(success: true, error: nil)
+            completionHandler(true, nil)
         }
     }
     

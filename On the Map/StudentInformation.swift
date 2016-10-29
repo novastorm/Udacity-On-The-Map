@@ -6,11 +6,15 @@
 //  Copyright © 2016 Adland Lee. All rights reserved.
 //
 
-// MARK: Notification Identifiers
 
-let StudentInformationUpdatedNotification = "StudentInformationUpdatedNotification"
 
 import Foundation
+
+// MARK: Notification Identifiers
+
+extension Notification.Name {
+    static let studentInformationUpdated = Notification.Name("studentInformationUpdated")
+}
 
 // MARK: StudentInformation
 
@@ -18,7 +22,7 @@ struct StudentInformation {
     
     static var list = [StudentInformation]() {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(StudentInformationUpdatedNotification, object: nil)
+            NotificationCenter.default.post(name: .studentInformationUpdated, object: nil)
         }
     }
     
@@ -43,8 +47,8 @@ struct StudentInformation {
     typealias MediaURLType = String
     typealias LatitudeType = Float
     typealias LongitudeType = Float
-    typealias CreatedAtType = NSDate
-    typealias UpdatedAtType = NSDate
+    typealias CreatedAtType = Date
+    typealias UpdatedAtType = Date
 
     var objectId: ObjectIdType?
     var uniqueKey: UniqueKeyType?
@@ -57,13 +61,13 @@ struct StudentInformation {
     var createdAt: CreatedAtType?
     var updatedAt: UpdatedAtType?
     
-    static var formatter = NSDateFormatter()
+    static var formatter = DateFormatter()
     
-    static func dateFromString(string: String) -> NSDate? {
+    static func dateFromString(_ string: String) -> Date? {
         if formatter.dateFormat == "" {
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         }
-        return formatter.dateFromString(string)
+        return formatter.date(from: string)
     }
     
     init(dictionary: [String:AnyObject?]) {
@@ -80,7 +84,7 @@ struct StudentInformation {
         updatedAt = dictionary[Keys.UpdatedAt] != nil ? StudentInformation.dateFromString((dictionary[Keys.UpdatedAt] as? String)!) : nil
     }
     
-    static func ListFromResults(results: [[String:AnyObject]]) -> [StudentInformation] {
+    static func ListFromResults(_ results: [[String:AnyObject]]) -> [StudentInformation] {
         
         var studentInformationList = [StudentInformation]()
         

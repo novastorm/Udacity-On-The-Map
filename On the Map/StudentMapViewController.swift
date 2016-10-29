@@ -30,7 +30,7 @@ class StudentMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateLocations), name: StudentInformationUpdatedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLocations), name: .studentInformationUpdated, object: nil)
     }
     
     
@@ -70,7 +70,7 @@ class StudentMapViewController: UIViewController {
     // MARK: Deinit
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -80,12 +80,12 @@ class StudentMapViewController: UIViewController {
 extension StudentMapViewController: MKMapViewDelegate {
     
     // add info icon to annotation
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let identifier = "pin"
         var view: MKPinAnnotationView
         
-        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
             dequeuedView.annotation = annotation
             view = dequeuedView
         }
@@ -93,28 +93,30 @@ extension StudentMapViewController: MKMapViewDelegate {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
         }
         return view
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        guard let components = NSURLComponents(string: (view.annotation?.subtitle)!!) else {
+        guard var components = URLComponents(string: (view.annotation?.subtitle)!!) else {
             showAlert(self, title: nil, message: "Invalid URL components")
             return
         }
 
         components.scheme = components.scheme ?? "http"
 
-        guard let url = components.URL else {
+        guard let url = components.url else {
             showAlert(self, title: nil, message: "Invalid URL")
             return
         }
 
-        guard UIApplication.sharedApplication().openURL(url) else {
+        guard UIApplication.shared.canOpenURL(url) else {
             showAlert(self, title: "Cannot open URL", message: "\(url)")
             return
         }
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
